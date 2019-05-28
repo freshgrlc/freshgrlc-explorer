@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 
 import { Row } from "./Row/Row.component";
 
@@ -9,7 +9,7 @@ import { ICoinInfo } from "interfaces/ICoinInfo.interface";
 import classes from "./NetworkInfo.module.scss";
 
 interface IProps {
-  latestBlock: IBlock;
+  latestBlock?: IBlock;
   coinInfo: ICoinInfo;
 }
 
@@ -22,20 +22,25 @@ const adjustDifficulty = (
 };
 
 export const NetworkInfo: React.FC<IProps> = ({ latestBlock, coinInfo }) => {
+  const [loadMore, setLoadMore] = useState(false);
   const formattedBlock = useMemo(() => {
-    return {
-      height: latestBlock.height.toString(),
-      timestamp: latestBlock.timestamp.toString(),
-      difficulty: latestBlock.difficulty.toFixed(3),
-      adjusted: adjustDifficulty(
-        latestBlock.difficulty,
-        coinInfo.blockTime,
-        coinInfo.blockReward
-      ).toFixed(3)
-    };
+    if (latestBlock) {
+      return {
+        height: latestBlock.height.toString(),
+        timestamp: latestBlock.timestamp.toString(),
+        difficulty: latestBlock.difficulty.toFixed(3),
+        adjusted: adjustDifficulty(
+          latestBlock.difficulty,
+          coinInfo.blockTime,
+          coinInfo.blockReward
+        ).toFixed(3)
+      };
+    } else {
+      return {};
+    }
   }, [latestBlock, coinInfo]);
   const table = useMemo(() => {
-    const data: Array<{ label: string; cells: [ICell, ICell] }> = [
+    let data: Array<{ label: string; cells: [ICell, ICell] }> = [
       {
         label: "Latest Block",
         cells: [
@@ -63,13 +68,106 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, coinInfo }) => {
         ]
       }
     ];
+    if (loadMore) {
+      data = [
+        ...data,
+        {
+          label: "24 Activity",
+          cells: [
+            {
+              label: "Transactions",
+              data: "100"
+            },
+            {
+              label: "Total Value",
+              data: "100"
+            }
+          ]
+        },
+        {
+          label: "24 Mining Stats",
+          cells: [
+            {
+              label: "Blocks Mined",
+              data: "100"
+            },
+            {
+              label: "Generated Wealth",
+              data: "100",
+              unit: "dollars"
+            }
+          ]
+        },
+        {
+          label: "Decentrilazation",
+          cells: [
+            {
+              label: "Controlling 50%",
+              data: "3",
+              unit: "pools"
+            },
+            {
+              label: "Controlling 90%",
+              data: "8",
+              unit: "pools"
+            }
+          ]
+        },
+        {
+          label: "Average Blocktime",
+          cells: [
+            {
+              label: "5,000 Blocks",
+              data: coinInfo.blockTime.toString(),
+              unit: "seconds"
+            },
+            {
+              label: "50,000 Blocks",
+              data: coinInfo.blockTime.toString(),
+              unit: "seconds"
+            }
+          ]
+        },
+        // {
+        //   label: "Coin Value",
+        //   cells: [
+        //     {
+        //       label: "Fiat",
+        //       data: "0.279",
+        //       unit: "cents"
+        //     },
+        //     {
+        //       label: "Bitcoin",
+        //       data: "32.120",
+        //       unit: "satoshi"
+        //     }
+        //   ]
+        // },
+        {
+          label: "Network Totals",
+          cells: [
+            {
+              label: "All-time Transactions",
+              data: "11",
+            },
+            {
+              label: "Coins Released (est.)",
+              data: "-5",
+            }
+          ]
+        }
+      ];
+    }
     return data;
-  }, [formattedBlock]);
+  }, [formattedBlock, loadMore, coinInfo]);
   return (
     <div className={classes.network}>
       {table.map(entry => (
         <Row key={Math.random().toString() + Date.now()} {...entry} />
       ))}
+      {!loadMore ? (
+        <button onClick={() => setLoadMore(true)}>Load More</button>
+      ) : null}
     </div>
   );
 };
