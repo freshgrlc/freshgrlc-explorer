@@ -2,8 +2,10 @@ import React, { useEffect, useState, useMemo } from "react";
 import { Observable } from "rxjs";
 
 import { Header } from "./Header/Header.component";
+import { NetworkInfo } from "./NetworkInfo/NetworkInfo.component";
 
 import { ICoinInfo } from "interfaces/ICoinInfo.interface";
+import { IBlock } from "interfaces/IBlock.interface";
 
 // import classes from "./CoinOverview.module.scss";
 
@@ -16,10 +18,10 @@ export const CoinOverview: React.FC<IProps> = ({ coinInfo }) => {
     () => `https://explorer.freshgrlc.net/api/${coinInfo.symbol.toLowerCase()}`,
     [coinInfo]
   );
-  const [blocks, setBlocks] = useState<any[]>([]);
+  const [blocks, setBlocks] = useState<IBlock[]>([]);
 
   useEffect(() => {
-    const obs = new Observable<any>(subscriber => {
+    const obs = new Observable<IBlock>(subscriber => {
       const es = new EventSource(
         `${baseUrl}/events/subscribe?channels=blocks,keepalive`
       );
@@ -31,8 +33,6 @@ export const CoinOverview: React.FC<IProps> = ({ coinInfo }) => {
           const data = message.data;
           if (data.event === "newblock") {
             subscriber.next(data.data);
-          } else {
-            console.log(data);
           }
         };
         es.onerror = error => subscriber.error(error);
@@ -61,9 +61,11 @@ export const CoinOverview: React.FC<IProps> = ({ coinInfo }) => {
       sub.unsubscribe();
     };
   }, [baseUrl]);
+
   return (
     <div>
       <Header name={coinInfo.name} displayName={coinInfo.displayName} />
+      <NetworkInfo />
       <ol>
         {blocks.map(block => (
           <li key={block.hash}>{block.height}</li>
