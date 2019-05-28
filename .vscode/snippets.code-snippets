@@ -41,5 +41,13 @@
       "}"
     ],
     "description": "Create interface"
+  },
+  "Create Util Function": {
+    "scope": "typescript",
+    "prefix": "ufc",
+    "body": [
+      "export const ${TM_FILENAME_BASE/(.util)//} = () => {};"
+    ],
+    "description": "Creates util function"
   }
 }
