@@ -4,22 +4,36 @@ import { Row } from "./Row/Row.component";
 
 import { IBlock } from "interfaces/IBlock.interface";
 import { ICell } from "interfaces/ICell.interface";
+import { ICoinInfo } from "interfaces/ICoinInfo.interface";
 
 import classes from "./NetworkInfo.module.scss";
 
 interface IProps {
   latestBlock: IBlock;
+  coinInfo: ICoinInfo;
 }
 
-export const NetworkInfo: React.FC<IProps> = ({ latestBlock }) => {
+const adjustDifficulty = (
+  difficulty: number,
+  blockTime: number,
+  blockReward: number
+) => {
+  return ((difficulty * blockTime) / 60 / blockReward) * 50;
+};
+
+export const NetworkInfo: React.FC<IProps> = ({ latestBlock, coinInfo }) => {
   const formattedBlock = useMemo(() => {
     return {
       height: latestBlock.height.toString(),
       timestamp: latestBlock.timestamp.toString(),
       difficulty: latestBlock.difficulty.toFixed(3),
-      adjusted: (latestBlock.difficulty * 0).toFixed(3)
+      adjusted: adjustDifficulty(
+        latestBlock.difficulty,
+        coinInfo.blockTime,
+        coinInfo.blockReward
+      ).toFixed(3)
     };
-  }, [latestBlock]);
+  }, [latestBlock, coinInfo]);
   const table = useMemo(() => {
     const data: Array<{ label: string; cells: [ICell, ICell] }> = [
       {

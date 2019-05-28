@@ -11,12 +11,16 @@ export const Home: React.FC = () => {
     {
       name: "garlicoin",
       displayName: "Garlicoin",
-      symbol: "GRLC"
+      symbol: "GRLC",
+      blockTime: 40,
+      blockReward: 25
     },
     {
       name: "tuxcoin",
       displayName: "Tuxcoin",
-      symbol: "TUX"
+      symbol: "TUX",
+      blockTime: 60,
+      blockReward: 33.5
     }
   ];
   return (

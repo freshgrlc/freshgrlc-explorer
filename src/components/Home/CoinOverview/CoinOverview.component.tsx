@@ -65,7 +65,7 @@ export const CoinOverview: React.FC<IProps> = ({ coinInfo }) => {
   return (
     <div className={classes.overview}>
       <Header name={coinInfo.name} displayName={coinInfo.displayName} />
-      {blocks[0] ? <NetworkInfo latestBlock={blocks[0]} /> : null}
+      {blocks[0] ? <NetworkInfo latestBlock={blocks[0]} coinInfo={coinInfo} /> : null}
       <ol>
         {blocks.map(block => (
           <li key={block.hash}>{block.height}</li>
