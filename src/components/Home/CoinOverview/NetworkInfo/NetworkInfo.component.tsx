@@ -50,7 +50,7 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock }) => {
       }
     ];
     return data;
-  }, []);
+  }, [formattedBlock]);
   return (
     <div className={classes.network}>
       {table.map(entry => (
