@@ -1,0 +1,14 @@
+.header {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  .text {
+    font-size: 2em;
+  }
+
+  .img {
+    height: 2em;
+
+    margin-right: 10px;
+  }
+}

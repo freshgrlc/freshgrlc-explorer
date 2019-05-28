@@ -1,19 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { Observable } from "rxjs";
+
+import { Header } from "./Header/Header.component";
 
 import { ICoinInfo } from "interfaces/ICoinInfo.interface";
 
-// import classes from "./Coin.module.scss"
+// import classes from "./CoinOverview.module.scss";
 
 interface IProps {
   coinInfo: ICoinInfo;
 }
 
 export const CoinOverview: React.FC<IProps> = ({ coinInfo }) => {
+  const baseUrl = useMemo(
+    () => `https://explorer.freshgrlc.net/api/${coinInfo.symbol.toLowerCase()}`,
+    [coinInfo]
+  );
   const [blocks, setBlocks] = useState<any[]>([]);
 
   useEffect(() => {
-    const baseUrl = `https://explorer.freshgrlc.net/api/${coinInfo.symbol.toLowerCase()}`;
     const obs = new Observable<any>(subscriber => {
       const es = new EventSource(
         `${baseUrl}/events/subscribe?channels=blocks,keepalive`
@@ -26,11 +31,15 @@ export const CoinOverview: React.FC<IProps> = ({ coinInfo }) => {
           const data = message.data;
           if (data.event === "newblock") {
             subscriber.next(data.data);
+          } else {
+            console.log(data);
           }
         };
         es.onerror = error => subscriber.error(error);
       })();
-      return () => es.close();
+      return function unsubscribe() {
+        es.close();
+      };
     });
     const sub = obs.subscribe({
       next: data => {
@@ -51,12 +60,15 @@ export const CoinOverview: React.FC<IProps> = ({ coinInfo }) => {
     return () => {
       sub.unsubscribe();
     };
-  }, [coinInfo]);
+  }, [baseUrl]);
   return (
-    <ol>
-      {blocks.map(block => (
-        <li key={block.hash}>{block.height}</li>
-      ))}
-    </ol>
+    <div>
+      <Header name={coinInfo.name} displayName={coinInfo.displayName} />
+      <ol>
+        {blocks.map(block => (
+          <li key={block.hash}>{block.height}</li>
+        ))}
+      </ol>
+    </div>
   );
 };
