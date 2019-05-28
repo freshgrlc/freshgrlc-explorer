@@ -3,7 +3,7 @@
   flex-flow: row;
   align-items: center;
 
-  height: 3em%;
+  height: 3em;
   width: 100%;
 
   .label {
@@ -11,6 +11,8 @@
     font-size: 1.25em;
 
     width: 33.33%;
+
+    text-align: center;
   }
 
   .cell {

@@ -7,7 +7,7 @@ import { NetworkInfo } from "./NetworkInfo/NetworkInfo.component";
 import { ICoinInfo } from "interfaces/ICoinInfo.interface";
 import { IBlock } from "interfaces/IBlock.interface";
 
-// import classes from "./CoinOverview.module.scss";
+import classes from "./CoinOverview.module.scss";
 
 interface IProps {
   coinInfo: ICoinInfo;
@@ -63,9 +63,9 @@ export const CoinOverview: React.FC<IProps> = ({ coinInfo }) => {
   }, [baseUrl]);
 
   return (
-    <div>
+    <div className={classes.overview}>
       <Header name={coinInfo.name} displayName={coinInfo.displayName} />
-      <NetworkInfo />
+      {blocks[0] ? <NetworkInfo latestBlock={blocks[0]} /> : null}
       <ol>
         {blocks.map(block => (
           <li key={block.hash}>{block.height}</li>
