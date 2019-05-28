@@ -4,7 +4,7 @@ import { CoinOverview } from "./CoinOverview/CoinOverview.component";
 
 import { ICoinInfo } from "interfaces/ICoinInfo.interface";
 
-import classes from "./Home.module.scss"
+import classes from "./Home.module.scss";
 
 export const Home: React.FC = () => {
   const coins: ICoinInfo[] = [
