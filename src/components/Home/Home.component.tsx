@@ -2,10 +2,12 @@ import React from "react";
 
 import { CoinOverview } from "./CoinOverview/CoinOverview.component";
 
+import { ICoinInfo } from "interfaces/ICoinInfo.interface";
+
 // import classes from "./Home.module.scss"
 
 export const Home: React.FC = () => {
-  const coins = [
+  const coins: ICoinInfo[] = [
     {
       name: "garlicoin",
       displayName: "Garlicoin",
@@ -14,7 +16,7 @@ export const Home: React.FC = () => {
     {
       name: "tuxcoin",
       displayName: "Tuxcoin",
-      symbol: "TUX",
+      symbol: "TUX"
     }
   ];
   return (

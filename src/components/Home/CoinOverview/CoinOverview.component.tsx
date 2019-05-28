@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Observable } from "rxjs";
 
+import { ICoinInfo } from "interfaces/ICoinInfo.interface";
+
 // import classes from "./Coin.module.scss"
 
 interface IProps {
-  coinInfo: any;
+  coinInfo: ICoinInfo;
 }
 
 export const CoinOverview: React.FC<IProps> = ({ coinInfo }) => {
@@ -43,7 +45,8 @@ export const CoinOverview: React.FC<IProps> = ({ coinInfo }) => {
 
           return slice;
         });
-      }
+      },
+      error: error => console.error(error)
     });
     return () => {
       sub.unsubscribe();
