@@ -16,6 +16,15 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    npm install
-    npm run build
-  displayName: 'npm install and build'
+    yarn install
+    yarn test
+    yan build
+  displayName: 'npm install, test, and build'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: 'build'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
+  displayName: "Publish build artifacts"
+  condition: "and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))"
