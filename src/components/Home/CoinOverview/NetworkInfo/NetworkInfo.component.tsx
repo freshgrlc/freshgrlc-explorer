@@ -193,6 +193,7 @@ export const NetworkInfo: React.FC<IProps> = ({
           }
         ]
       },
+      // TODO: Add the requests for this once indexer is running again
       {
         label: "Decentrilazation",
         cells: [
