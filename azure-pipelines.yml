@@ -17,7 +17,7 @@ steps:
 
 - script: |
     yarn install
-    yarn test
+    CI=true yarn test
     yarn build
   displayName: 'npm install, test, and build'
 
