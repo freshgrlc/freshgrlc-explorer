@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { Observable } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 
 import { Header } from "./Header/Header.component";
 import { NetworkInfo } from "./NetworkInfo/NetworkInfo.component";
@@ -21,14 +21,19 @@ export const CoinOverview: React.FC<IProps> = ({ coinInfo }) => {
   const [blocks, setBlocks] = useState<IBlock[]>([]);
 
   useEffect(() => {
-    const obs = new Observable<IBlock>(subscriber => {
-      const es = new EventSource(
-        `${baseUrl}/events/subscribe?channels=blocks,keepalive`
-      );
-      (async () => {
-        ((await (await fetch(
-          `${baseUrl}/blocks/?start=-50&limit=50&expand=miner,transactions`
-        )).json()) as any[]).forEach(block => subscriber.next(block));
+    let cancelled = false;
+    let sub: Subscription;
+    (async () => {
+      const blocksNew = (await (await fetch(
+        `${baseUrl}/blocks/?start=-50&limit=50&expand=miner,transactions`
+      )).json()) as IBlock[];
+      if (!cancelled) {
+        setBlocks(blocksNew);
+      }
+      const obs = new Observable<IBlock>(subscriber => {
+        const es = new EventSource(
+          `${baseUrl}/events/subscribe?channels=blocks,keepalive`
+        );
         es.onmessage = message => {
           const data = message.data;
           if (data.event === "newblock") {
@@ -36,36 +41,43 @@ export const CoinOverview: React.FC<IProps> = ({ coinInfo }) => {
           }
         };
         es.onerror = error => subscriber.error(error);
-      })();
-      return function unsubscribe() {
-        es.close();
-      };
-    });
-    const sub = obs.subscribe({
-      next: data => {
-        setBlocks(blocks => {
-          const slice = blocks.slice();
+        return function unsubscribe() {
+          es.close();
+        };
+      });
+      sub = obs.subscribe({
+        next: data => {
+          setBlocks(blocks => {
+            const slice = blocks.slice();
 
-          if (slice.length === 50) {
-            slice.pop();
-          }
+            if (slice.length === 50) {
+              slice.pop();
+            }
 
-          slice.unshift(data);
+            slice.unshift(data);
 
-          return slice;
-        });
-      },
-      error: error => console.error(error)
-    });
+            return slice;
+          });
+        },
+        error: error => console.error(error)
+      });
+    })();
     return () => {
-      sub.unsubscribe();
+      if (sub != null) {
+        sub.unsubscribe();
+      }
+      cancelled = true;
     };
   }, [baseUrl]);
 
   return (
     <div className={classes.overview}>
       <Header name={coinInfo.name} displayName={coinInfo.displayName} />
-      <NetworkInfo latestBlock={blocks[0]} coinInfo={coinInfo} baseUrl={baseUrl} />
+      <NetworkInfo
+        latestBlock={blocks[0]}
+        coinInfo={coinInfo}
+        baseUrl={baseUrl}
+      />
       <ol>
         {blocks.map(block => (
           <li key={block.hash}>{block.height}</li>

@@ -2,7 +2,7 @@ import React, { useMemo, useEffect, useState } from "react";
 
 import { Row } from "./Row/Row.component";
 
-import { IBlock } from "interfaces/IBlock.interface";
+import { IBlock, IBlockSimple } from "interfaces/IBlock.interface";
 import { ICell } from "interfaces/ICell.interface";
 import { ICoinInfo } from "interfaces/ICoinInfo.interface";
 import { INetworkStats } from "interfaces/INetworkStats.interface";
@@ -34,7 +34,7 @@ export const NetworkInfo: React.FC<IProps> = ({
     difficulty?: string;
     adjusted?: string;
   } => {
-    if (latestBlock) {
+    if (latestBlock != null) {
       return {
         height: latestBlock.height.toString(),
         timestamp: formatTime(latestBlock.timestamp),
@@ -57,6 +57,10 @@ export const NetworkInfo: React.FC<IProps> = ({
     blocks: {},
     transactions: {}
   });
+  const [average5000, setAverage5000] = useState<string | undefined>(undefined);
+  const [average50000, setAverage50000] = useState<string | undefined>(
+    undefined
+  );
   const [coins, setCoins] = useState<string | undefined>(undefined);
   useEffect(() => {
     let cancelled = false;
@@ -66,6 +70,14 @@ export const NetworkInfo: React.FC<IProps> = ({
       )).json()) as INetworkStats;
       if (!cancelled) {
         setYesterday(data);
+      }
+    })();
+    (async () => {
+      const data = (await (await fetch(
+        `${baseUrl}/networkstats/?since=0`
+      )).json()) as INetworkStats;
+      if (!cancelled) {
+        setAllTime(data);
       }
     })();
     (async () => {
@@ -80,6 +92,33 @@ export const NetworkInfo: React.FC<IProps> = ({
       cancelled = true;
     };
   }, [baseUrl, yesterdayDate]);
+  useEffect(() => {
+    if (latestBlock != null) {
+      const getAverage = async (depth: number): Promise<number> => {
+        const old = ((await (await fetch(
+          `${baseUrl}/blocks/?start=-${depth}&limit=1`
+        )).json()) as IBlockSimple[])[0];
+        const timeDifference = latestBlock.timestamp - old.timestamp;
+        return timeDifference / depth;
+      };
+      let cancelled = false;
+      (async () => {
+        const average = await getAverage(5000);
+        if (!cancelled) {
+          setAverage5000(average.toFixed(0));
+        }
+      })();
+      (async () => {
+        const average = await getAverage(50000);
+        if (!cancelled) {
+          setAverage50000(average.toFixed(0));
+        }
+      })();
+      return () => {
+        cancelled = true;
+      };
+    }
+  }, [baseUrl, latestBlock]);
   const table = useMemo(() => {
     let data: Array<{ label: string; cells: [ICell, ICell] }> = [
       {
@@ -166,12 +205,12 @@ export const NetworkInfo: React.FC<IProps> = ({
         cells: [
           {
             label: "5,000 Blocks",
-            data: coinInfo.blockTime.toString(),
+            data: average5000,
             unit: "seconds"
           },
           {
             label: "50,000 Blocks",
-            data: coinInfo.blockTime.toString(),
+            data: average50000,
             unit: "seconds"
           }
         ]
@@ -196,7 +235,9 @@ export const NetworkInfo: React.FC<IProps> = ({
         cells: [
           {
             label: "All-time Transactions",
-            data: "11"
+            data: allTime.transactions.amount
+              ? allTime.transactions.amount.toString()
+              : undefined
           },
           {
             label: "Coins Released (est.)",
@@ -206,7 +247,7 @@ export const NetworkInfo: React.FC<IProps> = ({
       }
     ];
     return data;
-  }, [formattedBlock, coinInfo, coins, yesterday]);
+  }, [formattedBlock, coins, yesterday, allTime, average5000, average50000]);
   return (
     <div className={classes.network}>
       {table.map(entry => (
