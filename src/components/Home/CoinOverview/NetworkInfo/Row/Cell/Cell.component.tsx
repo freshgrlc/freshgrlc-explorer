@@ -13,7 +13,7 @@ export const Cell: React.FC<ICell> = ({ label, data, unit }) => {
       <div className={classes.info}>
         {data ? (
           <>
-            <div className={classes.data}>{data}</div>
+            <div>{data}</div>
             {unit ? <div className={classes.unit}>{" "}{unit}</div> : null}
           </>
         ) : (

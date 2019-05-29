@@ -24,9 +24,9 @@ export const CoinOverview: React.FC<IProps> = ({ coinInfo }) => {
     let cancelled = false;
     let sub: Subscription;
     (async () => {
-      const blocksNew = (await (await fetch(
+      const blocksNew = ((await (await fetch(
         `${baseUrl}/blocks/?start=-50&limit=50&expand=miner,transactions`
-      )).json()) as IBlock[];
+      )).json()) as IBlock[]).reverse();
       if (!cancelled) {
         setBlocks(blocksNew);
       }

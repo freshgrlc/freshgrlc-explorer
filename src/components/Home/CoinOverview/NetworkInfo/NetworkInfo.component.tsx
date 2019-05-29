@@ -28,6 +28,7 @@ export const NetworkInfo: React.FC<IProps> = ({
     date.setDate(date.getDate() - 1);
     return (date.getTime() / 1000).toFixed(0);
   }, []);
+
   const formattedBlock = useMemo((): {
     height?: string;
     timestamp?: string;
@@ -49,19 +50,24 @@ export const NetworkInfo: React.FC<IProps> = ({
       return {};
     }
   }, [latestBlock, coinInfo]);
+
   const [yesterday, setYesterday] = useState<INetworkStats>({
     blocks: {},
     transactions: {}
   });
+
   const [allTime, setAllTime] = useState<INetworkStats>({
     blocks: {},
     transactions: {}
   });
+
   const [average5000, setAverage5000] = useState<string | undefined>(undefined);
   const [average50000, setAverage50000] = useState<string | undefined>(
     undefined
   );
+
   const [coins, setCoins] = useState<string | undefined>(undefined);
+
   useEffect(() => {
     let cancelled = false;
     (async () => {
@@ -92,6 +98,7 @@ export const NetworkInfo: React.FC<IProps> = ({
       cancelled = true;
     };
   }, [baseUrl, yesterdayDate]);
+
   useEffect(() => {
     if (latestBlock != null) {
       const getAverage = async (depth: number): Promise<number> => {
@@ -119,6 +126,7 @@ export const NetworkInfo: React.FC<IProps> = ({
       };
     }
   }, [baseUrl, latestBlock]);
+
   const table = useMemo(() => {
     let data: Array<{ label: string; cells: [ICell, ICell] }> = [
       {
@@ -248,6 +256,7 @@ export const NetworkInfo: React.FC<IProps> = ({
     ];
     return data;
   }, [formattedBlock, coins, yesterday, allTime, average5000, average50000]);
+
   return (
     <div className={classes.network}>
       {table.map(entry => (
