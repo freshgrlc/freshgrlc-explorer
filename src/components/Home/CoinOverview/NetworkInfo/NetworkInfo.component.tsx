@@ -5,6 +5,7 @@ import { Row } from "./Row/Row.component";
 import { IBlock } from "interfaces/IBlock.interface";
 import { ICell } from "interfaces/ICell.interface";
 import { ICoinInfo } from "interfaces/ICoinInfo.interface";
+import { INetworkStats } from "interfaces/INetworkStats.interface";
 
 import classes from "./NetworkInfo.module.scss";
 
@@ -17,7 +18,11 @@ interface IProps {
   baseUrl: string;
 }
 
-export const NetworkInfo: React.FC<IProps> = ({ latestBlock, coinInfo, baseUrl }) => {
+export const NetworkInfo: React.FC<IProps> = ({
+  latestBlock,
+  coinInfo,
+  baseUrl
+}) => {
   const yesterdayDate = useMemo(() => {
     const date = new Date();
     date.setDate(date.getDate() - 1);
@@ -44,19 +49,29 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, coinInfo, baseUrl }
       return {};
     }
   }, [latestBlock, coinInfo]);
-  const [yesterday, setYesterday] = useState({});
-  const [allTime, setAllTime] = useState({});
+  const [yesterday, setYesterday] = useState<INetworkStats>({
+    blocks: {},
+    transactions: {}
+  });
+  const [allTime, setAllTime] = useState<INetworkStats>({
+    blocks: {},
+    transactions: {}
+  });
   const [coins, setCoins] = useState<string | undefined>(undefined);
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      const data = ((await (await fetch(`${baseUrl}/networkstats/?since=${yesterdayDate}`)).json()));
+      const data = (await (await fetch(
+        `${baseUrl}/networkstats/?since=${yesterdayDate}`
+      )).json()) as INetworkStats;
       if (!cancelled) {
         setYesterday(data);
       }
     })();
     (async () => {
-      const coins = ((await (await fetch(`${baseUrl}/coins/`)).json()) as {total: number}).total;
+      const coins = ((await (await fetch(`${baseUrl}/coins/`)).json()) as {
+        total: number;
+      }).total;
       if (!cancelled) {
         setCoins(Math.round(coins).toString());
       }
@@ -98,11 +113,17 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, coinInfo, baseUrl }
         cells: [
           {
             label: "Transactions",
-            data: "100"
+            data:
+              yesterday.transactions.amount != null
+                ? yesterday.transactions.amount.toString()
+                : "0"
           },
           {
             label: "Total Value",
-            data: "100"
+            data:
+              yesterday.transactions.totalvalue != null
+                ? Math.round(yesterday.transactions.totalvalue).toString()
+                : "0"
           }
         ]
       },
@@ -111,12 +132,17 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, coinInfo, baseUrl }
         cells: [
           {
             label: "Blocks Mined",
-            data: "100"
+            data:
+              yesterday.blocks.amount != null
+                ? yesterday.blocks.amount.toString()
+                : undefined
           },
           {
-            label: "Generated Wealth",
-            data: "100",
-            unit: "dollars"
+            label: "Coins Created",
+            data:
+              yesterday.blocks.amount != null
+                ? (yesterday.blocks.amount * 25).toString()
+                : undefined
           }
         ]
       },
@@ -180,7 +206,7 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, coinInfo, baseUrl }
       }
     ];
     return data;
-  }, [formattedBlock, coinInfo, coins]);
+  }, [formattedBlock, coinInfo, coins, yesterday]);
   return (
     <div className={classes.network}>
       {table.map(entry => (
