@@ -15,7 +15,8 @@ interface IProps {
 
 export const CoinOverview: React.FC<IProps> = ({ coinInfo }) => {
   const baseUrl = useMemo(
-    () => `https://explorer.freshgrlc.net/api/${coinInfo.symbol.toLowerCase()}`,
+    () =>
+      `https://api.freshgrlc.net/blockchain/${coinInfo.symbol.toLowerCase()}`,
     [coinInfo]
   );
   const [blocks, setBlocks] = useState<IBlock[]>([]);
@@ -35,8 +36,9 @@ export const CoinOverview: React.FC<IProps> = ({ coinInfo }) => {
           `${baseUrl}/events/subscribe?channels=blocks,keepalive`
         );
         es.onmessage = (message) => {
-          const data = message.data;
-          if (data.event === "newblock") {
+          const data = JSON.parse(message.data);
+
+          if (data.channel === "blocks") {
             subscriber.next(data.data);
           }
         };
@@ -50,7 +52,7 @@ export const CoinOverview: React.FC<IProps> = ({ coinInfo }) => {
           setBlocks((blocks) => {
             const slice = blocks.slice();
 
-            if (slice.length === 50) {
+            if (slice.length > 49) {
               slice.pop();
             }
 
