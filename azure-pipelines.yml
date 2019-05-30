@@ -17,14 +17,15 @@ steps:
 
 - script: |
     yarn install
+    yarn lint
     CI=true yarn test
     yarn build
-  displayName: 'npm install, test, and build'
+  displayName: 'yarn install, lint, test, and build'
 
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: 'build'
     ArtifactName: 'drop'
     publishLocation: 'Container'
-  displayName: "Publish build artifacts"
+  displayName: "Save uBild Artifacts"
   condition: "and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))"
