@@ -163,14 +163,14 @@ export const NetworkInfo: React.FC<IProps> = ({
             data:
               yesterday.transactions.amount != null
                 ? yesterday.transactions.amount.toString()
-                : "0"
+                : undefined
           },
           {
             label: "Total Value",
             data:
               yesterday.transactions.totalvalue != null
                 ? Math.round(yesterday.transactions.totalvalue).toString()
-                : "0"
+                : undefined
           }
         ]
       },
