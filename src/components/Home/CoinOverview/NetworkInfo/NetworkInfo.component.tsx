@@ -21,7 +21,7 @@ interface IProps {
 export const NetworkInfo: React.FC<IProps> = ({
   latestBlock,
   coinInfo,
-  baseUrl
+  baseUrl,
 }) => {
   const yesterdayDate = useMemo(() => {
     const date = new Date();
@@ -44,7 +44,7 @@ export const NetworkInfo: React.FC<IProps> = ({
           latestBlock.difficulty,
           coinInfo.blockTime,
           coinInfo.blockReward
-        ).toFixed(3)
+        ).toFixed(3),
       };
     } else {
       return {};
@@ -53,12 +53,12 @@ export const NetworkInfo: React.FC<IProps> = ({
 
   const [yesterday, setYesterday] = useState<INetworkStats>({
     blocks: {},
-    transactions: {}
+    transactions: {},
   });
 
   const [allTime, setAllTime] = useState<INetworkStats>({
     blocks: {},
-    transactions: {}
+    transactions: {},
   });
 
   const [average5000, setAverage5000] = useState<string | undefined>(undefined);
@@ -134,26 +134,26 @@ export const NetworkInfo: React.FC<IProps> = ({
         cells: [
           {
             label: "Height",
-            data: formattedBlock.height
+            data: formattedBlock.height,
           },
           {
             label: "Recieved at",
-            data: formattedBlock.timestamp
-          }
-        ]
+            data: formattedBlock.timestamp,
+          },
+        ],
       },
       {
         label: "Difficulty",
         cells: [
           {
             label: "Network",
-            data: formattedBlock.difficulty
+            data: formattedBlock.difficulty,
           },
           {
             label: "Adjusted (50 coins/min)",
-            data: formattedBlock.adjusted
-          }
-        ]
+            data: formattedBlock.adjusted,
+          },
+        ],
       },
       {
         label: "24 Activity",
@@ -163,16 +163,16 @@ export const NetworkInfo: React.FC<IProps> = ({
             data:
               yesterday.transactions.amount != null
                 ? yesterday.transactions.amount.toString()
-                : undefined
+                : undefined,
           },
           {
             label: "Total Value",
             data:
               yesterday.transactions.totalvalue != null
                 ? Math.round(yesterday.transactions.totalvalue).toString()
-                : undefined
-          }
-        ]
+                : undefined,
+          },
+        ],
       },
       {
         label: "24 Mining Stats",
@@ -182,16 +182,16 @@ export const NetworkInfo: React.FC<IProps> = ({
             data:
               yesterday.blocks.amount != null
                 ? yesterday.blocks.amount.toString()
-                : undefined
+                : undefined,
           },
           {
             label: "Coins Created",
             data:
               yesterday.blocks.amount != null
                 ? (yesterday.blocks.amount * 25).toString()
-                : undefined
-          }
-        ]
+                : undefined,
+          },
+        ],
       },
       // TODO: Add the requests for this once indexer is running again
       {
@@ -200,14 +200,14 @@ export const NetworkInfo: React.FC<IProps> = ({
           {
             label: "Controlling 50%",
             data: "3",
-            unit: "pools"
+            unit: "pools",
           },
           {
             label: "Controlling 90%",
             data: "8",
-            unit: "pools"
-          }
-        ]
+            unit: "pools",
+          },
+        ],
       },
       {
         label: "Average Blocktime",
@@ -215,14 +215,14 @@ export const NetworkInfo: React.FC<IProps> = ({
           {
             label: "5,000 Blocks",
             data: average5000,
-            unit: "seconds"
+            unit: "seconds",
           },
           {
             label: "50,000 Blocks",
             data: average50000,
-            unit: "seconds"
-          }
-        ]
+            unit: "seconds",
+          },
+        ],
       },
       // {
       //   label: "Coin Value",
@@ -246,21 +246,21 @@ export const NetworkInfo: React.FC<IProps> = ({
             label: "All-time Transactions",
             data: allTime.transactions.amount
               ? allTime.transactions.amount.toString()
-              : undefined
+              : undefined,
           },
           {
             label: "Coins Released (est.)",
-            data: coins
-          }
-        ]
-      }
+            data: coins,
+          },
+        ],
+      },
     ];
     return data;
   }, [formattedBlock, coins, yesterday, allTime, average5000, average50000]);
 
   return (
     <div className={classes.network}>
-      {table.map(entry => (
+      {table.map((entry) => (
         <Row key={Math.random().toString() + Date.now()} {...entry} />
       ))}
     </div>

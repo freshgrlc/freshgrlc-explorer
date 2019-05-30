@@ -30,24 +30,24 @@ export const CoinOverview: React.FC<IProps> = ({ coinInfo }) => {
       if (!cancelled) {
         setBlocks(blocksNew);
       }
-      const obs = new Observable<IBlock>(subscriber => {
+      const obs = new Observable<IBlock>((subscriber) => {
         const es = new EventSource(
           `${baseUrl}/events/subscribe?channels=blocks,keepalive`
         );
-        es.onmessage = message => {
+        es.onmessage = (message) => {
           const data = message.data;
           if (data.event === "newblock") {
             subscriber.next(data.data);
           }
         };
-        es.onerror = error => subscriber.error(error);
+        es.onerror = (error) => subscriber.error(error);
         return function unsubscribe() {
           es.close();
         };
       });
       sub = obs.subscribe({
-        next: data => {
-          setBlocks(blocks => {
+        next: (data) => {
+          setBlocks((blocks) => {
             const slice = blocks.slice();
 
             if (slice.length === 50) {
@@ -59,7 +59,7 @@ export const CoinOverview: React.FC<IProps> = ({ coinInfo }) => {
             return slice;
           });
         },
-        error: error => console.error(error)
+        error: (error) => console.error(error),
       });
     })();
     return () => {
@@ -79,7 +79,7 @@ export const CoinOverview: React.FC<IProps> = ({ coinInfo }) => {
         baseUrl={baseUrl}
       />
       <ol>
-        {blocks.map(block => (
+        {blocks.map((block) => (
           <li key={block.hash}>{block.height}</li>
         ))}
       </ol>

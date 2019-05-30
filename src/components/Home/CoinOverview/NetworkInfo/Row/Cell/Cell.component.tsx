@@ -14,7 +14,7 @@ export const Cell: React.FC<ICell> = ({ label, data, unit }) => {
         {data ? (
           <>
             <div>{data}</div>
-            {unit ? <div className={classes.unit}>{" "}{unit}</div> : null}
+            {unit ? <div className={classes.unit}> {unit}</div> : null}
           </>
         ) : (
           <img className={classes.loading} src={loading} alt="Loading" />

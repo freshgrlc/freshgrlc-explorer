@@ -13,19 +13,19 @@ export const Home: React.FC = () => {
       displayName: "Garlicoin",
       symbol: "GRLC",
       blockTime: 40,
-      blockReward: 25
+      blockReward: 25,
     },
     {
       name: "tuxcoin",
       displayName: "Tuxcoin",
       symbol: "TUX",
       blockTime: 60,
-      blockReward: 33.5
-    }
+      blockReward: 33.5,
+    },
   ];
   return (
     <div className={classes.overviews}>
-      {coins.map(coinInfo => (
+      {coins.map((coinInfo) => (
         <CoinOverview key={coinInfo.symbol} coinInfo={coinInfo} />
       ))}
     </div>

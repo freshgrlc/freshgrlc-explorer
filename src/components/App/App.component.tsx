@@ -4,8 +4,8 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 // import classes from "./App.module.scss"
 
 const Home = React.lazy(() =>
-  import("components/Home/Home.component").then(module => ({
-    default: module.Home
+  import("components/Home/Home.component").then((module) => ({
+    default: module.Home,
   }))
 );
 

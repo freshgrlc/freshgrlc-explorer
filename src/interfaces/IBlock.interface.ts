@@ -15,7 +15,8 @@ export interface IBlockSimple {
 
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
-export interface IBlock extends Omit<Omit<IBlockSimple, 'transactions'>, 'miner'> {
+export interface IBlock
+  extends Omit<Omit<IBlockSimple, "transactions">, "miner"> {
   transactions: ITransaction[];
   miner: IMiner;
 }
