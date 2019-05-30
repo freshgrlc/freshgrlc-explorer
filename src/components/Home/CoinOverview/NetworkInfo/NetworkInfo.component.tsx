@@ -6,11 +6,12 @@ import { IBlock, IBlockSimple } from "interfaces/IBlock.interface";
 import { ICell } from "interfaces/ICell.interface";
 import { ICoinInfo } from "interfaces/ICoinInfo.interface";
 import { INetworkStats } from "interfaces/INetworkStats.interface";
-
-import classes from "./NetworkInfo.module.scss";
+import { IPoolStat } from "interfaces/IPoolStat.interface";
 
 import { adjustDifficulty } from "utils/adjustDifficulty.util";
 import { formatTime } from "utils/formatTime.util";
+
+import classes from "./NetworkInfo.module.scss";
 
 interface IProps {
   latestBlock?: IBlock;
@@ -61,6 +62,13 @@ export const NetworkInfo: React.FC<IProps> = ({
     transactions: {},
   });
 
+  const [decentrailization50, setDecentralization50] = useState<
+    string | undefined
+  >(undefined);
+  const [decentrailization90, setDecentralization90] = useState<
+    string | undefined
+  >(undefined);
+
   const [average5000, setAverage5000] = useState<string | undefined>(undefined);
   const [average50000, setAverage50000] = useState<string | undefined>(
     undefined
@@ -69,6 +77,22 @@ export const NetworkInfo: React.FC<IProps> = ({
   const [coins, setCoins] = useState<string | undefined>(undefined);
 
   useEffect(() => {
+    const getNumberPoolsNeeded = (
+      percentage: number,
+      blocks: number,
+      poolData: IPoolStat[]
+    ): number => {
+      const target = Math.ceil(blocks * percentage);
+      let runningCount = 0;
+      for (const [index, pool] of poolData.entries()) {
+        runningCount += pool.amountmined;
+        if (runningCount >= target) {
+          const amount = index + 1;
+          return amount;
+        }
+      }
+      return poolData.length;
+    };
     let cancelled = false;
     (async () => {
       const data = (await (await fetch(
@@ -84,6 +108,27 @@ export const NetworkInfo: React.FC<IProps> = ({
       )).json()) as INetworkStats;
       if (!cancelled) {
         setAllTime(data);
+      }
+    })();
+    (async () => {
+      const poolData = ((await (await fetch(
+        `${baseUrl}/poolstats/?since=${yesterdayDate}`
+      )).json()) as IPoolStat[]).sort((a, b) =>
+        a.amountmined > b.amountmined ? -1 : 1
+      );
+      if (!cancelled) {
+        const blocks = poolData
+          .map((pool) => pool.amountmined)
+          .reduce((total, next) => total + next);
+
+        console.log(blocks, blocks * 0.5, blocks * 0.9);
+
+        setDecentralization50(() =>
+          getNumberPoolsNeeded(0.5, blocks, poolData).toString()
+        );
+        setDecentralization90(() =>
+          getNumberPoolsNeeded(0.9, blocks, poolData).toString()
+        );
       }
     })();
     (async () => {
@@ -193,18 +238,17 @@ export const NetworkInfo: React.FC<IProps> = ({
           },
         ],
       },
-      // TODO: Add the requests for this once indexer is running again
       {
         label: "Decentrilazation",
         cells: [
           {
             label: "Controlling 50%",
-            data: "3",
+            data: decentrailization50,
             unit: "pools",
           },
           {
             label: "Controlling 90%",
-            data: "8",
+            data: decentrailization90,
             unit: "pools",
           },
         ],
@@ -256,7 +300,16 @@ export const NetworkInfo: React.FC<IProps> = ({
       },
     ];
     return data;
-  }, [formattedBlock, coins, yesterday, allTime, average5000, average50000]);
+  }, [
+    formattedBlock,
+    coins,
+    yesterday,
+    allTime,
+    average5000,
+    average50000,
+    decentrailization50,
+    decentrailization90,
+  ]);
 
   return (
     <div className={classes.network}>
