@@ -1,6 +1,8 @@
-import React, { useMemo, useEffect, useState } from "react";
+import React, { useMemo, useEffect, useState, useCallback } from "react";
 
 import { Row } from "./Row/Row.component";
+
+import { useGetData } from "hooks/useGetData.hook";
 
 import { IBlock, IBlockSimple } from "interfaces/IBlock.interface";
 import { ICell } from "interfaces/ICell.interface";
@@ -10,6 +12,7 @@ import { IPoolStat } from "interfaces/IPoolStat.interface";
 
 import { adjustDifficulty } from "utils/adjustDifficulty.util";
 import { formatTime } from "utils/formatTime.util";
+import { getNumberPoolsNeeded } from "utils/getNumberPoolsNeeded.util";
 
 import classes from "./NetworkInfo.module.scss";
 
@@ -52,87 +55,45 @@ export const NetworkInfo: React.FC<IProps> = ({
     }
   }, [latestBlock, coinInfo]);
 
-  const [yesterday, setYesterday] = useState<INetworkStats>({
-    blocks: {},
-    transactions: {},
-    coins: {},
-  });
+  const yesterday = useGetData<INetworkStats>(
+    `${baseUrl}/networkstats/?since=${yesterdayDate}`
+  );
 
-  const [allTime, setAllTime] = useState<INetworkStats>({
-    blocks: {},
-    transactions: {},
-    coins: {},
-  });
+  const allTime = useGetData<INetworkStats>(`${baseUrl}/networkstats/?since=0`);
 
-  const [decentrailization50, setDecentralization50] = useState<
-    string | undefined
-  >(undefined);
-  const [decentrailization90, setDecentralization90] = useState<
-    string | undefined
-  >(undefined);
+  const poolData = useGetData<IPoolStat[]>(
+    `${baseUrl}/poolstats/?since=${yesterdayDate}`
+  );
+
+  const blocks = useMemo(() => {
+    if (poolData) {
+      return poolData
+        .map((pool) => pool.amountmined)
+        .reduce((total, next) => total + next);
+    }
+  }, [poolData]);
+
+  const getDecentralization = useCallback(
+    (percentage: number) => {
+      if (poolData && blocks) {
+        return getNumberPoolsNeeded(percentage, blocks, poolData).toString();
+      }
+    },
+    [poolData, blocks]
+  );
+
+  const decentrailization50 = useMemo(() => {
+    return getDecentralization(0.5);
+  }, [getDecentralization]);
+
+  const decentrailization90 = useMemo(() => {
+    return getDecentralization(0.9);
+  }, [getDecentralization]);
 
   const [average5000, setAverage5000] = useState<string | undefined>(undefined);
   const [average50000, setAverage50000] = useState<string | undefined>(
     undefined
   );
-
-  useEffect(() => {
-    const getNumberPoolsNeeded = (
-      percentage: number,
-      blocks: number,
-      poolData: IPoolStat[]
-    ): number => {
-      const target = Math.ceil(blocks * percentage);
-      let runningCount = 0;
-      for (const [index, pool] of poolData.entries()) {
-        runningCount += pool.amountmined;
-        if (runningCount >= target) {
-          const amount = index + 1;
-          return amount;
-        }
-      }
-      return poolData.length;
-    };
-    let cancelled = false;
-    (async () => {
-      const data = (await (await fetch(
-        `${baseUrl}/networkstats/?since=${yesterdayDate}`
-      )).json()) as INetworkStats;
-      if (!cancelled) {
-        setYesterday(data);
-      }
-    })();
-    (async () => {
-      const data = (await (await fetch(
-        `${baseUrl}/networkstats/?since=0`
-      )).json()) as INetworkStats;
-      if (!cancelled) {
-        setAllTime(data);
-      }
-    })();
-    (async () => {
-      const poolData = ((await (await fetch(
-        `${baseUrl}/poolstats/?since=${yesterdayDate}`
-      )).json()) as IPoolStat[]).sort((a, b) =>
-        a.amountmined > b.amountmined ? -1 : 1
-      );
-      if (!cancelled) {
-        const blocks = poolData
-          .map((pool) => pool.amountmined)
-          .reduce((total, next) => total + next);
-
-        setDecentralization50(
-          getNumberPoolsNeeded(0.5, blocks, poolData).toString()
-        );
-        setDecentralization90(
-          getNumberPoolsNeeded(0.9, blocks, poolData).toString()
-        );
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, [baseUrl, yesterdayDate]);
 
   useEffect(() => {
     if (latestBlock != null) {
@@ -196,14 +157,14 @@ export const NetworkInfo: React.FC<IProps> = ({
           {
             label: "Transactions",
             data:
-              yesterday.transactions.amount != null
+              yesterday != null
                 ? yesterday.transactions.amount.toString()
                 : undefined,
           },
           {
             label: "Total Value",
             data:
-              yesterday.transactions.totalvalue != null
+              yesterday != null && yesterday.transactions.totalvalue
                 ? Math.round(yesterday.transactions.totalvalue).toString()
                 : undefined,
           },
@@ -215,14 +176,14 @@ export const NetworkInfo: React.FC<IProps> = ({
           {
             label: "Blocks Mined",
             data:
-              yesterday.blocks.amount != null
+              yesterday != null
                 ? yesterday.blocks.amount.toString()
                 : undefined,
           },
           {
             label: "Coins Created",
             data:
-              yesterday.blocks.amount != null
+              yesterday != null
                 ? (yesterday.blocks.amount * 25).toString()
                 : undefined,
           },
@@ -278,15 +239,15 @@ export const NetworkInfo: React.FC<IProps> = ({
         cells: [
           {
             label: "All-time Transactions",
-            data: allTime.transactions.amount
-              ? allTime.transactions.amount.toString()
-              : undefined,
+            data:
+              allTime != null
+                ? allTime.transactions.amount.toString()
+                : undefined,
           },
           {
             label: "Coins Released (est.)",
-            data: allTime.coins.released
-              ? allTime.coins.released.toString()
-              : undefined,
+            data:
+              allTime != null ? allTime.coins.released.toString() : undefined,
           },
         ],
       },

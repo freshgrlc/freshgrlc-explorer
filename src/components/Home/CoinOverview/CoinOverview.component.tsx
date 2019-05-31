@@ -6,6 +6,7 @@ import { NetworkInfo } from "./NetworkInfo/NetworkInfo.component";
 
 import { ICoinInfo } from "interfaces/ICoinInfo.interface";
 import { IBlock } from "interfaces/IBlock.interface";
+import { IUnconfirmedTransaction } from "interfaces/ITransaction.interface";
 
 import classes from "./CoinOverview.module.scss";
 
@@ -20,6 +21,9 @@ export const CoinOverview: React.FC<IProps> = ({ coinInfo }) => {
     [coinInfo]
   );
   const [blocks, setBlocks] = useState<IBlock[]>([]);
+  const [unconfirmedTransactions, setUnconfirmedTransactions] = useState<
+    IUnconfirmedTransaction[]
+  >([]);
 
   useEffect(() => {
     let cancelled = false;

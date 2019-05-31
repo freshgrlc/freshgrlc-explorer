@@ -1,4 +1,4 @@
-import { ITransaction } from "./ITransaction.interface";
+import { IBlockTransaction } from "./ITransaction.interface";
 import { IMiner } from "./IMiner.interface";
 
 export interface IBlockSimple {
@@ -15,6 +15,6 @@ export interface IBlockSimple {
 
 export interface IBlock
   extends Omit<Omit<IBlockSimple, "transactions">, "miner"> {
-  transactions: ITransaction[];
+  transactions: IBlockTransaction[];
   miner: IMiner;
 }
