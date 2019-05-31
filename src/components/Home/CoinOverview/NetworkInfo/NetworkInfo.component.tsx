@@ -266,7 +266,7 @@ export const NetworkInfo: React.FC<IProps> = ({
   return (
     <div className={classes.network}>
       {table.map((entry) => (
-        <Row key={Math.random().toString() + Date.now()} {...entry} />
+        <Row key={entry.label} {...entry} />
       ))}
     </div>
   );
