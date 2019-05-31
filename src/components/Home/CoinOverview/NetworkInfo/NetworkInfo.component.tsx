@@ -55,11 +55,13 @@ export const NetworkInfo: React.FC<IProps> = ({
   const [yesterday, setYesterday] = useState<INetworkStats>({
     blocks: {},
     transactions: {},
+    coins: {},
   });
 
   const [allTime, setAllTime] = useState<INetworkStats>({
     blocks: {},
     transactions: {},
+    coins: {},
   });
 
   const [decentrailization50, setDecentralization50] = useState<
@@ -73,8 +75,6 @@ export const NetworkInfo: React.FC<IProps> = ({
   const [average50000, setAverage50000] = useState<string | undefined>(
     undefined
   );
-
-  const [coins, setCoins] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     const getNumberPoolsNeeded = (
@@ -121,22 +121,12 @@ export const NetworkInfo: React.FC<IProps> = ({
           .map((pool) => pool.amountmined)
           .reduce((total, next) => total + next);
 
-        console.log(blocks, blocks * 0.5, blocks * 0.9);
-
-        setDecentralization50(() =>
+        setDecentralization50(
           getNumberPoolsNeeded(0.5, blocks, poolData).toString()
         );
-        setDecentralization90(() =>
+        setDecentralization90(
           getNumberPoolsNeeded(0.9, blocks, poolData).toString()
         );
-      }
-    })();
-    (async () => {
-      const coins = ((await (await fetch(`${baseUrl}/coins/`)).json()) as {
-        total: number;
-      }).total;
-      if (!cancelled) {
-        setCoins(Math.round(coins).toString());
       }
     })();
     return () => {
@@ -294,7 +284,9 @@ export const NetworkInfo: React.FC<IProps> = ({
           },
           {
             label: "Coins Released (est.)",
-            data: coins,
+            data: allTime.coins.released
+              ? allTime.coins.released.toString()
+              : undefined,
           },
         ],
       },
@@ -302,7 +294,6 @@ export const NetworkInfo: React.FC<IProps> = ({
     return data;
   }, [
     formattedBlock,
-    coins,
     yesterday,
     allTime,
     average5000,
