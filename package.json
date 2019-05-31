@@ -27,7 +27,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "format": "prettier --config .prettierrc.json --write './src/**/**.ts*'",
+    "format": "prettier --config .prettierrc.json --write './src/**/**.{ts,tsx,scss}'",
     "lint": "eslint --config .eslintrc.json --ext .ts,.tsx ./src"
   },
   "browserslist": {
