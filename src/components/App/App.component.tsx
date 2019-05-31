@@ -3,10 +3,12 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 
 // import classes from "./App.module.scss"
 
+const wrapModule = (module: any) => ({ default: module });
+
 const Home = React.lazy(() =>
-  import("components/Home/Home.component").then((module) => ({
-    default: module.Home,
-  }))
+  import("components/Home/Home.component").then((module) =>
+    wrapModule(module.Home)
+  )
 );
 
 const Waiting = (Component: any) => {
