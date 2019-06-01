@@ -1,22 +1,29 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+
+import { Cell } from "../../Cell/Cell.component";
+
+import { CoinInfoContext } from "context/CoinInfo.context";
 
 import { IBlock } from "interfaces/IBlock.interface";
 
 import { formatTime } from "utils/formatTime.util";
 
 import classes from "./Block.module.scss";
-import { Cell } from "../../Cell/Cell.component";
 
 interface IProps {
   block: IBlock;
 }
 
 export const Block: React.FC<IProps> = ({ block }) => {
-  return (
+  const coinInfo = useContext(CoinInfoContext);
+  return coinInfo ? (
     <div className={classes.block}>
       <h3 className={classes.header}>
-        <Link to="" className={classes.link}>
+        <Link
+          to={`/${coinInfo.symbol.toLowerCase()}/blocks/${block.hash}`}
+          className={classes.link}
+        >
           {block.hash}
         </Link>
       </h3>
@@ -43,5 +50,5 @@ export const Block: React.FC<IProps> = ({ block }) => {
         )}
       </div>
     </div>
-  );
+  ) : null;
 };

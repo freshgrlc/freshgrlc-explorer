@@ -8,6 +8,8 @@ import React, {
 
 import { Row } from "./Row/Row.component";
 
+import { CoinInfoContext } from "context/CoinInfo.context";
+
 import { useGetData } from "hooks/useGetData.hook";
 
 import { IBlock, IBlockSimple } from "interfaces/IBlock.interface";
@@ -20,7 +22,6 @@ import { formatTime } from "utils/formatTime.util";
 import { getNumberPoolsNeeded } from "utils/getNumberPoolsNeeded.util";
 
 import classes from "./NetworkInfo.module.scss";
-import { CoinInfoContext } from "context/CoinInfo.context";
 
 interface IProps {
   latestBlock?: IBlock;
