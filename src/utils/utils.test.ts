@@ -12,7 +12,7 @@ it("shouldn't pad", () => {
 });
 
 it("should format time", () => {
-  expect(formatTime(1559354809)).toBe("20:09:14");
+  expect(formatTime(1559354809)).toBe("22:06:49");
 });
 
 it("should adjust difficulty", () => {
