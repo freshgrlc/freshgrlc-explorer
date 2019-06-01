@@ -9,7 +9,7 @@ import classes from "./Cell.module.scss";
 export const Cell: React.FC<ICell> = ({ label, data, unit, notMono }) => {
   return (
     <div className={classes.cell}>
-      <h4 className={classes.label}>{label}</h4>
+      {label ? <h4 className={classes.label}>{label}</h4> : null}
       <div className={classes.info}>
         {data ? (
           <>

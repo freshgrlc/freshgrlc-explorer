@@ -37,7 +37,11 @@ export const Block: React.FC<IProps> = ({ block }) => {
           data={block.transactions.length.toString()}
         />
       </div>
-      <div className={classes.transactions}>c</div>
+      <div className={classes.transactions}>
+        {block.transactions.map((transaction) =>
+          transaction.totalvalue.toFixed(3)
+        )}
+      </div>
     </div>
   );
 };

@@ -1,5 +1,5 @@
 export interface ICell {
-  label: string;
+  label?: string;
   data?: string;
   unit?: string;
   notMono?: boolean;

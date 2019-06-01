@@ -1,4 +1,10 @@
-import React, { useMemo, useEffect, useState, useCallback } from "react";
+import React, {
+  useMemo,
+  useEffect,
+  useState,
+  useCallback,
+  useContext,
+} from "react";
 
 import { Row } from "./Row/Row.component";
 
@@ -6,7 +12,6 @@ import { useGetData } from "hooks/useGetData.hook";
 
 import { IBlock, IBlockSimple } from "interfaces/IBlock.interface";
 import { ICell } from "interfaces/ICell.interface";
-import { ICoinInfo } from "interfaces/ICoinInfo.interface";
 import { INetworkStats } from "interfaces/INetworkStats.interface";
 import { IPoolStat } from "interfaces/IPoolStat.interface";
 
@@ -15,18 +20,16 @@ import { formatTime } from "utils/formatTime.util";
 import { getNumberPoolsNeeded } from "utils/getNumberPoolsNeeded.util";
 
 import classes from "./NetworkInfo.module.scss";
+import { CoinInfoContext } from "context/CoinInfo.context";
 
 interface IProps {
   latestBlock?: IBlock;
-  coinInfo: ICoinInfo;
   baseUrl: string;
 }
 
-export const NetworkInfo: React.FC<IProps> = ({
-  latestBlock,
-  coinInfo,
-  baseUrl,
-}) => {
+export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
+  const coinInfo = useContext(CoinInfoContext);
+
   const yesterdayDate = useMemo(() => {
     const date = new Date();
     date.setDate(date.getDate() - 1);
@@ -39,7 +42,7 @@ export const NetworkInfo: React.FC<IProps> = ({
     difficulty?: string;
     adjusted?: string;
   } => {
-    if (latestBlock != null) {
+    if (latestBlock != null && coinInfo) {
       return {
         height: latestBlock.height.toString(),
         timestamp: formatTime(latestBlock.firstseen),

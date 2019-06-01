@@ -12,6 +12,7 @@ import { IEventMessage } from "interfaces/IEventMessage.interface";
 
 import classes from "./CoinOverview.module.scss";
 import { useGetData } from "hooks/useGetData.hook";
+import { CoinInfoContext } from "context/CoinInfo.context";
 
 interface IProps {
   coinInfo: ICoinInfo;
@@ -87,21 +88,19 @@ export const CoinOverview: React.FC<IProps> = ({ coinInfo }) => {
   }, [baseUrl, firstBlocks, firstUnconfirmedTransactions]);
 
   return (
-    <div className={classes.overview}>
-      <Header name={coinInfo.name} displayName={coinInfo.displayName} />
-      <NetworkInfo
-        latestBlock={blocks[0]}
-        coinInfo={coinInfo}
-        baseUrl={baseUrl}
-      />
-      <ol>
-        {unconfirmedTransactions.map((unconfirmedTransaction) => (
-          <li key={unconfirmedTransaction.txid}>
-            {unconfirmedTransaction.txid}
-          </li>
-        ))}
-      </ol>
-      <Blocks blocks={blocks} />
-    </div>
+    <CoinInfoContext.Provider value={coinInfo}>
+      <div className={classes.overview}>
+        <Header />
+        <NetworkInfo latestBlock={blocks[0]} baseUrl={baseUrl} />
+        <ol>
+          {unconfirmedTransactions.map((unconfirmedTransaction) => (
+            <li key={unconfirmedTransaction.txid}>
+              {unconfirmedTransaction.txid}
+            </li>
+          ))}
+        </ol>
+        <Blocks blocks={blocks} />
+      </div>
+    </CoinInfoContext.Provider>
   );
 };

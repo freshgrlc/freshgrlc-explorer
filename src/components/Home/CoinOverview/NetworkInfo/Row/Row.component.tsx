@@ -16,7 +16,7 @@ export const Row: React.FC<IProps> = ({ label, cells }) => {
     <div className={classes.row}>
       <h3 className={classes.label}>{label}</h3>
       {cells.map((cell) => (
-        <Cell key={Math.random() + cell.label} {...cell} />
+        <Cell key={Math.random() + Date.now().toString()} {...cell} />
       ))}
     </div>
   );

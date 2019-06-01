@@ -1,21 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
+
+import { CoinInfoContext } from "context/CoinInfo.context";
 
 import classes from "./Header.module.scss";
 
-interface IProps {
-  name: string;
-  displayName: string;
-}
+interface IProps {}
 
-export const Header: React.FC<IProps> = ({ name, displayName }) => {
-  return (
+export const Header: React.FC<IProps> = () => {
+  const coinInfo = useContext(CoinInfoContext);
+  return coinInfo ? (
     <h1 className={classes.header}>
       <img
         className={classes.img}
-        src={require(`assets/logos/${name}.svg`)}
+        src={require(`assets/logos/${coinInfo.name}.svg`)}
         alt=""
       />
-      <span className={classes.text}>{displayName}</span>
+      <span className={classes.text}>{coinInfo.displayName}</span>
     </h1>
-  );
+  ) : null;
 };
