@@ -6,4 +6,13 @@
   min-width: 700px;
   max-width: 700px;
   width: 700px;
+
+  .unconfirmedTransactions {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 675px;
+  }
 }
