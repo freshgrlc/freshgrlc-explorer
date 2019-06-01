@@ -18,7 +18,7 @@ steps:
 - script: |
     yarn install
     yarn lint
-    CI=true yarn test
+    yarn test:ci
     yarn build
   displayName: 'yarn install, lint, test, and build'
 
