@@ -3,6 +3,7 @@ import { Subject } from "rxjs";
 
 import { Header } from "./Header/Header.component";
 import { NetworkInfo } from "./NetworkInfo/NetworkInfo.component";
+import { Blocks } from "./Blocks/Blocks.component";
 
 import { ICoinInfo } from "interfaces/ICoinInfo.interface";
 import { IBlock } from "interfaces/IBlock.interface";
@@ -35,7 +36,7 @@ export const CoinOverview: React.FC<IProps> = ({ coinInfo }) => {
 
   useEffect(() => {
     if (first50Blocks && firstUnconfirmedTransactions) {
-      setBlocks(first50Blocks);
+      setBlocks(first50Blocks.slice().reverse());
       setUnconfirmedTransactions(firstUnconfirmedTransactions);
       const blocksSubject = new Subject<IBlock>();
       const unconfirmedTransactionsSubject = new Subject<
@@ -93,11 +94,7 @@ export const CoinOverview: React.FC<IProps> = ({ coinInfo }) => {
           </li>
         ))}
       </ol>
-      <ol>
-        {blocks.map((block) => (
-          <li key={block.hash}>{block.height}</li>
-        ))}
-      </ol>
+      <Blocks blocks={blocks} />
     </div>
   );
 };
