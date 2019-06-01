@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 
 import { Cell } from "../../Cell/Cell.component";
+import { MemoTransaction } from "../../Transaction/Transaction.component";
 
 import { CoinInfoContext } from "context/CoinInfo.context";
 
@@ -45,8 +46,21 @@ export const Block: React.FC<IProps> = ({ block }) => {
         />
       </div>
       <div className={classes.transactions}>
-        {block.transactions.map((transaction) =>
-          transaction.totalvalue.toFixed(3)
+        <h4>Transactions</h4>
+        {block.transactions.map((transaction, index) =>
+          index === 0 ? (
+            <MemoTransaction
+              key={transaction.txid}
+              transaction={transaction}
+              showHeader={true}
+            />
+          ) : (
+            <MemoTransaction
+              key={transaction.txid}
+              transaction={transaction}
+              showHeader={false}
+            />
+          )
         )}
       </div>
     </div>
