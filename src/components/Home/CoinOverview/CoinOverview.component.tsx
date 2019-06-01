@@ -48,10 +48,14 @@ export const CoinOverview: React.FC<IProps> = ({ coinInfo }) => {
       const bSub = blocksSubject.subscribe({
         next: (block) => {
           setBlocks((blocks) => {
-            const slice = blocks.slice();
-            slice.pop();
-            slice.unshift(block);
-            return slice;
+            if (blocks[0].hash !== block.hash) {
+              const slice = blocks.slice();
+              slice.pop();
+              slice.unshift(block);
+              return slice;
+            } else {
+              return blocks;
+            }
           });
         },
       });

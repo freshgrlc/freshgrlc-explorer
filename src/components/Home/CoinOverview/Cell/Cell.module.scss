@@ -17,12 +17,12 @@
     display: flex;
     flex-flow: row;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end;
 
     width: 100%;
     height: 1em;
 
-    .data {
+    .mono {
       font-family: 'Roboto Mono', monospace;
     }
 

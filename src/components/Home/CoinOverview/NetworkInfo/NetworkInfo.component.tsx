@@ -42,7 +42,7 @@ export const NetworkInfo: React.FC<IProps> = ({
     if (latestBlock != null) {
       return {
         height: latestBlock.height.toString(),
-        timestamp: formatTime(latestBlock.timestamp),
+        timestamp: formatTime(latestBlock.firstseen),
         difficulty: latestBlock.difficulty.toFixed(3),
         adjusted: adjustDifficulty(
           latestBlock.difficulty,

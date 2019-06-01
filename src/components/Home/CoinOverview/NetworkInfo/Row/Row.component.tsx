@@ -2,7 +2,7 @@ import React from "react";
 
 import { ICell } from "interfaces/ICell.interface";
 
-import { Cell } from "./Cell/Cell.component";
+import { Cell } from "../../Cell/Cell.component";
 
 import classes from "./Row.module.scss";
 
