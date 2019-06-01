@@ -247,7 +247,9 @@ export const NetworkInfo: React.FC<IProps> = ({
           {
             label: "Coins Released (est.)",
             data:
-              allTime != null ? allTime.coins.released.toString() : undefined,
+              allTime != null
+                ? Math.round(allTime.coins.released).toString()
+                : undefined,
           },
         ],
       },

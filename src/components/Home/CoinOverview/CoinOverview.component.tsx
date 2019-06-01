@@ -23,8 +23,11 @@ export const CoinOverview: React.FC<IProps> = ({ coinInfo }) => {
       `https://api.freshgrlc.net/blockchain/${coinInfo.symbol.toLowerCase()}`,
     [coinInfo]
   );
-  const first50Blocks = useGetData<IBlock[]>(
-    `${baseUrl}/blocks/?start=-50&limit=50&expand=miner,transactions`
+
+  const blockCount = useMemo(() => 10, []);
+
+  const firstBlocks = useGetData<IBlock[]>(
+    `${baseUrl}/blocks/?start=-${blockCount}&limit=${blockCount}&expand=miner,transactions`
   );
   const firstUnconfirmedTransactions = useGetData<IUnconfirmedTransaction[]>(
     `${baseUrl}/transactions/?confirmed=false`
@@ -35,8 +38,8 @@ export const CoinOverview: React.FC<IProps> = ({ coinInfo }) => {
   >([]);
 
   useEffect(() => {
-    if (first50Blocks && firstUnconfirmedTransactions) {
-      setBlocks(first50Blocks.slice().reverse());
+    if (firstBlocks && firstUnconfirmedTransactions) {
+      setBlocks(firstBlocks.slice().reverse());
       setUnconfirmedTransactions(firstUnconfirmedTransactions);
       const blocksSubject = new Subject<IBlock>();
       const unconfirmedTransactionsSubject = new Subject<
@@ -77,7 +80,7 @@ export const CoinOverview: React.FC<IProps> = ({ coinInfo }) => {
         es.close();
       };
     }
-  }, [baseUrl, first50Blocks, firstUnconfirmedTransactions]);
+  }, [baseUrl, firstBlocks, firstUnconfirmedTransactions]);
 
   return (
     <div className={classes.overview}>
