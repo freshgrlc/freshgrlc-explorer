@@ -25,7 +25,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "TZ=America/New_York react-scripts test",
     "eject": "react-scripts eject",
     "format": "prettier --config .prettierrc.json --write './src/**/**.{ts,tsx,scss}'",
     "lint": "eslint --config .eslintrc.json --ext .ts,.tsx ./src"
