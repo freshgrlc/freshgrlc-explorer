@@ -22,6 +22,12 @@ steps:
     yarn build:ci
   displayName: 'yarn install, lint, test, and build'
 
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: 'junit.xml'
+    searchFolder: './'
+
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: 'build'
