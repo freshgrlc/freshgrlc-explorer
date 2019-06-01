@@ -26,6 +26,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build:ci": "CI=true yarn build",
     "test": "TZ=America/New_York react-scripts test",
     "test:ci": "CI=true yarn test --reporters=jest-junit",
     "eject": "react-scripts eject",

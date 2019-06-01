@@ -19,7 +19,7 @@ steps:
     yarn install
     yarn lint
     yarn test:ci
-    yarn build
+    yarn build:ci
   displayName: 'yarn install, lint, test, and build'
 
 - task: PublishBuildArtifacts@1
