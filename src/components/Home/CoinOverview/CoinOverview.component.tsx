@@ -6,14 +6,16 @@ import { NetworkInfo } from "./NetworkInfo/NetworkInfo.component";
 import { Blocks } from "./Blocks/Blocks.component";
 import { MemoTransaction } from "./Transaction/Transaction.component";
 
+import { CoinInfoContext } from "context/CoinInfo.context";
+
+import { useGetData } from "hooks/useGetData.hook";
+
 import { ICoinInfo } from "interfaces/ICoinInfo.interface";
 import { IBlock } from "interfaces/IBlock.interface";
 import { IUnconfirmedTransaction } from "interfaces/ITransaction.interface";
 import { IEventMessage } from "interfaces/IEventMessage.interface";
 
 import classes from "./CoinOverview.module.scss";
-import { useGetData } from "hooks/useGetData.hook";
-import { CoinInfoContext } from "context/CoinInfo.context";
 
 interface IProps {
   coinInfo: ICoinInfo;
