@@ -99,11 +99,13 @@ export const CoinOverview: React.FC<IProps> = ({ coinInfo }) => {
             ? unconfirmedTransactions.map((unconfirmedTransaction, index) =>
                 index === 0 ? (
                   <MemoTransaction
+                    key={unconfirmedTransaction.txid}
                     transaction={unconfirmedTransaction}
                     showHeader={true}
                   />
                 ) : (
                   <MemoTransaction
+                    key={unconfirmedTransaction.txid}
                     transaction={unconfirmedTransaction}
                     showHeader={false}
                   />
