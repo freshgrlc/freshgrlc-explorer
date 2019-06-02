@@ -4,7 +4,7 @@ import { Subject } from "rxjs";
 import { Header } from "./Header/Header.component";
 import { NetworkInfo } from "./NetworkInfo/NetworkInfo.component";
 import { Blocks } from "./Blocks/Blocks.component";
-import { MemoTransaction } from "./Transaction/Transaction.component";
+import { Transactions } from "./Transactions/Transactions.component";
 
 import { CoinInfoContext } from "context/CoinInfo.context";
 
@@ -97,23 +97,11 @@ export const CoinOverview: React.FC<IProps> = ({ coinInfo }) => {
         <NetworkInfo latestBlock={blocks[0]} baseUrl={baseUrl} />
         <div className={classes.unconfirmedTransactions}>
           <h2>Unconfirmed Transactions</h2>
-          {unconfirmedTransactions.length > 0
-            ? unconfirmedTransactions.map((unconfirmedTransaction, index) =>
-                index === 0 ? (
-                  <MemoTransaction
-                    key={unconfirmedTransaction.txid}
-                    transaction={unconfirmedTransaction}
-                    showHeader={true}
-                  />
-                ) : (
-                  <MemoTransaction
-                    key={unconfirmedTransaction.txid}
-                    transaction={unconfirmedTransaction}
-                    showHeader={false}
-                  />
-                )
-              )
-            : "No Unconfirmed Transactions"}
+          {unconfirmedTransactions.length > 0 ? (
+            <Transactions transactions={unconfirmedTransactions} />
+          ) : (
+            "No Unconfirmed Transactions"
+          )}
         </div>
         <h2>Blocks</h2>
         <Blocks blocks={blocks} />
