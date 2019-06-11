@@ -7,9 +7,8 @@ $backgroundColor: hsl(37, 5%, 20%);
 $text: hsla(37, 100%, 85%, 0.87);
 $muted: hsla(37, 100%, 85%, 0.5);
 
-$border: hsla(37, 100%, 85%, 0.25);
-$border-light: hsla(37, 100%, 85%, 0.125);
-$border-noalpha: #696051;
+$border: solid #696051 3px;
+$borderThin: solid #696051 1px;
 
 $mono: "Roboto Mono", monospace;
 $normal: "Roboto", sans-serif;

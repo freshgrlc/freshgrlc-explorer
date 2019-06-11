@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Block } from "./Block/Block.component";
+import { Link } from "./Link/Link.component";
 
 import { IBlock } from "interfaces/IBlock.interface";
 
@@ -14,7 +15,10 @@ export const Blocks: React.FC<IProps> = ({ blocks }) => {
   return (
     <>
       {blocks.map((block) => (
-        <Block key={block.hash} block={block} />
+        <React.Fragment key={block.hash}>
+          <Block block={block} />
+          <Link />
+        </React.Fragment>
       ))}
     </>
   );
