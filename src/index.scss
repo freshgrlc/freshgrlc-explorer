@@ -1,13 +1,13 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono&display=swap");
-@import 'variables.scss';
+@import "variables.scss";
 
 html,
 body,
 #root {
-  margin: 0;
+  margin: 0px;
   font-family: $normal;
   font-size: 1em;
-  width: 100vw;
+  width: 99vw;
   height: 100vh;
   background-color: $backgroundColor;
   color: $text;
@@ -17,6 +17,9 @@ a {
   color: $accent;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   color: $primary;
 }

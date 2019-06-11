@@ -25,9 +25,11 @@ export const Home: React.FC = () => {
   ];
   return (
     <div className={classes.overviews}>
-      {coins.map((coinInfo) => (
-        <CoinOverview key={coinInfo.symbol} coinInfo={coinInfo} />
-      ))}
+      <div style={{ flex: "1 0 0" }}></div>
+      <CoinOverview coinInfo={coins[0]} />
+      <div style={{ flex: "1 0 0" }}></div>
+      <CoinOverview coinInfo={coins[1]} />
+      <div style={{ flex: "1 0 0" }}></div>
     </div>
   );
 };
