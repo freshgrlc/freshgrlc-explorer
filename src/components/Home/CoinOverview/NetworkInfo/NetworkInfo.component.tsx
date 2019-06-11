@@ -6,7 +6,7 @@ import React, {
   useContext,
 } from "react";
 
-import { Row } from "./Row/Row.component";
+import { Row } from "../../../Row/Row.component";
 
 import { CoinInfoContext } from "context/CoinInfo.context";
 

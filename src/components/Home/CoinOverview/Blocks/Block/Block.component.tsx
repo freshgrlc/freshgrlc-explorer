@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 
-import { Cell } from "../../Cell/Cell.component";
+import { Cell } from "../../../../Cell/Cell.component";
 import { Transactions } from "../../Transactions/Transactions.component";
 
 import { CoinInfoContext } from "context/CoinInfo.context";

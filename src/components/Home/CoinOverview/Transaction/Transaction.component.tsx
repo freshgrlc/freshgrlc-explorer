@@ -5,7 +5,7 @@ import {
   IBlockTransaction,
   IUnconfirmedTransaction,
 } from "interfaces/ITransaction.interface";
-import { Cell } from "../Cell/Cell.component";
+import { Cell } from "../../../Cell/Cell.component";
 
 import classes from "./Transaction.module.scss";
 

@@ -2,13 +2,13 @@ import React from "react";
 
 import { ICell } from "interfaces/ICell.interface";
 
-import { Cell } from "../../Cell/Cell.component";
+import { Cell } from "../Cell/Cell.component";
 
 import classes from "./Row.module.scss";
 
 interface IProps {
   label: string;
-  cells: [ICell, ICell];
+  cells: ICell[];
 }
 
 export const Row: React.FC<IProps> = ({ label, cells }) => {
