@@ -11,7 +11,7 @@ const Waiting = (Component: any) => {
   );
 };
 
-const RouteParams = (Component: any) => {
+const RouteParams = (Component: React.FC<any>) => {
   return ({ match }: any) => <Component routeParams={match.params} />;
 };
 

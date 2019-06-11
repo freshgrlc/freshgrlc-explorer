@@ -100,7 +100,7 @@ export const CoinOverview: React.FC<IProps> = ({ coinInfo }) => {
           {unconfirmedTransactions.length > 0 ? (
             <Transactions transactions={unconfirmedTransactions} />
           ) : (
-            "No Unconfirmed Transactions"
+            <span className={classes.none}>No Unconfirmed Transactions</span>
           )}
         </div>
         <h2>Blocks</h2>

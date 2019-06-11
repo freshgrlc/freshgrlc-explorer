@@ -46,7 +46,7 @@ export const Block: React.FC<IProps> = ({ block }) => {
         />
       </div>
       <div className={classes.transactions}>
-        <h4>Transactions</h4>
+        <h4 className={classes.header}>Transactions</h4>
         <Transactions transactions={block.transactions} />
       </div>
     </div>
