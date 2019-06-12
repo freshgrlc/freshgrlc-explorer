@@ -7,7 +7,7 @@ import {
   IUnconfirmedTransaction,
 } from "interfaces/ITransaction.interface";
 
-// import classes from "./Transactions.module.scss";
+import classes from "./Transactions.module.scss";
 
 interface IProps {
   transactions: IBlockTransaction[] | IUnconfirmedTransaction[];
@@ -15,7 +15,7 @@ interface IProps {
 
 export const Transactions: React.FC<IProps> = ({ transactions }) => {
   return (
-    <>
+    <div className={classes.transactions}>
       {(transactions as any[]).map(
         (transaction: IBlockTransaction | IUnconfirmedTransaction, index) =>
           index === 0 ? (
@@ -32,6 +32,6 @@ export const Transactions: React.FC<IProps> = ({ transactions }) => {
             />
           )
       )}
-    </>
+    </div>
   );
 };
