@@ -34,4 +34,4 @@ steps:
     ArtifactName: 'drop'
     publishLocation: 'Container'
   displayName: "Save Build Artifacts"
-  condition: "and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))"
+  condition: "succeeded()"
