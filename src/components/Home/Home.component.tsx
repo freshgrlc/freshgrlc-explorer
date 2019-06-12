@@ -25,11 +25,8 @@ export const Home: React.FC = () => {
   ];
   return (
     <div className={classes.overviews}>
-      <div style={{ flex: "1 0 0" }}></div>
       <CoinOverview coinInfo={coins[0]} />
-      <div style={{ flex: "1 0 0" }}></div>
       <CoinOverview coinInfo={coins[1]} />
-      <div style={{ flex: "1 0 0" }}></div>
     </div>
   );
 };
