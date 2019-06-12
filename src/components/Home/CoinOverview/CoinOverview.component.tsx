@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import { Subject } from "rxjs";
 
 import { Header } from "./Header/Header.component";
@@ -22,13 +22,9 @@ interface IProps {
 }
 
 export const CoinOverview: React.FC<IProps> = ({ coinInfo }) => {
-  const baseUrl = useMemo(
-    () =>
-      `https://api.freshgrlc.net/blockchain/${coinInfo.symbol.toLowerCase()}`,
-    [coinInfo]
-  );
+  const baseUrl = `https://api.freshgrlc.net/blockchain/${coinInfo.symbol.toLowerCase()}`;
 
-  const blockCount = useMemo(() => 10, []);
+  const blockCount = 10;
 
   const firstBlocks = useGetData<IBlock[]>(
     `${baseUrl}/blocks/?start=-${blockCount}&limit=${blockCount}&expand=miner,transactions`
