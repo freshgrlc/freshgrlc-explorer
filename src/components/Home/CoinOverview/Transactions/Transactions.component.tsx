@@ -1,6 +1,6 @@
 import React from "react";
 
-import { MemoTransaction } from "../Transaction/Transaction.component";
+import { Transaction } from "../Transaction/Transaction.component";
 
 import {
   IBlockTransaction,
@@ -19,13 +19,13 @@ export const Transactions: React.FC<IProps> = ({ transactions }) => {
       {(transactions as any[]).map(
         (transaction: IBlockTransaction | IUnconfirmedTransaction, index) =>
           index === 0 ? (
-            <MemoTransaction
+            <Transaction
               key={transaction.txid}
               transaction={transaction}
               showHeader={true}
             />
           ) : (
-            <MemoTransaction
+            <Transaction
               key={transaction.txid}
               transaction={transaction}
               showHeader={false}

@@ -14,40 +14,38 @@ interface IProps {
   showHeader: boolean;
 }
 
-const Transaction: React.FC<IProps> = ({ transaction, showHeader }) => {
-  const shortenedId = useMemo(
-    () =>
-      `${transaction.txid.substring(0, 8)}...${transaction.txid.substring(
-        transaction.txid.length - 8,
-        transaction.txid.length
-      )}`,
-    [transaction]
-  );
-  const [byteCount, byteUnit] = useMemo(
-    () => prettyBytes(transaction.size).split(" "),
-    [transaction]
-  );
-  return (
-    <div className={classes.transaction}>
-      {showHeader ? (
-        <>
-          <Cell label="ID" data={shortenedId} />
-          <Cell label="Size" data={byteCount} unit={byteUnit} />
-          <Cell label="Value" data={transaction.totalvalue.toFixed(3)} />
-        </>
-      ) : (
-        <>
-          <Cell data={shortenedId} />
-          <Cell data={byteCount} unit={byteUnit} />
-          <Cell data={transaction.totalvalue.toFixed(3)} />
-        </>
-      )}
-    </div>
-  );
-};
-
-export const MemoTransaction = React.memo(
-  Transaction,
+export const Transaction: React.FC<IProps> = React.memo(
+  ({ transaction, showHeader }) => {
+    const shortenedId = useMemo(
+      () =>
+        `${transaction.txid.substring(0, 8)}...${transaction.txid.substring(
+          transaction.txid.length - 8,
+          transaction.txid.length
+        )}`,
+      [transaction]
+    );
+    const [byteCount, byteUnit] = useMemo(
+      () => prettyBytes(transaction.size).split(" "),
+      [transaction]
+    );
+    return (
+      <div className={classes.transaction}>
+        {showHeader ? (
+          <>
+            <Cell label="ID" data={shortenedId} />
+            <Cell label="Size" data={byteCount} unit={byteUnit} />
+            <Cell label="Value" data={transaction.totalvalue.toFixed(3)} />
+          </>
+        ) : (
+          <>
+            <Cell data={shortenedId} />
+            <Cell data={byteCount} unit={byteUnit} />
+            <Cell data={transaction.totalvalue.toFixed(3)} />
+          </>
+        )}
+      </div>
+    );
+  },
   (prev, next) =>
     prev.transaction.txid === next.transaction.txid &&
     prev.showHeader === next.showHeader

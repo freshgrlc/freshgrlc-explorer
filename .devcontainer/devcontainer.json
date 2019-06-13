@@ -5,7 +5,8 @@
   "extensions": [
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
-    "editorconfig.editorconfig"
+    "editorconfig.editorconfig",
+    "wix.vscode-import-cost"
   ],
 
   // Uncomment the next line if you want to publish any ports.
