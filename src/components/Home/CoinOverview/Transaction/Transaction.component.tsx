@@ -1,11 +1,12 @@
 import React, { useMemo } from "react";
 import prettyBytes from "pretty-bytes";
 
+import { Cell } from "components/Cell/Cell.component";
+
 import {
   IBlockTransaction,
   IUnconfirmedTransaction,
 } from "interfaces/ITransaction.interface";
-import { Cell } from "../../../Cell/Cell.component";
 
 import classes from "./Transaction.module.scss";
 

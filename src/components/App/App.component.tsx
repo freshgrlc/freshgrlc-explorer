@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
 // import classes from "./App.module.scss"
 
@@ -23,18 +23,38 @@ const Home = React.lazy(() =>
   )
 );
 
+const TransactionView = React.lazy(() =>
+  import("components/TransactionView/TransactionView.component").then(
+    (module) => wrapModule(module.TransactionView)
+  )
+);
+
 export const App: React.FC = () => {
   return (
     <Router>
-      <Route exact path="/" component={Waiting(Home)} />
-      <Route
-        path="/:coin/blocks/:hash"
-        component={RouteParams((props: any) => (
-          <div>
-            {props.routeParams.coin}/blocks/{props.routeParams.hash}
-          </div>
-        ))}
-      />
+      <Switch>
+        <Route exact path="/" component={Waiting(Home)} />
+        <Route
+          path="/:coin(grlc|tux|tgrlc)/blocks/:hash(\w{64,64})"
+          component={RouteParams((props: any) => (
+            <div>
+              {props.routeParams.coin}/blocks/{props.routeParams.hash}
+            </div>
+          ))}
+        />
+        <Route
+          path="/:coin(grlc|tux|tgrlc)/transactions/:txid(\w{64,64})"
+          component={RouteParams(Waiting(TransactionView))}
+        />
+        <Route
+          component={() => (
+            <div>
+              <h1>Error 404</h1>
+              <Link to="/">Back to Safety</Link>
+            </div>
+          )}
+        />
+      </Switch>
     </Router>
   );
 };

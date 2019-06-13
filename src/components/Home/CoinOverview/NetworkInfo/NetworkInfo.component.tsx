@@ -5,15 +5,13 @@ import React, {
   useCallback,
   useContext,
 } from "react";
+import useFetch from "react-fetch-hook";
 
-import { Row } from "../../../Row/Row.component";
+import { Row } from "components/Row/Row.component";
 
 import { CoinInfoContext } from "context/CoinInfo.context";
 
-import { useGetData } from "hooks/useGetData.hook";
-
 import { IBlock, IBlockSimple } from "interfaces/IBlock.interface";
-import { ICell } from "interfaces/ICell.interface";
 import { INetworkStats } from "interfaces/INetworkStats.interface";
 import { IPoolStat } from "interfaces/IPoolStat.interface";
 
@@ -22,6 +20,7 @@ import { formatTime } from "utils/formatTime.util";
 import { getNumberPoolsNeeded } from "utils/getNumberPoolsNeeded.util";
 
 import classes from "./NetworkInfo.module.scss";
+import { IRow } from "interfaces/IRow.interface";
 
 interface IProps {
   latestBlock?: IBlock;
@@ -59,13 +58,15 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
     }
   }, [latestBlock, coinInfo]);
 
-  const yesterday = useGetData<INetworkStats>(
+  const { data: yesterday } = useFetch<INetworkStats>(
     `${baseUrl}/networkstats/?since=${yesterdayDate}`
   );
 
-  const allTime = useGetData<INetworkStats>(`${baseUrl}/networkstats/?since=0`);
+  const { data: allTime } = useFetch<INetworkStats>(
+    `${baseUrl}/networkstats/?since=0`
+  );
 
-  const poolData = useGetData<IPoolStat[]>(
+  const { data: poolData } = useFetch<IPoolStat[]>(
     `${baseUrl}/poolstats/?since=${yesterdayDate}`
   );
 
@@ -128,7 +129,7 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
   }, [baseUrl, latestBlock]);
 
   const table = useMemo(() => {
-    let data: Array<{ label: string; cells: [ICell, ICell] }> = [
+    let data: IRow[] = [
       {
         label: "Latest Block",
         cells: [

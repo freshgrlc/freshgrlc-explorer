@@ -18,3 +18,12 @@ export interface IBlockTransaction
     height: number;
   };
 }
+
+export interface IExpandedTransaction extends IBlockTransaction {
+  inputs: { href: string };
+  outputs: { href: string };
+  mutations: {
+    inputs: { [key: string]: number };
+    outputs: { [key: string]: number };
+  };
+}
