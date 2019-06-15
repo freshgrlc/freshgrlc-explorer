@@ -38,6 +38,7 @@ export const Block: React.FC<IProps> = React.memo(
           <Cell
             label="Miner"
             data={block.miner.website ? block.miner.name : "(Unknown Pool)"}
+            link={block.miner.website}
             notMono={true}
           />
           <Cell label="Size" data={block.size.toString()} unit="bytes" />
