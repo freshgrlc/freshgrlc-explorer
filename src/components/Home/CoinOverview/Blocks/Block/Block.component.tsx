@@ -32,12 +32,12 @@ export const Block: React.FC<IProps> = React.memo(
         <div className={classes.data}>
           <Cell label="Height" data={block.height.toString()} />
           <Cell label="Difficulty" data={block.difficulty.toString()} />
-          <Cell label="Firstseen" data={formatTime(block.firstseen)} />
+          <Cell label="Received at" data={formatTime(block.firstseen)} />
         </div>
         <div className={classes.data}>
           <Cell
             label="Miner"
-            data={block.miner.website ? block.miner.name : "(Unknown Pool)"}
+            data={block.miner.website ? block.miner.name : "Unknown Pool"}
             link={block.miner.website}
             notMono={true}
           />
