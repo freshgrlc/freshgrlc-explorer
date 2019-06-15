@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Subject } from "rxjs";
 import useFetch from "react-fetch-hook";
 
+import { Section } from "../../Section/Section.component";
+
 import { Header } from "./Header/Header.component";
 import { NetworkInfo } from "./NetworkInfo/NetworkInfo.component";
+import { Mempool } from "./Mempool/Mempool.component";
 import { Blocks } from "./Blocks/Blocks.component";
-import { Transactions } from "./Transactions/Transactions.component";
 
 import { CoinInfoContext } from "context/CoinInfo.context";
 
@@ -90,18 +92,14 @@ export const CoinOverview: React.FC<IProps> = ({ coinInfo }) => {
   return (
     <CoinInfoContext.Provider value={coinInfo}>
       <div className={classes.overview}>
-        <Header />
-        <NetworkInfo latestBlock={blocks[0]} baseUrl={baseUrl} />
-        <div className={classes.unconfirmedTransactions}>
-          <h2>Unconfirmed Transactions</h2>
-          {unconfirmedTransactions.length > 0 ? (
-            <Transactions transactions={unconfirmedTransactions} />
-          ) : (
-            <span className={classes.none}>No Unconfirmed Transactions</span>
-          )}
-        </div>
-        <h2>Blocks</h2>
-        <Blocks blocks={blocks} />
+        <Section>
+            <Header />
+            <NetworkInfo latestBlock={blocks[0]} baseUrl={baseUrl} />
+        </Section>
+        <Mempool transactions={unconfirmedTransactions} />
+        <Section header="Blocks">
+            <Blocks blocks={blocks} />
+        </Section>
       </div>
     </CoinInfoContext.Provider>
   );

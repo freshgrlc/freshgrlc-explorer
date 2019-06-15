@@ -10,12 +10,14 @@ export const Header: React.FC<IProps> = () => {
   const coinInfo = useContext(CoinInfoContext);
   return coinInfo ? (
     <h1 className={classes.header}>
-      <img
-        className={classes.img}
-        src={require(`assets/logos/${coinInfo.name}.svg`)}
-        alt=""
-      />
-      <span className={classes.text}>{coinInfo.displayName}</span>
+      <span className={classes.contents}>
+        <img
+          className={classes.img}
+          src={require(`assets/logos/${coinInfo.name}.svg`)}
+          alt=""
+        />
+        <span className={classes.text}>{coinInfo.displayName}</span>
+      </span>
     </h1>
   ) : null;
 };
