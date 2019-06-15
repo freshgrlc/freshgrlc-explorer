@@ -87,11 +87,11 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
     [poolData, blocks]
   );
 
-  const decentrailization50 = useMemo(() => {
+  const decentralization50 = useMemo(() => {
     return getDecentralization(0.5);
   }, [getDecentralization]);
 
-  const decentrailization90 = useMemo(() => {
+  const decentralization90 = useMemo(() => {
     return getDecentralization(0.9);
   }, [getDecentralization]);
 
@@ -195,16 +195,16 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
         ],
       },
       {
-        label: "Decentrilazation",
+        label: "Decentralization",
         cells: [
           {
             label: "Controlling 50%",
-            data: decentrailization50,
+            data: decentralization50,
             unit: "pools",
           },
           {
             label: "Controlling 90%",
-            data: decentrailization90,
+            data: decentralization90,
             unit: "pools",
           },
         ],
@@ -266,8 +266,8 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
     allTime,
     average5000,
     average50000,
-    decentrailization50,
-    decentrailization90,
+    decentralization50,
+    decentralization90,
   ]);
 
   return (
