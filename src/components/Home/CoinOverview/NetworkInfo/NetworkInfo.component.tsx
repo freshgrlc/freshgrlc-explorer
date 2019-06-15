@@ -39,19 +39,19 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
   const formattedBlock = useMemo((): {
     height?: string;
     timestamp?: string;
-    difficulty?: string;
-    adjusted?: string;
+    difficulty?: Number;
+    adjusted?: Number;
   } => {
     if (latestBlock != null && coinInfo) {
       return {
         height: latestBlock.height.toString(),
         timestamp: formatTime(latestBlock.firstseen),
-        difficulty: latestBlock.difficulty.toFixed(3),
+        difficulty: latestBlock.difficulty,
         adjusted: adjustDifficulty(
           latestBlock.difficulty,
           coinInfo.blockTime,
           coinInfo.blockReward
-        ).toFixed(3),
+        ),
       };
     } else {
       return {};
@@ -95,8 +95,8 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
     return getDecentralization(0.9);
   }, [getDecentralization]);
 
-  const [average5000, setAverage5000] = useState<string | undefined>(undefined);
-  const [average50000, setAverage50000] = useState<string | undefined>(
+  const [average5000, setAverage5000] = useState<Number | undefined>(undefined);
+  const [average50000, setAverage50000] = useState<Number | undefined>(
     undefined
   );
 
@@ -113,13 +113,13 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
       (async () => {
         const average = await getAverage(5000);
         if (!cancelled) {
-          setAverage5000(average.toFixed(0));
+          setAverage5000(average);
         }
       })();
       (async () => {
         const average = await getAverage(50000);
         if (!cancelled) {
-          setAverage50000(average.toFixed(0));
+          setAverage50000(average);
         }
       })();
       return () => {
@@ -149,10 +149,12 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
           {
             label: "Network",
             data: formattedBlock.difficulty,
+            decimals: 3
           },
           {
             label: "Adjusted (50 coins/min)",
             data: formattedBlock.adjusted,
+            decimals: 3
           },
         ],
       },
@@ -200,12 +202,12 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
           {
             label: "Controlling 50%",
             data: decentralization50,
-            unit: "pools",
+            unit: "pool",
           },
           {
             label: "Controlling 90%",
             data: decentralization90,
-            unit: "pools",
+            unit: "pool",
           },
         ],
       },
@@ -213,14 +215,16 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
         label: "Average Blocktime",
         cells: [
           {
-            label: "5,000 Blocks",
+            label: "Over 5,000 Blocks",
             data: average5000,
-            unit: "seconds",
+            unit: "second",
+            decimals: 2
           },
           {
-            label: "50,000 Blocks",
+            label: "Over 50,000 Blocks",
             data: average50000,
-            unit: "seconds",
+            unit: "second",
+            decimals: 2
           },
         ],
       },
@@ -230,7 +234,7 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
       //     {
       //       label: "Fiat",
       //       data: "0.279",
-      //       unit: "cents"
+      //       unit: "cent"
       //     },
       //     {
       //       label: "Bitcoin",

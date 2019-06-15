@@ -10,11 +10,14 @@
 
   .label {
     margin: 0;
-    font-size: 1.25em;
+    font-size: 1.05em;
+    font-style: italic;
+    margin-top: auto;
+    margin-bottom: 7px;
 
     width: 100%;
 
-    text-align: center;
+    text-align: left;
 
     color: $text;
   }

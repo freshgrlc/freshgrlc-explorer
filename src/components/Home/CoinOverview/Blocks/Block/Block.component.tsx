@@ -41,14 +41,13 @@ export const Block: React.FC<IProps> = React.memo(
             link={block.miner.website}
             notMono={true}
           />
-          <Cell label="Size" data={block.size.toString()} unit="bytes" />
+          <Cell label="Size" data={block.size.toString()} unit="byte" />
           <Cell
             label="Transactions"
             data={block.transactions.length.toString()}
           />
         </div>
         <div className={classes.transactions}>
-          <h4 className={classes.header}>Transactions</h4>
           <Transactions transactions={block.transactions} />
         </div>
       </div>
