@@ -23,8 +23,8 @@ export const Transaction: React.FC<IProps> = React.memo(
 
     const shortenedId = useMemo(
       () =>
-        `${transaction.txid.substring(0, 8)}...${transaction.txid.substring(
-          transaction.txid.length - 8,
+        `${transaction.txid.substring(0, 12)}\u2025${transaction.txid.substring(
+          transaction.txid.length - 12,
           transaction.txid.length
         )}`,
       [transaction]
@@ -38,7 +38,7 @@ export const Transaction: React.FC<IProps> = React.memo(
       <div className={classes.transaction + (highlightRows ? ' ' + classes.transactionHighlightedRow : '')}>
         {(
           <>
-            <Cell label={showHeader ? 'Transaction ID' : undefined} data={shortenedId} />
+            <Cell label={showHeader ? 'Transaction ID' : undefined} data={shortenedId} link={coinInfo ? `/${coinInfo.symbol.toLowerCase()}/transactions/${transaction.txid}` : undefined} cellStyle={{fontSize: 'small'}}/>
             <Cell label={showHeader ? 'Size' : undefined} data={byteCount} unit={byteUnit} alwaysSingular={true} cellStyle={{align: 'right', size: '100px'}} />
             <Cell label={showHeader ? 'Value' : undefined} data={transaction.totalvalue} unit={coinInfo ? coinInfo.symbol : ''} alwaysSingular={true} decimals={8} cellStyle={{align: 'right', size: '155px'}} />
           </>

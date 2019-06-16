@@ -39,6 +39,7 @@ export const Block: React.FC<IProps> = React.memo(
             label="Miner"
             data={block.miner.website ? block.miner.name : "Unknown Pool"}
             link={block.miner.website}
+            externalLink={true}
             notMono={true}
             cellStyle={{color: 'lighter'}}
           />

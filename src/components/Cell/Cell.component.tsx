@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import loading from "assets/loading.gif";
 
@@ -6,12 +7,16 @@ import { ICell, ICellStyle } from "interfaces/ICell.interface";
 
 import classes from "./Cell.module.scss";
 
-export const Cell: React.FC<ICell> = ({ label, data, link, unit, notMono, decimals, alwaysSingular, cellStyle }) => {
+export const Cell: React.FC<ICell> = ({ label, data, link, externalLink, unit, notMono, decimals, alwaysSingular, cellStyle }) => {
   const wrapInLink = (contents: JSX.Element) => {
-    return link ? (
-      <a href={link} target={'_blank'}>
+    return link ? externalLink ? (
+      <a className={classes.link} href={link} target={'_blank'}>
         {contents}
       </a>
+    ) : (
+      <Link className={classes.link} to={link}>
+        {contents}
+      </Link>
     ) : contents;
   };
 
@@ -49,6 +54,14 @@ export const Cell: React.FC<ICell> = ({ label, data, link, unit, notMono, decima
 
       if (!innerCell && cellStyle.size) {
           style.width = cellStyle.size;
+      }
+
+      if (!innerCell && cellStyle.fontSize) {
+          style.fontSize = {
+              'normal': undefined,
+              'smaller': '90%',
+              'small': '85%'
+          }[cellStyle.fontSize];
       }
 
       return style;
