@@ -14,12 +14,12 @@ interface IProps {
 
 export const Mempool: React.FC<IProps> = ({ transactions }) => {
     return (
-        <Section header="Unconfirmed Transactions">
+        <Section header="Transactions pending confirmation">
             <div className={classes.mempool}>
               {transactions.length > 0 ? (
                 <Transactions transactions={transactions} height={5} border={true} highlightRows={true}/>
               ) : (
-                <span className={classes.none}><h4>No Unconfirmed Transactions</h4></span>
+                <span className={classes.none}><h4>No unconfirmed transactions</h4></span>
               )}
             </div>
         </Section>

@@ -7,7 +7,7 @@ import { ICell, ICellStyle } from "interfaces/ICell.interface";
 
 import classes from "./Cell.module.scss";
 
-export const Cell: React.FC<ICell> = ({ label, data, link, externalLink, unit, notMono, decimals, alwaysSingular, cellStyle }) => {
+export const Cell: React.FC<ICell> = ({ label, data, link, externalLink, unit, notMono, decimals, maxDecimals, alwaysSingular, cellStyle }) => {
   const wrapInLink = (contents: JSX.Element) => {
     return link ? externalLink ? (
       <a className={classes.link} href={link} target={'_blank'}>
@@ -20,12 +20,12 @@ export const Cell: React.FC<ICell> = ({ label, data, link, externalLink, unit, n
     ) : contents;
   };
 
-  const rounded = (number: Number, decimals?: Number): [number, string | undefined ] => {
+  const rounded = (number: Number, decimals?: Number, maxDecimals?: Number): [number, string | undefined ] => {
       const negative = number < 0;
       const absolute = Math.abs(number.valueOf());
       const integer = Math.floor(absolute);
       const decimalpart = absolute - integer;
-      const roundedDecimals = (decimals ? decimalpart.toFixed(decimals.valueOf()) : decimalpart.toString()).substring(2);
+      const roundedDecimals = (decimals ? decimalpart.toFixed(decimals.valueOf()) : decimalpart.toString()).substring(2, 2 + (maxDecimals !== undefined ? maxDecimals.valueOf() : 8));
 
       return [ negative ? -integer : integer, roundedDecimals !== '' ? roundedDecimals : undefined ];
   }
@@ -76,11 +76,11 @@ export const Cell: React.FC<ICell> = ({ label, data, link, externalLink, unit, n
 
   if (data) {
       if (typeof(data) === 'number') {
-          roundedData = rounded(data, decimals);
+          roundedData = rounded(data, decimals, maxDecimals);
           formattedData = formatDecimal(roundedData[0], roundedData[1])
       } else {
           data = data as string;
-          roundedData = rounded(parseFloat(data), decimals);
+          roundedData = rounded(parseFloat(data), decimals, maxDecimals);
           formattedData = data;
       }
       isExactlyOne = roundedData[0] in [-1, 1];

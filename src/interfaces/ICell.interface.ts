@@ -13,6 +13,7 @@ export interface ICell {
   unit?: string;
   notMono?: boolean;
   decimals?: Number;
+  maxDecimals?: Number;
   alwaysSingular?: boolean;
   cellStyle?: ICellStyle;
 }

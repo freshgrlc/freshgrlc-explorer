@@ -159,7 +159,7 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
         ],
       },
       {
-        label: "24 Activity",
+        label: "24-hour Activity",
         cells: [
           {
             label: "Transactions",
@@ -169,16 +169,19 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
                 : undefined,
           },
           {
-            label: "Total Value",
+            label: "Transacted Value",
             data:
               yesterday != null && yesterday.transactions.totalvalue
-                ? Math.round(yesterday.transactions.totalvalue).toString()
+                ? yesterday.transactions.totalvalue
                 : undefined,
+            unit: coinInfo ? coinInfo.symbol : undefined,
+            alwaysSingular: true,
+            decimals: 2
           },
         ],
       },
       {
-        label: "24 Mining Stats",
+        label: "24-hour Mining",
         cells: [
           {
             label: "Blocks Mined",
@@ -188,11 +191,13 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
                 : undefined,
           },
           {
-            label: "Coins Created",
+            label: "New Coins Released",
             data:
               yesterday != null
-                ? (yesterday.blocks.amount * 25).toString()
+                ? yesterday.coins.released
                 : undefined,
+            unit: coinInfo ? coinInfo.symbol : undefined,
+            alwaysSingular: true
           },
         ],
       },
@@ -250,15 +255,18 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
             label: "All-time Transactions",
             data:
               allTime != null
-                ? allTime.transactions.amount.toString()
+                ? allTime.transactions.amount
                 : undefined,
           },
           {
-            label: "Coins Released (est.)",
+            label: "Coins Released",
             data:
               allTime != null
-                ? Math.round(allTime.coins.released).toString()
+                ? allTime.coins.released
                 : undefined,
+            unit: coinInfo ? coinInfo.symbol : undefined,
+            alwaysSingular: true,
+            maxDecimals: 3
           },
         ],
       },
@@ -272,6 +280,7 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
     average50000,
     decentralization50,
     decentralization90,
+    coinInfo
   ]);
 
   return (
