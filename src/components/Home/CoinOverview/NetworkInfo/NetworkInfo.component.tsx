@@ -46,7 +46,7 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
     if (latestBlock != null && coinInfo) {
       return {
         height: latestBlock.height.toString(),
-        url: `/${coinInfo.symbol.toLowerCase()}/blocks/${latestBlock.hash}`,
+        url: `/${coinInfo.ticker}/blocks/${latestBlock.hash}`,
         timestamp: formatTime(latestBlock.firstseen),
         difficulty: latestBlock.difficulty,
         adjusted: adjustDifficulty(
@@ -177,7 +177,7 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
               yesterday != null && yesterday.transactions.totalvalue
                 ? yesterday.transactions.totalvalue
                 : undefined,
-            unit: coinInfo ? coinInfo.symbol : undefined,
+            unit: coinInfo ? coinInfo.displaySymbol : undefined,
             alwaysSingular: true,
             decimals: 2
           },
@@ -199,7 +199,7 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
               yesterday != null
                 ? yesterday.coins.released
                 : undefined,
-            unit: coinInfo ? coinInfo.symbol : undefined,
+            unit: coinInfo ? coinInfo.displaySymbol : undefined,
             alwaysSingular: true
           },
         ],
@@ -267,7 +267,7 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
               allTime != null
                 ? allTime.coins.released
                 : undefined,
-            unit: coinInfo ? coinInfo.symbol : undefined,
+            unit: coinInfo ? coinInfo.displaySymbol : undefined,
             alwaysSingular: true,
             maxDecimals: 3
           },

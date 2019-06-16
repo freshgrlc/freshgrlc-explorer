@@ -1,8 +1,22 @@
-.transactionView {
-  display: grid;
-  grid-template-columns: auto;
-  justify-items: center;
+@import "../../variables.scss";
 
-  width: 100%;
-  height: 100%;
+.transactionView {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    h1 {
+        text-align: center;
+
+        .txid {
+            font-family: $mono;
+            font-size: 75%;
+            font-weight: normal;
+            color: $accent;
+        }
+    }
 }

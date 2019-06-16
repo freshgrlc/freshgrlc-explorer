@@ -25,7 +25,7 @@ interface IProps {
 }
 
 export const CoinOverview: React.FC<IProps> = ({ coinInfo }) => {
-  const baseUrl = getBaseUrl(coinInfo.symbol);
+  const baseUrl = getBaseUrl(coinInfo.ticker);
 
   const blockCount = 10;
 

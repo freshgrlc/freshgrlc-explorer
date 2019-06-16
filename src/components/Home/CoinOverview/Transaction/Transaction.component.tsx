@@ -43,9 +43,9 @@ export const Transaction: React.FC<IProps> = React.memo(
       <div className={classes.transaction + (highlightRows ? ' ' + classes.transactionHighlightedRow : '')}>
         {(
           <>
-            <Cell label={showHeader ? 'Transaction ID' : undefined} data={shortenedId} link={coinInfo ? `/${coinInfo.symbol.toLowerCase()}/transactions/${transaction.txid}` : undefined} cellStyle={{fontSize: 'small'}}/>
+            <Cell label={showHeader ? 'Transaction ID' : undefined} data={shortenedId} link={coinInfo ? `/${coinInfo.ticker}/transactions/${transaction.txid}` : undefined} cellStyle={{fontSize: 'small'}}/>
             <Cell label={showHeader ? 'Size' : undefined} data={byteCount} unit={byteUnit} alwaysSingular={true} cellStyle={{align: 'right', size: '100px'}} />
-            <Cell label={showHeader ? 'Value' : undefined} data={transaction.totalvalue} unit={coinInfo ? coinInfo.symbol : ''} alwaysSingular={true} decimals={8} cellStyle={{align: 'right', size: '155px'}} />
+            <Cell label={showHeader ? 'Value' : undefined} data={transaction.totalvalue} unit={coinInfo ? coinInfo.displaySymbol : ''} alwaysSingular={true} decimals={8} cellStyle={{align: 'right', size: '155px'}} />
             { showPendingColumn ? (<Cell label={showHeader ? 'Pending' : undefined} data={timeSince[0]} unit={timeSince[1]} alwaysSingular={typeof(timeSince[0]) === 'string'} />) : undefined }
           </>
         )}

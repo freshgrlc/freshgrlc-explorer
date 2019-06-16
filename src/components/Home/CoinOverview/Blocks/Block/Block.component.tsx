@@ -23,7 +23,7 @@ export const Block: React.FC<IProps> = React.memo(
       <div className={classes.block}>
         <h3 className={classes.header}>
           <Link
-            to={`/${coinInfo.symbol.toLowerCase()}/blocks/${block.hash}`}
+            to={`/${coinInfo.ticker}/blocks/${block.hash}`}
             className={classes.link}
           >
             {block.hash}

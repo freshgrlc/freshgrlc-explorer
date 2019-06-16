@@ -1,5 +1,5 @@
 export interface ICellStyle {
-    align?: 'right';
+    align?: 'left' | 'center' | 'right';
     size?: string;
     color?: 'normal' | 'lighter' | 'light' | 'darker';
     fontSize?: 'normal' | 'smaller' | 'small';

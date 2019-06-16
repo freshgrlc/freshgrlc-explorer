@@ -1,13 +1,19 @@
 import { padNumber } from "./padNumber.util";
 
-export const formatTime = (timestamp: number): string => {
+export const formatTime = (timestamp: number | null | undefined, alwaysIncludeDate?: boolean): string => {
+  if (timestamp === null || timestamp === undefined) {
+    return 'Unknown';
+  }
+
+  const includeDate: boolean = alwaysIncludeDate || Date.now() / 1000 - timestamp > 86400;
   const date = new Date(timestamp * 1000);
   const zone = new Date()
     .toLocaleTimeString("en-us", { timeZoneName: "short" })
     .split(" ")[2];
-  return `${padNumber(date.getHours())}:${padNumber(
-    date.getMinutes()
-  )}:${padNumber(date.getSeconds())} ${zone}`;
+
+  /* FIXME: Detect browsers for people that don't get how calenders work */
+  return (includeDate ? `${padNumber(date.getDate())}-${padNumber(date.getMonth()+1)}-${padNumber(date.getFullYear())} ` : '') +
+                        `${padNumber(date.getHours())}:${padNumber(date.getMinutes())}:${padNumber(date.getSeconds())} ${zone}`;
 };
 
 export const formatTimeDiff = (timestamp1: number | undefined | null, timestamp2: number | undefined): [ number | string, string | undefined ] => {

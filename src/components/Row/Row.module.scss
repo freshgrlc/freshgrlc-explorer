@@ -5,7 +5,7 @@
   flex-flow: row;
   align-items: center;
 
-  height: 48px;
+  height: 24px;
 
   padding: 2px 15px;
   border-left: $border;
@@ -15,8 +15,9 @@
     margin: 0;
     font-size: 1.05em;
     font-style: italic;
+    font-weight: normal;
     margin-top: auto;
-    margin-bottom: 7px;
+    margin-bottom: auto;
 
     width: 100%;
 
@@ -24,6 +25,19 @@
 
     color: $text;
   }
+
+  .wideRowLabel {
+      font-style: normal;
+      font-weight: bold;
+  }
+
+  .verticalPaddedLabel {
+    margin-bottom: 7px;
+  }
+}
+
+.verticalPaddedRow {
+  height: 48px;
 }
 
 .row:first-child {

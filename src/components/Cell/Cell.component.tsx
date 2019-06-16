@@ -5,40 +5,25 @@ import loading from "assets/loading.gif";
 
 import { ICell, ICellStyle } from "interfaces/ICell.interface";
 
+import { formatNumericalValue } from "utils/formatNumericalValue.util";
+
 import classes from "./Cell.module.scss";
 
 export const Cell: React.FC<ICell> = ({ label, data, link, externalLink, unit, notMono, decimals, maxDecimals, alwaysSingular, cellStyle }) => {
-  const wrapInLink = (contents: JSX.Element) => {
+  const wrapInLink = (contents: JSX.Element, cellStyle?: ICellStyle) => {
     return link ? externalLink ? (
-      <a className={classes.link} href={link} target={'_blank'}>
+      <a className={classes.link} href={link} target={'_blank'} style={processInnerCellStyle(cellStyle)}>
         {contents}
       </a>
     ) : (
-      <Link className={classes.link} to={link}>
+      <Link className={classes.link} to={link} style={processInnerCellStyle(cellStyle)}>
         {contents}
       </Link>
-    ) : contents;
-  };
-
-  const rounded = (number: Number, decimals?: Number, maxDecimals?: Number): [number, string | undefined ] => {
-      const negative = number < 0;
-      const absolute = Math.abs(number.valueOf());
-      const integer = Math.floor(absolute);
-      const decimalpart = absolute - integer;
-      const roundedDecimals = (decimals ? decimalpart.toFixed(decimals.valueOf()) : decimalpart.toString()).substring(2, 2 + (maxDecimals !== undefined ? maxDecimals.valueOf() : 8));
-
-      return [ negative ? -integer : integer, roundedDecimals !== '' ? roundedDecimals : undefined ];
-  }
-
-  const formatDecimal = (integer: number, roundedDecimals: string | undefined): JSX.Element => {
-      return (
-          <>
-              {integer}
-              {roundedDecimals ? (
-                  <span className={classes.decimals}>.{roundedDecimals}</span>
-              ) : null}
-          </>
-      );
+    ) : (
+      <div style={processInnerCellStyle(cellStyle)}>
+        {contents}
+      </div>
+    );
   };
 
   const processCellStyle = (cellStyle: ICellStyle | undefined, innerCell: boolean): React.CSSProperties | undefined => {
@@ -48,8 +33,12 @@ export const Cell: React.FC<ICell> = ({ label, data, link, externalLink, unit, n
           return undefined;
       }
 
-      if (innerCell && cellStyle.align === 'right') {
-          style.marginLeft = 'auto';
+      if (innerCell && cellStyle.align) {
+          if (cellStyle.align === 'left') {
+              style.marginRight = 'auto';
+          } else if (cellStyle.align === 'right') {
+              style.marginLeft = 'auto';
+          }
       }
 
       if (!innerCell && cellStyle.size) {
@@ -70,32 +59,16 @@ export const Cell: React.FC<ICell> = ({ label, data, link, externalLink, unit, n
   const processOuterCellStyle = (cellStyle?: ICellStyle): React.CSSProperties | undefined => processCellStyle(cellStyle, false);
   const processInnerCellStyle = (cellStyle?: ICellStyle): React.CSSProperties | undefined => processCellStyle(cellStyle, true);
 
-  var roundedData: [number, string | undefined ] | undefined;
-  var formattedData: JSX.Element | string | undefined;
-  var isExactlyOne: boolean = false;
-
-  if (data) {
-      if (typeof(data) === 'number') {
-          roundedData = rounded(data, decimals, maxDecimals);
-          formattedData = formatDecimal(roundedData[0], roundedData[1])
-      } else {
-          data = data as string;
-          roundedData = rounded(parseFloat(data), decimals, maxDecimals);
-          formattedData = data;
-      }
-      isExactlyOne = roundedData[0] in [-1, 1];
-  }
+  const hasData = data !== null && data !== undefined;
+  const formattedData = hasData ? formatNumericalValue(data as (string | number), decimals, maxDecimals, unit, alwaysSingular, classes.decimals, classes.unit) : undefined;
 
   return (
     <div className={classes.cell + (cellStyle && cellStyle.color ? ' ' + classes[cellStyle.color + 'Cell'] : '')}>
       {label ? <h4 className={classes.label}>{label}</h4> : null}
       <div className={classes.info} style={processOuterCellStyle(cellStyle)}>
-        {data ? wrapInLink(
-          <>
-            <div className={notMono ? undefined : classes.mono} style={processInnerCellStyle(cellStyle)}>{formattedData}</div>
-            {unit ? <div className={classes.unit}> {unit}{isExactlyOne || alwaysSingular ? '' : 's'}</div> : null}
-          </>
-        ) : (
+        {hasData ? wrapInLink((
+          <div className={notMono ? undefined : classes.mono}>{formattedData}</div>
+        ), cellStyle) : (
           <img className={classes.loading} src={loading} alt="Loading" />
         )}
       </div>
