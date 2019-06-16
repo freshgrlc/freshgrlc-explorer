@@ -5,7 +5,8 @@ export interface IUnconfirmedTransaction {
   block: null;
   coinbase: boolean;
   totalvalue: number;
-  firstseen: null;
+  firstseen: number | null;
+  pending?: number;
   size: number;
 }
 

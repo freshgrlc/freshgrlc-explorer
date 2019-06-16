@@ -9,3 +9,35 @@ export const formatTime = (timestamp: number): string => {
     date.getMinutes()
   )}:${padNumber(date.getSeconds())} ${zone}`;
 };
+
+export const formatTimeDiff = (timestamp1: number | undefined | null, timestamp2: number | undefined): [ number | string, string | undefined ] => {
+    if (timestamp1 === undefined || timestamp1 === null || timestamp2 === undefined) {
+        return ['Unknown', undefined];
+    }
+
+    const timeDiff = timestamp2 - timestamp1;
+
+    if (timeDiff < 60) {
+        return ['<1', 'minute'];
+    }
+    if (timeDiff < 3600) {
+        return [ Math.round(timeDiff / 60), 'minute'];
+    }
+    if (timeDiff < 86400) {
+        return [ Math.round(timeDiff / 3600), 'hour'];
+    }
+    if (timeDiff < 604800) {
+        return [ Math.round(timeDiff / 86400), 'day'];
+    }
+    if (timeDiff < 2592000) {
+        return [ Math.round(timeDiff / 604800), 'week'];
+    }
+    if (timeDiff < 220752000) {
+        return [ Math.round(timeDiff / 2592000), 'month'];
+    }
+    return [ Math.round(timeDiff / 220752000), 'year'];
+};
+
+export const formatTimeSince = (timestamp: number | undefined | null): [ number | string, string | undefined ] => {
+    return formatTimeDiff(timestamp, Date.now() / 1000);
+};

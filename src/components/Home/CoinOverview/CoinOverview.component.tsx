@@ -40,10 +40,21 @@ export const CoinOverview: React.FC<IProps> = ({ coinInfo }) => {
     IUnconfirmedTransaction[]
   >([]);
 
+  const calculateAndInjectPendingTime = (transactions: IUnconfirmedTransaction[]): IUnconfirmedTransaction[] => {
+      return (transactions as any[]).map(
+          (transaction: IUnconfirmedTransaction) => {
+              if (transaction.firstseen !== null) {
+                  transaction.pending = Date.now() / 1000 - transaction.firstseen;
+              }
+              return transaction;
+          }
+      )
+  };
+
   useEffect(() => {
     if (firstBlocks != null && firstUnconfirmedTransactions != null) {
       setBlocks(firstBlocks.slice().reverse());
-      setUnconfirmedTransactions(firstUnconfirmedTransactions);
+      setUnconfirmedTransactions(calculateAndInjectPendingTime(firstUnconfirmedTransactions));
       const blocksSubject = new Subject<IBlock>();
       const unconfirmedTransactionsSubject = new Subject<
         IUnconfirmedTransaction[]
@@ -64,7 +75,7 @@ export const CoinOverview: React.FC<IProps> = ({ coinInfo }) => {
       });
       const uSub = unconfirmedTransactionsSubject.subscribe({
         next: (mempool) => {
-          setUnconfirmedTransactions(mempool);
+          setUnconfirmedTransactions(calculateAndInjectPendingTime(mempool));
         },
       });
       const es = new EventSource(

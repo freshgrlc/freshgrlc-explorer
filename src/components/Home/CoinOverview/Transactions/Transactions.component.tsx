@@ -14,9 +14,10 @@ interface IProps {
   highlightRows?: boolean;
   border?: boolean;
   height: number;
+  showPendingColumn?: boolean;
 }
 
-export const Transactions: React.FC<IProps> = ({ transactions, highlightRows, border, height }) => {
+export const Transactions: React.FC<IProps> = ({ transactions, highlightRows, border, height, showPendingColumn }) => {
   const calcHeight = (height: number): React.CSSProperties => {
     var style: React.CSSProperties = {};
 
@@ -33,6 +34,7 @@ export const Transactions: React.FC<IProps> = ({ transactions, highlightRows, bo
               key={transaction.txid}
               transaction={transaction}
               highlightRows={highlightRows}
+              showPendingColumn={showPendingColumn}
               showHeader={true}
             />
           ) : (
@@ -40,6 +42,7 @@ export const Transactions: React.FC<IProps> = ({ transactions, highlightRows, bo
               key={transaction.txid}
               transaction={transaction}
               highlightRows={highlightRows}
+              showPendingColumn={showPendingColumn}
               showHeader={false}
             />
           )

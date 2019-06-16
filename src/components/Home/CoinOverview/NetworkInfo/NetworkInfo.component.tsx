@@ -147,7 +147,7 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
         ],
       },
       {
-        label: "Difficulty",
+        label: "Mining Difficulty",
         cells: [
           {
             label: "Network",
