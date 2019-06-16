@@ -14,6 +14,7 @@ export const Home: React.FC = () => {
       symbol: "GRLC",
       blockTime: 40,
       blockReward: 25,
+      logo: "garlicoin.svg"
     },
     {
       name: "tuxcoin",
@@ -21,7 +22,16 @@ export const Home: React.FC = () => {
       symbol: "TUX",
       blockTime: 60,
       blockReward: 33.5,
+      logo: "tuxcoin.svg"
     },
+    {
+      name: "garlicoin-testnet",
+      displayName: "Garlicoin testnet",
+      symbol: "tGRLC",
+      blockTime: 40,
+      blockReward: 50,
+      logo: "garlicoin.svg"
+    }
   ];
   return (
     <div className={classes.overviews}>

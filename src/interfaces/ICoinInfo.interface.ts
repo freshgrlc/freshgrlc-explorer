@@ -4,4 +4,5 @@ export interface ICoinInfo {
   symbol: string;
   blockTime: number;
   blockReward: number;
+  logo: string;
 }
