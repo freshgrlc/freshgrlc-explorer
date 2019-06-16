@@ -17,9 +17,9 @@ export const Mempool: React.FC<IProps> = ({ transactions }) => {
         <Section header="Unconfirmed Transactions">
             <div className={classes.mempool}>
               {transactions.length > 0 ? (
-                <Transactions transactions={transactions} />
+                <Transactions transactions={transactions} height={5} border={true} highlightRows={true}/>
               ) : (
-                <span className={classes.none}>No Unconfirmed Transactions</span>
+                <span className={classes.none}><h4>No Unconfirmed Transactions</h4></span>
               )}
             </div>
         </Section>

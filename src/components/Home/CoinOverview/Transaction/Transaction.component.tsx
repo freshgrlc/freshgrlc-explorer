@@ -14,10 +14,11 @@ import { CoinInfoContext } from "context/CoinInfo.context"
 interface IProps {
   transaction: IBlockTransaction | IUnconfirmedTransaction;
   showHeader: boolean;
+  highlightRows?: boolean;
 }
 
 export const Transaction: React.FC<IProps> = React.memo(
-  ({ transaction, showHeader }) => {
+  ({ transaction, showHeader, highlightRows }) => {
     const coinInfo = useContext(CoinInfoContext);
 
     const shortenedId = useMemo(
@@ -34,7 +35,7 @@ export const Transaction: React.FC<IProps> = React.memo(
     );
 
     return (
-      <div className={classes.transaction}>
+      <div className={classes.transaction + (highlightRows ? ' ' + classes.transactionHighlightedRow : '')}>
         {(
           <>
             <Cell label={showHeader ? 'Transaction ID' : undefined} data={shortenedId} />

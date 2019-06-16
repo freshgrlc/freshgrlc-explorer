@@ -3,11 +3,15 @@ $secondary: hsl(0, 0%, 57%);
 $accent: hsla(201, 85%, 60%, 0.87);
 
 $backgroundColor: hsl(37, 5%, 20%);
+$sunkenBackground: hsl(37, 5%, 17%);
+$rowBackground1: hsl(37, 5%, 25%);
+$rowBackground2: hsl(37, 5%, 22%);
 
 $text: hsla(37, 100%, 85%, 0.87);
 $muted: hsla(37, 100%, 85%, 0.5);
+$ultramuted: hsla(37, 5%, 35%, 0.5);
 
-$border: solid #696051 3px;
+$border: solid #696051 2px;
 $borderThin: solid #696051 1px;
 
 $mono: "Roboto Mono", monospace;

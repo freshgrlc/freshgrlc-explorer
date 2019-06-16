@@ -74,7 +74,7 @@ export const Cell: React.FC<ICell> = ({ label, data, link, unit, notMono, decima
   }
 
   return (
-    <div className={classes.cell}>
+    <div className={classes.cell + (cellStyle && cellStyle.color ? ' ' + classes[cellStyle.color + 'Cell'] : '')}>
       {label ? <h4 className={classes.label}>{label}</h4> : null}
       <div className={classes.info} style={processOuterCellStyle(cellStyle)}>
         {data ? wrapInLink(

@@ -97,7 +97,7 @@ export const CoinOverview: React.FC<IProps> = ({ coinInfo }) => {
             <NetworkInfo latestBlock={blocks[0]} baseUrl={baseUrl} />
         </Section>
         <Mempool transactions={unconfirmedTransactions} />
-        <Section header="Blocks">
+        <Section header="Blockchain">
             <Blocks blocks={blocks} />
         </Section>
       </div>

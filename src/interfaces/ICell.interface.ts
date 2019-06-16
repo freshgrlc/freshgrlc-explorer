@@ -1,6 +1,7 @@
 export interface ICellStyle {
     align?: 'right';
     size?: string;
+    color?: 'normal' | 'lighter' | 'light' | 'darker';
 }
 
 export interface ICell {

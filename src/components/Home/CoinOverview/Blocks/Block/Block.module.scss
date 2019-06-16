@@ -9,15 +9,28 @@
   width: 675px;
   margin: 0px auto;
   border: $border;
-
-  padding: 0px 0px 15px;
+  border-radius: 25px;
+  background-color: $sunkenBackground;
 
   .header {
     font-size: 1em;
     font-family: $mono;
+    background-color: $rowBackground2;
+    margin: 0px;
+    width: 100%;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    padding-left: auto;
+    padding-right: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
 
     .link {
       text-decoration: none;
+    }
+
+    .link:hover {
+      text-decoration: underline;
     }
   }
 
@@ -29,28 +42,14 @@
 
     width: 100%;
     height: 48px;
-    border-bottom: $border;
-
-    // hack hack hack plz forgive
-    * {
-      border-right: $border;
-
-      * {
-        border-right: none;
-      }
-    }
-
-    *:last-child {
-      border-right: none;
-    }
   }
   .data:first-of-type {
-    border-top: $border;
+    border-top: $borderThin;
   }
 
   .transactions {
     width: 100%;
-    margin: 10px 0px;
+    border-top: $borderThin;
 
     .header {
       text-align: center;

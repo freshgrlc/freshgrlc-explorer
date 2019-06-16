@@ -6,7 +6,10 @@
   align-items: center;
 
   height: 48px;
-  width: 100%;
+
+  padding: 2px 15px;
+  border-left: $border;
+  border-right: $border;
 
   .label {
     margin: 0;
@@ -21,4 +24,26 @@
 
     color: $text;
   }
+}
+
+.row:first-child {
+    border-top: $border;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    padding-top: 10px;
+}
+
+.row:last-child {
+    border-bottom: $border;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    padding-bottom: 10px;
+}
+
+.row:nth-child(2n+0) {
+    background-color: $rowBackground1;
+}
+
+.row:nth-child(2n+1) {
+    background-color: $rowBackground2;
 }

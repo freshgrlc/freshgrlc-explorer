@@ -13,7 +13,7 @@ export const Header: React.FC<IProps> = () => {
       <span className={classes.contents}>
         <img
           className={classes.img}
-          src={require(`assets/logos/${coinInfo.name}.svg`)}
+          src={require(`assets/logos/${coinInfo.logo}`)}
           alt=""
         />
         <span className={classes.text}>{coinInfo.displayName}</span>

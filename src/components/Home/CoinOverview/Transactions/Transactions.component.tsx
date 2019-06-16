@@ -11,23 +11,35 @@ import classes from "./Transactions.module.scss";
 
 interface IProps {
   transactions: IBlockTransaction[] | IUnconfirmedTransaction[];
+  highlightRows?: boolean;
+  border?: boolean;
+  height: number;
 }
 
-export const Transactions: React.FC<IProps> = ({ transactions }) => {
+export const Transactions: React.FC<IProps> = ({ transactions, highlightRows, border, height }) => {
+  const calcHeight = (height: number): React.CSSProperties => {
+    var style: React.CSSProperties = {};
+
+    style.height = 31 + 30 * height;
+    return style;
+  };
+
   return (
-    <div className={classes.transactions}>
+    <div className={classes.transactions + (border ? ' ' + classes.highLightedTransactions : '')} style={calcHeight(height)}>
       {(transactions as any[]).map(
         (transaction: IBlockTransaction | IUnconfirmedTransaction, index) =>
           index === 0 ? (
             <Transaction
               key={transaction.txid}
               transaction={transaction}
+              highlightRows={highlightRows}
               showHeader={true}
             />
           ) : (
             <Transaction
               key={transaction.txid}
               transaction={transaction}
+              highlightRows={highlightRows}
               showHeader={false}
             />
           )

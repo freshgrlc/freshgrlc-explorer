@@ -30,9 +30,9 @@ export const Block: React.FC<IProps> = React.memo(
           </Link>
         </h3>
         <div className={classes.data}>
-          <Cell label="Height" data={block.height.toString()} />
-          <Cell label="Difficulty" data={block.difficulty.toString()} />
-          <Cell label="Received at" data={formatTime(block.firstseen)} />
+          <Cell label="Height" data={block.height.toString()} cellStyle={{color: 'normal'}} />
+          <Cell label="Difficulty" data={block.difficulty.toString()} cellStyle={{color: 'lighter'}} />
+          <Cell label="Received at" data={formatTime(block.firstseen)} cellStyle={{color: 'normal'}} />
         </div>
         <div className={classes.data}>
           <Cell
@@ -40,15 +40,17 @@ export const Block: React.FC<IProps> = React.memo(
             data={block.miner.website ? block.miner.name : "Unknown Pool"}
             link={block.miner.website}
             notMono={true}
+            cellStyle={{color: 'lighter'}}
           />
-          <Cell label="Size" data={block.size.toString()} unit="byte" />
+          <Cell label="Size" data={block.size.toString()} unit="byte" cellStyle={{color: 'normal'}} />
           <Cell
             label="Transactions"
             data={block.transactions.length.toString()}
+            cellStyle={{color: 'lighter'}}
           />
         </div>
         <div className={classes.transactions}>
-          <Transactions transactions={block.transactions} />
+          <Transactions transactions={block.transactions} height={4} highlightRows={true}/>
         </div>
       </div>
     ) : null;
