@@ -38,6 +38,7 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
 
   const formattedBlock = useMemo((): {
     height?: string;
+    url?: string;
     timestamp?: string;
     difficulty?: Number;
     adjusted?: Number;
@@ -45,6 +46,7 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
     if (latestBlock != null && coinInfo) {
       return {
         height: latestBlock.height.toString(),
+        url: `/${coinInfo.symbol.toLowerCase()}/blocks/${latestBlock.hash}`,
         timestamp: formatTime(latestBlock.firstseen),
         difficulty: latestBlock.difficulty,
         adjusted: adjustDifficulty(
@@ -136,6 +138,7 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
           {
             label: "Height",
             data: formattedBlock.height,
+            link: formattedBlock.url
           },
           {
             label: "Recieved at",
