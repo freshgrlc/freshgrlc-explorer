@@ -1,6 +1,6 @@
 // See https://aka.ms/vscode-remote/devcontainer.json for format details.
 {
-  "name": "Node.js (latest LTS)",
+  "name": "freshgrlc-explorer",
   "dockerFile": "Dockerfile",
   "extensions": [
     "dbaeumer.vscode-eslint",

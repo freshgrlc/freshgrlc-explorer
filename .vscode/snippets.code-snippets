@@ -42,7 +42,7 @@
     ],
     "description": "Create interface"
   },
-  "Create Util Function": {
+  "Create Utiltiy Function": {
     "scope": "typescript",
     "prefix": "ufc",
     "body": [
