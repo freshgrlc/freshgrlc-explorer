@@ -1,105 +1,106 @@
 @import "../../../../variables.scss";
 
 .transactionOutputs {
+  display: flex;
+  flex-direction: column;
+  width: 730px;
+
+  .transactionOutput {
     display: flex;
-    flex-direction: column;
-    width: 730px;
+    flex-direction: row;
+    border-bottom: $border;
 
-    .transactionOutput {
-        display: flex;
-        flex-direction: row;
-        border-bottom: $border;
+    height: 85px;
 
-        height: 85px;
+    * .data {
+      display: block;
+      width: 100%;
+      margin-top: auto;
+      margin-bottom: auto;
 
-        * .data {
-            display: block;
-            width: 100%;
-            margin-top: auto;
-            margin-bottom: auto;
-
-            div {
-                display: inline;
-            }
-        }
-
-        .destination {
-            font-family: $mono;
-            display: flex;
-            flex-direction: column;
-            width: 440px;
-            margin-top: auto;
-            margin-bottom: auto;
-            padding-left: 20px;
-            text-align: left;
-
-            .address {
-                display: flex;
-                font-size: 95%;
-                color: $primary;
-                padding-top: 14px;
-            }
-
-            .rawOutput {
-                font-family: $normal;
-            }
-
-            .script {
-                display: flex;
-                font-size: 0.70em;
-                text-align: left;
-                color: $muted;
-
-                .header {
-                    font-family: $normal;
-                    color: $slightlyMuted;
-                    font-style: italic;
-                    padding-right: 5px;
-                    padding-top: 2px;
-                    height: auto;
-                }
-            }
-        }
-
-        .value {
-            display: flex;
-            font-family: $mono;
-            font-size: 115%;
-            width: 210px;
-
-            .data {
-                margin-left: auto;
-                margin-right: 20px;
-                width: auto;
-            }
-
-            .decimals {
-                font-size: 70%;
-            }
-
-            .unit {
-                margin-left: -5px;
-                font-size: 0.9em;
-                white-space: pre;
-                color: $muted;
-            }
-        }
-
-        .spent, .unspend {
-            display: flex;
-            width: 75px;
-
-            a {
-                text-decoration: none;
-            }
-
-            a:hover {
-                text-decoration: underline;
-            }
-        }
-
-        .unspend {
-            color: $muted;
-        }
+      div {
+        display: inline;
+      }
     }
+
+    .destination {
+      font-family: $mono;
+      display: flex;
+      flex-direction: column;
+      width: 440px;
+      margin-top: auto;
+      margin-bottom: auto;
+      padding-left: 20px;
+      text-align: left;
+
+      .address {
+        display: flex;
+        font-size: 95%;
+        color: $primary;
+        padding-top: 14px;
+      }
+
+      .rawOutput {
+        font-family: $normal;
+      }
+
+      .script {
+        display: flex;
+        font-size: 0.7em;
+        text-align: left;
+        color: $muted;
+
+        .header {
+          font-family: $normal;
+          color: $slightlyMuted;
+          font-style: italic;
+          padding-right: 5px;
+          padding-top: 2px;
+          height: auto;
+        }
+      }
+    }
+
+    .value {
+      display: flex;
+      font-family: $mono;
+      font-size: 115%;
+      width: 210px;
+
+      .data {
+        margin-left: auto;
+        margin-right: 20px;
+        width: auto;
+      }
+
+      .decimals {
+        font-size: 70%;
+      }
+
+      .unit {
+        margin-left: -5px;
+        font-size: 0.9em;
+        white-space: pre;
+        color: $muted;
+      }
+    }
+
+    .spent,
+    .unspent {
+      display: flex;
+      width: 75px;
+
+      a {
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .unspent {
+      color: $muted;
+    }
+  }
 }

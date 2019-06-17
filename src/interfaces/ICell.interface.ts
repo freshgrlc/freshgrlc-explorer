@@ -1,8 +1,8 @@
 export interface ICellStyle {
-    align?: 'left' | 'center' | 'right';
-    size?: string;
-    color?: 'normal' | 'lighter' | 'light' | 'darker';
-    fontSize?: 'normal' | 'smaller' | 'small';
+  align?: "left" | "center" | "right";
+  size?: string;
+  color?: "normal" | "lighter" | "light" | "darker";
+  fontSize?: "normal" | "smaller" | "small";
 }
 
 export interface ICell {

@@ -1,6 +1,13 @@
 import { IBlock } from "./IBlock.interface";
 
-export type TransactionOutputType = 'p2pk' | 'p2pkh' | 'p2sh' | 'p2wpkh' | 'p2wsh' | 'data' | 'raw';
+export type TransactionOutputType =
+  | "p2pk"
+  | "p2pkh"
+  | "p2sh"
+  | "p2wpkh"
+  | "p2wsh"
+  | "data"
+  | "raw";
 
 export interface IUnconfirmedTransaction {
   confirmed: boolean;
@@ -24,47 +31,48 @@ export interface IBlockTransaction
 }
 
 export interface IReference {
-    href: string;
+  href: string;
 }
 
 export interface ITransactionReference extends IReference {
-    txid: string;
+  txid: string;
 }
 
-export interface ISpentTransactionOutputReference extends ITransactionReference {
-    input: number;
-};
+export interface ISpentTransactionOutputReference
+  extends ITransactionReference {
+  input: number;
+}
 
 export interface ITransactionOutputReference extends ITransactionReference {
-    output: number;
-};
+  output: number;
+}
 
 export interface ITransactionInput {
-    amount: number;
-    type: TransactionOutputType;
-    spends: ITransactionOutputReference;
-    address: string;
-};
+  amount: number;
+  type: TransactionOutputType;
+  spends: ITransactionOutputReference;
+  address: string;
+}
 
 export interface ISimplifiedTransactionInput {
-    address: string;
-    type: TransactionOutputType;
-    amount: number;
-    inputsAmount: number;
-    txid: string | undefined;
+  address: string;
+  type: TransactionOutputType;
+  amount: number;
+  inputsAmount: number;
+  txid: string | undefined;
 }
 
 export interface ITransactionOutput {
-    spentby: ISpentTransactionOutputReference;
-    amount: number;
-    address: string | null;
-    type: TransactionOutputType;
-    script: string;
-};
+  spentby: ISpentTransactionOutputReference;
+  amount: number;
+  address: string | null;
+  type: TransactionOutputType;
+  script: string;
+}
 
 export interface IExpandedTransaction extends Omit<IBlockTransaction, "block"> {
-    inputs: { [key: string]: ITransactionInput };
-    outputs: { [key: string]: ITransactionOutput };
-    mutations: IReference;
-    block: IBlock;
+  inputs: { [key: string]: ITransactionInput };
+  outputs: { [key: string]: ITransactionOutput };
+  mutations: IReference;
+  block: IBlock;
 }

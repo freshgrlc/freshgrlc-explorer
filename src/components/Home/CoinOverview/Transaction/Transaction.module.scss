@@ -9,8 +9,6 @@
   width: 100%;
 
   padding: 10px 0px 4px 0px;
-
-
 }
 
 .transaction:last-child {
@@ -24,17 +22,17 @@
 }
 
 .transactionHighlightedRow:first-child {
-    padding-top: 10px;
+  padding-top: 10px;
 }
 
 .transactionHighlightedRow:last-child {
-    padding-bottom: 10px;
+  padding-bottom: 10px;
 }
 
-.transactionHighlightedRow:nth-child(2n+0) {
-    background-color: $rowBackground1;
+.transactionHighlightedRow:nth-child(2n + 0) {
+  background-color: $rowBackground1;
 }
 
-.transactionHighlightedRow:nth-child(2n+1) {
-    background-color: $rowBackground2;
+.transactionHighlightedRow:nth-child(2n + 1) {
+  background-color: $rowBackground2;
 }

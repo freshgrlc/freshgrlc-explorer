@@ -30,9 +30,21 @@ export const Block: React.FC<IProps> = React.memo(
           </Link>
         </h3>
         <div className={classes.data}>
-          <Cell label="Height" data={block.height.toString()} cellStyle={{color: 'normal'}} />
-          <Cell label="Difficulty" data={block.difficulty.toString()} cellStyle={{color: 'lighter'}} />
-          <Cell label="Received at" data={formatTime(block.firstseen)} cellStyle={{color: 'normal'}} />
+          <Cell
+            label="Height"
+            data={block.height.toString()}
+            cellStyle={{ color: "normal" }}
+          />
+          <Cell
+            label="Difficulty"
+            data={block.difficulty.toString()}
+            cellStyle={{ color: "lighter" }}
+          />
+          <Cell
+            label="Received at"
+            data={formatTime(block.firstseen)}
+            cellStyle={{ color: "normal" }}
+          />
         </div>
         <div className={classes.data}>
           <Cell
@@ -41,17 +53,26 @@ export const Block: React.FC<IProps> = React.memo(
             link={block.miner.website}
             externalLink={true}
             notMono={true}
-            cellStyle={{color: 'lighter'}}
+            cellStyle={{ color: "lighter" }}
           />
-          <Cell label="Size" data={block.size.toString()} unit="byte" cellStyle={{color: 'normal'}} />
+          <Cell
+            label="Size"
+            data={block.size.toString()}
+            unit="byte"
+            cellStyle={{ color: "normal" }}
+          />
           <Cell
             label="Transactions"
             data={block.transactions.length.toString()}
-            cellStyle={{color: 'lighter'}}
+            cellStyle={{ color: "lighter" }}
           />
         </div>
         <div className={classes.transactions}>
-          <Transactions transactions={block.transactions} height={4} highlightRows={true}/>
+          <Transactions
+            transactions={block.transactions}
+            height={4}
+            highlightRows={true}
+          />
         </div>
       </div>
     ) : null;

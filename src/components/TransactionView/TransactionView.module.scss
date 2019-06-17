@@ -1,22 +1,22 @@
 @import "../../variables.scss";
 
 .transactionView {
-    width: 100%;
+  width: 100%;
 
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 
-    margin-left: auto;
-    margin-right: auto;
+  margin-left: auto;
+  margin-right: auto;
 
-    h1 {
-        text-align: center;
+  h1 {
+    text-align: center;
 
-        .txid {
-            font-family: $mono;
-            font-size: 75%;
-            font-weight: normal;
-            color: $accent;
-        }
+    .txid {
+      font-family: $mono;
+      font-size: 75%;
+      font-weight: normal;
+      color: $accent;
     }
+  }
 }

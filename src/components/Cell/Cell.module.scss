@@ -25,11 +25,11 @@
     height: 16px;
 
     * {
-        display: inline;
+      display: inline;
     }
 
     .mono {
-      font-family: "Roboto Mono", monospace;
+      font-family: $mono;
     }
 
     .decimals {

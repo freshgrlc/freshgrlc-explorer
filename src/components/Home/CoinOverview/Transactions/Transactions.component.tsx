@@ -17,7 +17,13 @@ interface IProps {
   showPendingColumn?: boolean;
 }
 
-export const Transactions: React.FC<IProps> = ({ transactions, highlightRows, border, height, showPendingColumn }) => {
+export const Transactions: React.FC<IProps> = ({
+  transactions,
+  highlightRows,
+  border,
+  height,
+  showPendingColumn,
+}) => {
   const calcHeight = (height: number): React.CSSProperties => {
     var style: React.CSSProperties = {};
 
@@ -26,7 +32,13 @@ export const Transactions: React.FC<IProps> = ({ transactions, highlightRows, bo
   };
 
   return (
-    <div className={classes.transactions + (border ? ' ' + classes.highLightedTransactions : '')} style={calcHeight(height)}>
+    <div
+      className={`${classes.transactions} ${
+        border ? classes.highLightedTransactions : ""
+      }
+      `}
+      style={calcHeight(height)}
+    >
       {(transactions as any[]).map(
         (transaction: IBlockTransaction | IUnconfirmedTransaction, index) =>
           index === 0 ? (

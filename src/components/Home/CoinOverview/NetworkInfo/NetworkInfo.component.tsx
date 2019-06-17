@@ -138,7 +138,7 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
           {
             label: "Height",
             data: formattedBlock.height,
-            link: formattedBlock.url
+            link: formattedBlock.url,
           },
           {
             label: "Recieved at",
@@ -152,12 +152,12 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
           {
             label: "Network",
             data: formattedBlock.difficulty,
-            decimals: 3
+            decimals: 3,
           },
           {
             label: "Adjusted (50 coins/min)",
             data: formattedBlock.adjusted,
-            decimals: 3
+            decimals: 3,
           },
         ],
       },
@@ -179,7 +179,7 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
                 : undefined,
             unit: coinInfo ? coinInfo.displaySymbol : undefined,
             alwaysSingular: true,
-            decimals: 2
+            decimals: 2,
           },
         ],
       },
@@ -195,12 +195,9 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
           },
           {
             label: "New Coins Released",
-            data:
-              yesterday != null
-                ? yesterday.coins.released
-                : undefined,
+            data: yesterday != null ? yesterday.coins.released : undefined,
             unit: coinInfo ? coinInfo.displaySymbol : undefined,
-            alwaysSingular: true
+            alwaysSingular: true,
           },
         ],
       },
@@ -226,13 +223,13 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
             label: "Over 5,000 Blocks",
             data: average5000,
             unit: "second",
-            decimals: 2
+            decimals: 2,
           },
           {
             label: "Over 50,000 Blocks",
             data: average50000,
             unit: "second",
-            decimals: 2
+            decimals: 2,
           },
         ],
       },
@@ -256,20 +253,14 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
         cells: [
           {
             label: "All-time Transactions",
-            data:
-              allTime != null
-                ? allTime.transactions.amount
-                : undefined,
+            data: allTime != null ? allTime.transactions.amount : undefined,
           },
           {
             label: "Coins Released",
-            data:
-              allTime != null
-                ? allTime.coins.released
-                : undefined,
+            data: allTime != null ? allTime.coins.released : undefined,
             unit: coinInfo ? coinInfo.displaySymbol : undefined,
             alwaysSingular: true,
-            maxDecimals: 3
+            maxDecimals: 3,
           },
         ],
       },
@@ -283,7 +274,7 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
     average50000,
     decentralization50,
     decentralization90,
-    coinInfo
+    coinInfo,
   ]);
 
   return (

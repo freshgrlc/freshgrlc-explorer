@@ -40,21 +40,25 @@ export const CoinOverview: React.FC<IProps> = ({ coinInfo }) => {
     IUnconfirmedTransaction[]
   >([]);
 
-  const calculateAndInjectPendingTime = (transactions: IUnconfirmedTransaction[]): IUnconfirmedTransaction[] => {
-      return (transactions as any[]).map(
-          (transaction: IUnconfirmedTransaction) => {
-              if (transaction.firstseen !== null) {
-                  transaction.pending = Date.now() / 1000 - transaction.firstseen;
-              }
-              return transaction;
-          }
-      )
+  const calculateAndInjectPendingTime = (
+    transactions: IUnconfirmedTransaction[]
+  ): IUnconfirmedTransaction[] => {
+    return (transactions as any[]).map(
+      (transaction: IUnconfirmedTransaction) => {
+        if (transaction.firstseen !== null) {
+          transaction.pending = Date.now() / 1000 - transaction.firstseen;
+        }
+        return transaction;
+      }
+    );
   };
 
   useEffect(() => {
     if (firstBlocks != null && firstUnconfirmedTransactions != null) {
       setBlocks(firstBlocks.slice().reverse());
-      setUnconfirmedTransactions(calculateAndInjectPendingTime(firstUnconfirmedTransactions));
+      setUnconfirmedTransactions(
+        calculateAndInjectPendingTime(firstUnconfirmedTransactions)
+      );
       const blocksSubject = new Subject<IBlock>();
       const unconfirmedTransactionsSubject = new Subject<
         IUnconfirmedTransaction[]
@@ -104,12 +108,12 @@ export const CoinOverview: React.FC<IProps> = ({ coinInfo }) => {
     <CoinInfoContext.Provider value={coinInfo}>
       <div className={classes.overview}>
         <Section>
-            <Header />
-            <NetworkInfo latestBlock={blocks[0]} baseUrl={baseUrl} />
+          <Header />
+          <NetworkInfo latestBlock={blocks[0]} baseUrl={baseUrl} />
         </Section>
         <Mempool transactions={unconfirmedTransactions} />
         <Section header="Blockchain">
-            <Blocks blocks={blocks} />
+          <Blocks blocks={blocks} />
         </Section>
       </div>
     </CoinInfoContext.Provider>
