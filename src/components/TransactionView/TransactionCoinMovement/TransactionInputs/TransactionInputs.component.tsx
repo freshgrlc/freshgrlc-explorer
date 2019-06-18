@@ -61,9 +61,11 @@ export const TransactionInputs: React.FC<IProps> = ({ inputs, coinbase, coinbase
                             </Link>
                         ) : (
                             <div className={classes.data}>
-                                {`(${formatNumericalValue(input.inputsAmount, {
+                                {'('}
+                                {formatNumericalValue(input.inputsAmount, {
                                     unit: 'input',
-                                })})`}
+                                })}
+                                {')'}
                             </div>
                         )}
                     </div>
@@ -81,7 +83,7 @@ export const TransactionInputs: React.FC<IProps> = ({ inputs, coinbase, coinbase
                 </div>
             ))}
             {coinbase ? (
-                <div key={'coinbase'} className={classes.transactionInput}>
+                <div key="coinbase" className={classes.transactionInput}>
                     <div className={classes.source}>
                         <div className={classes.address + ' ' + classes.textAddress}>
                             <div className={classes.data}>Newly generated coins + transaction fees</div>
