@@ -1,11 +1,12 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 
+import { CoinInfoContext } from "context/CoinInfo.context";
+
 import {
   ISimplifiedTransactionInput,
   TransactionOutputType,
 } from "interfaces/ITransaction.interface";
-import { CoinInfoContext } from "context/CoinInfo.context";
 
 import { formatNumericalValue } from "utils/formatNumericalValue.util";
 

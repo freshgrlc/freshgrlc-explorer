@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Subject } from "rxjs";
 import useFetch from "react-fetch-hook";
 
-import { Section } from "../../Section/Section.component";
+import { Section } from "components/Section/Section.component";
 
 import { Header } from "./Header/Header.component";
 import { NetworkInfo } from "./NetworkInfo/NetworkInfo.component";
