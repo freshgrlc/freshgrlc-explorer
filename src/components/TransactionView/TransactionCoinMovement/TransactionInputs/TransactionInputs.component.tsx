@@ -1,13 +1,13 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 
-import { ISimplifiedTransactionInput, TransactionOutputType } from "interfaces/ITransaction.interface";
-import { CoinInfoContext } from "context/CoinInfo.context";
+import { CoinInfoContext } from 'context/CoinInfo.context';
 
-import { formatNumericalValue } from "utils/formatNumericalValue.util";
+import { ISimplifiedTransactionInput, TransactionOutputType } from 'interfaces/ITransaction.interface';
 
-import classes from "./TransactionInputs.module.scss";
+import { formatNumericalValue } from 'utils/formatNumericalValue.util';
 
+import classes from './TransactionInputs.module.scss';
 
 interface IProps {
     inputs: ISimplifiedTransactionInput[];
@@ -34,7 +34,6 @@ const getInputSubtext = (inputType: TransactionOutputType): string | undefined =
     return undefined;
 };
 
-
 export const TransactionInputs: React.FC<IProps> = ({ inputs, coinbase, coinbaseAmount }) => {
     const coinInfo = useContext(CoinInfoContext);
     return (
@@ -45,7 +44,7 @@ export const TransactionInputs: React.FC<IProps> = ({ inputs, coinbase, coinbase
                         <div className={classes.address}>
                             <div className={classes.data}>{input.address}</div>
                         </div>
-                        { getInputSubtext(input.type) !== undefined ? (
+                        {getInputSubtext(input.type) !== undefined ? (
                             <div className={classes.signatureType}>
                                 <div className={classes.data}>{getInputSubtext(input.type)}</div>
                             </div>
@@ -54,17 +53,29 @@ export const TransactionInputs: React.FC<IProps> = ({ inputs, coinbase, coinbase
                     <div className={classes.inputsAmount}>
                         {coinInfo && input.txid ? (
                             <Link className={classes.data} to={`/${coinInfo.ticker}/transactions/${input.txid}`}>
-                                {'('}{formatNumericalValue(input.inputsAmount, undefined, undefined, 'input')}{')'}
+                                {'('}
+                                {formatNumericalValue(input.inputsAmount, {
+                                    unit: 'input',
+                                })}
+                                {')'}
                             </Link>
                         ) : (
                             <div className={classes.data}>
-                                {'('}{formatNumericalValue(input.inputsAmount, undefined, undefined, 'input')}{')'}
+                                {`(${formatNumericalValue(input.inputsAmount, {
+                                    unit: 'input',
+                                })})`}
                             </div>
                         )}
                     </div>
                     <div className={classes.value}>
                         <div className={classes.data}>
-                            {formatNumericalValue(input.amount, 8, undefined, coinInfo ? coinInfo.displaySymbol : undefined, true, classes.decimals, classes.unit)}
+                            {formatNumericalValue(input.amount, {
+                                decimals: 8,
+                                unit: coinInfo ? coinInfo.displaySymbol : undefined,
+                                alwaysSingular: true,
+                                decimalClass: classes.decimals,
+                                unitClass: classes.unit,
+                            })}
                         </div>
                     </div>
                 </div>
@@ -82,7 +93,13 @@ export const TransactionInputs: React.FC<IProps> = ({ inputs, coinbase, coinbase
                     {coinbaseAmount !== undefined ? (
                         <div className={classes.value}>
                             <div className={classes.data}>
-                                {formatNumericalValue(coinbaseAmount, 8, undefined, coinInfo ? coinInfo.displaySymbol : undefined, true, classes.decimals, classes.unit)}
+                                {formatNumericalValue(coinbaseAmount, {
+                                    decimals: 8,
+                                    unit: coinInfo ? coinInfo.displaySymbol : undefined,
+                                    alwaysSingular: true,
+                                    decimalClass: classes.decimals,
+                                    unitClass: classes.unit,
+                                })}
                             </div>
                         </div>
                     ) : null}

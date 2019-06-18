@@ -1,4 +1,4 @@
-@import "../../../../variables.scss";
+@import '../../../../variables.scss';
 
 .transactionOutputs {
     display: flex;
@@ -46,7 +46,7 @@
 
             .script {
                 display: flex;
-                font-size: 0.70em;
+                font-size: 0.7em;
                 text-align: left;
                 color: $muted;
 
@@ -85,7 +85,8 @@
             }
         }
 
-        .spent, .unspend {
+        .spent,
+        .unspent {
             display: flex;
             width: 75px;
 
@@ -98,7 +99,7 @@
             }
         }
 
-        .unspend {
+        .unspent {
             color: $muted;
         }
     }

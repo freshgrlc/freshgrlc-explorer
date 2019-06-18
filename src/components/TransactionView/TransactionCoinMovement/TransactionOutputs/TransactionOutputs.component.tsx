@@ -1,18 +1,16 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 
-import { ITransactionOutput } from "interfaces/ITransaction.interface";
-import { CoinInfoContext } from "context/CoinInfo.context";
+import { ITransactionOutput } from 'interfaces/ITransaction.interface';
+import { CoinInfoContext } from 'context/CoinInfo.context';
 
-import { formatNumericalValue } from "utils/formatNumericalValue.util";
+import { formatNumericalValue } from 'utils/formatNumericalValue.util';
 
-import classes from "./TransactionOutputs.module.scss";
-
+import classes from './TransactionOutputs.module.scss';
 
 interface IProps {
     outputs: ITransactionOutput[];
 }
-
 
 export const TransactionOutputs: React.FC<IProps> = ({ outputs }) => {
     const convertDestination = (output: ITransactionOutput): [string, string] => {
@@ -22,14 +20,15 @@ export const TransactionOutputs: React.FC<IProps> = ({ outputs }) => {
 
         const splitted = output.address.split(': ');
         if (splitted.length > 1) {
-            return [ splitted[0] + ' output', splitted[1] ];
+            return [splitted[0] + ' output', splitted[1]];
         }
 
-        return [ output.address, output.script ];
+        return [output.address, output.script];
     };
     const getDestinationHeader = (output: ITransactionOutput): string => convertDestination(output)[0];
     const getDestinationRaw = (output: ITransactionOutput): string => convertDestination(output)[1];
-    const isDataOutput = (output: ITransactionOutput): boolean => output.address && output.address.split(': ')[0] === 'Data' ? true : false;
+    const isDataOutput = (output: ITransactionOutput): boolean =>
+        output.address && output.address.split(': ')[0] === 'Data' ? true : false;
 
     const coinInfo = useContext(CoinInfoContext);
     return (
@@ -48,21 +47,32 @@ export const TransactionOutputs: React.FC<IProps> = ({ outputs }) => {
                     {output.amount !== 0 || !isDataOutput(output) ? (
                         <div className={classes.value}>
                             <div className={classes.data}>
-                                {formatNumericalValue(output.amount, 8, undefined, coinInfo ? coinInfo.displaySymbol : undefined, true, classes.decimals, classes.unit)}
+                                {formatNumericalValue(output.amount, {
+                                    decimals: 8,
+                                    unit: coinInfo ? coinInfo.displaySymbol : undefined,
+                                    alwaysSingular: true,
+                                    decimalClass: classes.decimals,
+                                    unitClass: classes.unit,
+                                })}
                             </div>
                         </div>
                     ) : null}
                     {output.spentby ? (
                         <div className={classes.spent}>
-                            { coinInfo ? (
-                                <Link className={classes.data} to={`/${coinInfo.ticker}/transactions/${output.spentby.txid}`}>Spent ➔</Link>
+                            {coinInfo ? (
+                                <Link
+                                    className={classes.data}
+                                    to={`/${coinInfo.ticker}/transactions/${output.spentby.txid}`}
+                                >
+                                    Spent ➔
+                                </Link>
                             ) : (
                                 <div className={classes.data}>(spent)</div>
                             )}
                         </div>
                     ) : !isDataOutput(output) ? (
-                        <div className={classes.unspend}>
-                            <div className={classes.data}>(Unspend)</div>
+                        <div className={classes.unspent}>
+                            <div className={classes.data}>(Unspent)</div>
                         </div>
                     ) : null}
                 </div>

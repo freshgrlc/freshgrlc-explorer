@@ -6,14 +6,14 @@ export interface ICellStyle {
 }
 
 export interface ICell {
-  label?: string;
-  data?: string | Number;
-  link?: string | null;
-  externalLink?: boolean;
-  unit?: string;
-  notMono?: boolean;
-  decimals?: Number;
-  maxDecimals?: Number;
-  alwaysSingular?: boolean;
-  cellStyle?: ICellStyle;
+    label?: string;
+    data?: string | Number;
+    link?: string | null;
+    externalLink?: boolean;
+    unit?: string;
+    notMono?: boolean;
+    decimals?: number;
+    maxDecimals?: number;
+    alwaysSingular?: boolean;
+    cellStyle?: ICellStyle;
 }

@@ -1,43 +1,43 @@
-@import "../../variables.scss";
+@import '../../variables.scss';
 
 .row {
-  display: flex;
-  flex-flow: row;
-  align-items: center;
+    display: flex;
+    flex-flow: row;
+    align-items: center;
 
-  height: 24px;
+    height: 24px;
 
-  padding: 2px 15px;
-  border-left: $border;
-  border-right: $border;
+    padding: 2px 15px;
+    border-left: $border;
+    border-right: $border;
 
-  .label {
-    margin: 0;
-    font-size: 1.05em;
-    font-style: italic;
-    font-weight: normal;
-    margin-top: auto;
-    margin-bottom: auto;
+    .label {
+        margin: 0;
+        font-size: 1.05em;
+        font-style: italic;
+        font-weight: normal;
+        margin-top: auto;
+        margin-bottom: auto;
 
-    width: 100%;
+        width: 100%;
 
-    text-align: left;
+        text-align: left;
 
-    color: $text;
-  }
+        color: $text;
+    }
 
-  .wideRowLabel {
-      font-style: normal;
-      font-weight: bold;
-  }
+    .wideRowLabel {
+        font-style: normal;
+        font-weight: bold;
+    }
 
-  .verticalPaddedLabel {
-    margin-bottom: 7px;
-  }
+    .verticalPaddedLabel {
+        margin-bottom: 7px;
+    }
 }
 
 .verticalPaddedRow {
-  height: 48px;
+    height: 48px;
 }
 
 .row:first-child {
@@ -54,10 +54,10 @@
     padding-bottom: 10px;
 }
 
-.row:nth-child(2n+0) {
+.row:nth-child(2n + 0) {
     background-color: $rowBackground1;
 }
 
-.row:nth-child(2n+1) {
+.row:nth-child(2n + 1) {
     background-color: $rowBackground2;
 }

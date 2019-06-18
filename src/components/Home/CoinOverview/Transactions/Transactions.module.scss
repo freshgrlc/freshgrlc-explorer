@@ -1,13 +1,13 @@
-@import "../../../../variables.scss";
+@import '../../../../variables.scss';
 
 .transactions {
-  width: 100%;
-  overflow-y: auto;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
-  background-color: $rowBackground2;
-  scrollbar-width: thin;
-  scrollbar-color: $accent $backgroundColor;
+    width: 100%;
+    overflow-y: auto;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    background-color: $rowBackground2;
+    scrollbar-width: thin;
+    scrollbar-color: $accent $backgroundColor;
 }
 
 .highLightedTransactions {

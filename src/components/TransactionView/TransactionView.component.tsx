@@ -1,21 +1,25 @@
-import React from "react";
-import useFetch from "react-fetch-hook";
+import React from 'react';
+import useFetch from 'react-fetch-hook';
 
-import { IExpandedTransaction, ITransactionInput, ISimplifiedTransactionInput } from "interfaces/ITransaction.interface";
-import { CoinTickerSymbol } from "interfaces/ICoinInfo.interface";
+import {
+    IExpandedTransaction,
+    ITransactionInput,
+    ISimplifiedTransactionInput,
+} from 'interfaces/ITransaction.interface';
+import { CoinTickerSymbol } from 'interfaces/ICoinInfo.interface';
 
-import { getBaseUrl } from "utils/getBaseUrl.util";
-import { getCoinInfo } from "utils/getCoinInfo.util";
-import { Redirect } from "react-router";
-import { TransactionMetaInfo } from "./TransactionMetaInfo/TransactionMetaInfo.component";
-import { TransactionCoinMovement } from "./TransactionCoinMovement/TransactionCoinMovement.component";
+import { getBaseUrl } from 'utils/getBaseUrl.util';
+import { getCoinInfo } from 'utils/getCoinInfo.util';
+import { Redirect } from 'react-router';
+import { TransactionMetaInfo } from './TransactionMetaInfo/TransactionMetaInfo.component';
+import { TransactionCoinMovement } from './TransactionCoinMovement/TransactionCoinMovement.component';
 
-import { CoinInfoContext } from "context/CoinInfo.context";
+import { CoinInfoContext } from 'context/CoinInfo.context';
 
-import { Section } from "components/Section/Section.component";
-import { PageLoadAnimation } from "components/PageLoadAnimation/PageLoadAnimation.component";
+import { Section } from 'components/Section/Section.component';
+import { PageLoadAnimation } from 'components/PageLoadAnimation/PageLoadAnimation.component';
 
-import classes from "./TransactionView.module.scss";
+import classes from './TransactionView.module.scss';
 
 interface IProps {
     routeParams: { coin: CoinTickerSymbol; txid: string };
@@ -33,8 +37,8 @@ const simplifyInputs = (inputs: ITransactionInput[]): ISimplifiedTransactionInpu
                 type: input.type,
                 amount: input.amount,
                 inputsAmount: 1,
-                txid: input.spends.txid
-            } as ISimplifiedTransactionInput
+                txid: input.spends.txid,
+            } as ISimplifiedTransactionInput;
         } else {
             simplifiedDict[key].amount += input.amount;
             simplifiedDict[key].inputsAmount += 1;
@@ -58,15 +62,21 @@ export const TransactionView: React.FC<IProps> = ({ routeParams }) => {
     return transaction != null ? (
         <CoinInfoContext.Provider value={coinInfo}>
             <div className={classes.transactionView}>
-                <h1>Transaction <span className={classes.txid}>{transaction.txid}</span></h1>
+                <h1>
+                    Transaction <span className={classes.txid}>{transaction.txid}</span>
+                </h1>
                 <Section>
                     <TransactionMetaInfo transaction={transaction} />
                 </Section>
                 <Section header="Coins moved">
-                    <TransactionCoinMovement transaction={transaction} simplifiedInputs={simplifyInputs(Object.values(transaction.inputs))} />
+                    <TransactionCoinMovement
+                        transaction={transaction}
+                        simplifiedInputs={simplifyInputs(Object.values(transaction.inputs))}
+                    />
                 </Section>
             </div>
         </CoinInfoContext.Provider>
-    ) : <PageLoadAnimation />;
-
+    ) : (
+        <PageLoadAnimation />
+    );
 };

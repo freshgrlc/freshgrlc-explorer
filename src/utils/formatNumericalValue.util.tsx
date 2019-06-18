@@ -1,45 +1,59 @@
-import React from "react";
+import React from 'react';
 
-export const rounded = (number: Number, decimals?: Number, maxDecimals?: Number): [number, string | undefined ] => {
-    const negative = number < 0;
-    const absolute = Math.abs(number.valueOf());
-    const integer = Math.floor(absolute);
-    const decimalpart = absolute - integer;
-    const roundedDecimals = (decimals ? decimalpart.toFixed(decimals.valueOf()) : decimalpart.toString()).substring(2, 2 + (maxDecimals !== undefined ? maxDecimals.valueOf() : 8));
+export const rounded = (number: number, decimals: number = 0, maxDecimals: number = decimals): [number, string] => {
+    number = Math.round(number * 10 ** decimals) / 10 ** decimals;
+    const formatted = number
+        .toFixed(decimals)
+        .replace(/\.?0+$/, '')
+        .split('.');
 
-    return [ negative ? -integer : integer, roundedDecimals !== '' ? roundedDecimals : undefined ];
-}
+    return [Number(formatted[0]), (formatted[1] ? formatted[1] : '').padEnd(maxDecimals, '0')];
+};
 
-export const formatDecimal = (integer: number, roundedDecimals: string | undefined, decimalClass?: string): JSX.Element => {
+export const formatDecimal = (integer: number, decimalClass?: string, roundedDecimals?: string): JSX.Element => {
     return (
         <>
             {integer}
-            {roundedDecimals ? (
-                <span className={decimalClass}>.{roundedDecimals}</span>
-            ) : null}
+            {roundedDecimals ? <span className={decimalClass}>.{roundedDecimals}</span> : null}
         </>
     );
 };
 
-export const formatNumericalValue = (value: number | string, decimals?: Number, maxDecimals?: Number, unit?: string, alwaysSingular?: boolean, decimalClass?: string, unitClass?: string) => {
-    var roundedData: [number, string | undefined ] | undefined;
-    var formattedData: JSX.Element | string | undefined;
-    var isExactlyOne: boolean = false;
+interface INumericalValueOptions {
+    decimals?: number;
+    maxDecimals?: number;
+    unit?: string;
+    alwaysSingular?: boolean;
+    decimalClass?: string;
+    unitClass?: string;
+}
 
-    if (typeof(value) === 'number') {
+export const formatNumericalValue = (value: number | string, options: INumericalValueOptions) => {
+    const { decimals, maxDecimals, unit, alwaysSingular, decimalClass, unitClass } = options;
+
+    let roundedData: [number, string] | undefined;
+    let formattedData: JSX.Element | string | undefined;
+    let isExactlyOne: boolean = false;
+
+    if (typeof value === 'number') {
         roundedData = rounded(value, decimals, maxDecimals);
-        formattedData = formatDecimal(roundedData[0], roundedData[1], decimalClass)
+        formattedData = formatDecimal(roundedData[0], decimalClass, roundedData[1]);
     } else {
-        value = value as string;
-        roundedData = rounded(parseFloat(value), decimals, maxDecimals);
+        roundedData = rounded(Number(value), decimals, maxDecimals);
         formattedData = value;
     }
     isExactlyOne = roundedData[0] in [-1, 1];
 
     return (
         <>
-          {formattedData}
-          {unit ? <div className={unitClass}> {unit}{isExactlyOne || alwaysSingular ? '' : 's'}</div> : null}
+            {formattedData}
+            {unit ? (
+                <div className={unitClass}>
+                    {' '}
+                    {unit}
+                    {isExactlyOne || alwaysSingular ? '' : 's'}
+                </div>
+            ) : null}
         </>
     );
 };

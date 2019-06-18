@@ -1,73 +1,74 @@
-@import "../../variables.scss";
+@import '../../variables.scss';
 
 .cell {
-  display: flex;
-  flex-flow: column;
-  justify-content: center;
-  align-items: center;
-
-  width: 100%;
-  height: 100%;
-
-  .label {
-    margin: 0;
-    font-size: 0.85em;
-    margin-bottom: 5px;
-  }
-
-  .info {
     display: flex;
-    flex-flow: row;
+    flex-flow: column;
     justify-content: center;
-    align-items: flex-end;
+    align-items: center;
 
     width: 100%;
-    height: 16px;
+    height: 100%;
 
-    * {
-        display: inline;
+    .label {
+        margin: 0;
+        font-size: 0.85em;
+        margin-bottom: 5px;
     }
 
-    .mono {
-      font-family: "Roboto Mono", monospace;
-    }
+    .info {
+        display: flex;
+        flex-flow: row;
+        justify-content: center;
+        align-items: flex-end;
 
-    .decimals {
-      font-size: 0.75em;
-    }
+        width: 100%;
+        height: 16px;
 
-    .unit {
-      font-size: 0.9em;
-      white-space: pre;
-      color: $muted;
-    }
+        * {
+            display: inline;
+        }
 
-    .loading {
-      height: 100%;
-    }
+        .mono {
+            font-family: $mono;
+        }
 
-    .link {
-      text-decoration: none;
-    }
+        .decimals {
+            font-size: 0.75em;
+        }
 
-    .link:hover {
-      text-decoration: underline;
+        .unit {
+            font-size: 0.9em;
+            white-space: pre;
+            color: $muted;
+            font-family: $normal;
+        }
+
+        .loading {
+            height: 100%;
+        }
+
+        .link {
+            text-decoration: none;
+        }
+
+        .link:hover {
+            text-decoration: underline;
+        }
     }
-  }
 }
 
 .normalCell {
-  background-color: $backgroundColor;
+    background-color: $backgroundColor;
 }
 
 .lighterCell {
-  background-color: $rowBackground1;
+    background-color: $rowBackground1;
 }
 
 .lightCell {
-  background-color: $rowBackground2;
+    background-color: $rowBackground2;
 }
 
 .darkerCell {
-  background-color: $sunkenBackground;
+    background-color: $sunkenBackground;
 }
