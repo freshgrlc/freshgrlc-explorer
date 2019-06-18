@@ -39,7 +39,7 @@ export const TransactionInputs: React.FC<IProps> = ({ inputs, coinbase, coinbase
     return (
         <div className={classes.transactionInputs}>
             {inputs.map((input, index) => (
-                <div key={'input' + index} className={classes.transactionInput}>
+                <div key={index} className={classes.transactionInput}>
                     <div className={classes.source}>
                         <div className={classes.address}>
                             <div className={classes.data}>{input.address}</div>
@@ -83,7 +83,7 @@ export const TransactionInputs: React.FC<IProps> = ({ inputs, coinbase, coinbase
                 </div>
             ))}
             {coinbase ? (
-                <div key="coinbase" className={classes.transactionInput}>
+                <div className={classes.transactionInput}>
                     <div className={classes.source}>
                         <div className={classes.address + ' ' + classes.textAddress}>
                             <div className={classes.data}>Newly generated coins + transaction fees</div>

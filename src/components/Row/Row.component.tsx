@@ -38,8 +38,8 @@ export const Row: React.FC<IRow> = ({ label, labelWidth, cells, wide }) => {
             >
                 {label}
             </h3>
-            {cells.map((cell) => (
-                <Cell key={Math.random() + Date.now().toString()} {...cell} />
+            {cells.map((cell, index) => (
+                <Cell key={index} {...cell} />
             ))}
         </div>
     );

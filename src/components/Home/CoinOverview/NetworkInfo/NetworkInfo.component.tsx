@@ -253,8 +253,8 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
 
     return (
         <div className={classes.network}>
-            {table.map((entry) => (
-                <Row key={entry.label} {...entry} />
+            {table.map((entry, index) => (
+                <Row key={index} {...entry} />
             ))}
         </div>
     );

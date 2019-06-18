@@ -129,8 +129,8 @@ export const TransactionMetaInfo: React.FC<IProps> = ({ transaction }) => {
 
     return (
         <div className={classes.transactionMetaInfo}>
-            {table.map((entry) => (
-                <Row key={entry.label} wide={true} labelWidth="200px" {...entry} />
+            {table.map((entry, index) => (
+                <Row key={index} wide={true} labelWidth="200px" {...entry} />
             ))}
         </div>
     );

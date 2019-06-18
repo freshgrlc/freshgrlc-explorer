@@ -34,7 +34,7 @@ export const TransactionOutputs: React.FC<IProps> = ({ outputs }) => {
     return (
         <div className={classes.transactionOutputs}>
             {outputs.map((output, index) => (
-                <div key={'output' + index} className={classes.transactionOutput}>
+                <div key={index} className={classes.transactionOutput}>
                     <div className={classes.destination}>
                         <div className={classes.address + (output.type === 'raw' ? ' ' + classes.rawOutput : '')}>
                             <div className={classes.data}>{getDestinationHeader(output)}</div>
