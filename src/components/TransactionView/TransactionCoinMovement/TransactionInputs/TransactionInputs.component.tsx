@@ -84,7 +84,7 @@ export const TransactionInputs: React.FC<IProps> = ({
           <div className={classes.value}>
             <div className={classes.data}>
               {formatNumericalValue(input.amount, {
-                maxDecimals: 8,
+                decimals: 8,
                 unit: coinInfo ? coinInfo.displaySymbol : undefined,
                 alwaysSingular: true,
                 decimalClass: classes.decimals,
@@ -110,7 +110,7 @@ export const TransactionInputs: React.FC<IProps> = ({
             <div className={classes.value}>
               <div className={classes.data}>
                 {formatNumericalValue(coinbaseAmount, {
-                  maxDecimals: 8,
+                  decimals: 8,
                   unit: coinInfo ? coinInfo.displaySymbol : undefined,
                   alwaysSingular: true,
                   decimalClass: classes.decimals,
