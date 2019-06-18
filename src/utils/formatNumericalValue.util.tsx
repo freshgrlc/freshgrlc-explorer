@@ -2,22 +2,15 @@ import React from "react";
 
 export const rounded = (
   number: number,
-  decimals?: number,
-  maxDecimals?: number
-): [number, string | undefined] => {
-  const negative = number < 0;
-  const absolute = Math.abs(number.valueOf());
-  const integer = Math.floor(absolute);
-  const decimalpart = absolute - integer;
-  const roundedDecimals = (decimals
-    ? decimalpart.toFixed(decimals.valueOf())
-    : decimalpart.toString()
-  ).substring(2, 2 + (maxDecimals !== undefined ? maxDecimals.valueOf() : 8));
+  decimals: number = 0
+): [number, string] => {
+  number = Math.round(number * 10 ** decimals) / 10 ** decimals;
+  const formatted = number
+    .toFixed(decimals)
+    .replace(/\.?0+$/, "")
+    .split(".");
 
-  return [
-    negative ? -integer : integer,
-    roundedDecimals !== "" ? roundedDecimals : undefined,
-  ];
+  return [Number(formatted[0]), formatted[1]];
 };
 
 export const formatDecimal = (
@@ -49,7 +42,6 @@ export const formatNumericalValue = (
   options: INumericalValueOptions
 ) => {
   const {
-    decimals,
     maxDecimals,
     unit,
     alwaysSingular,
@@ -57,16 +49,15 @@ export const formatNumericalValue = (
     unitClass,
   } = options;
 
-  let roundedData: [number, string | undefined] | undefined;
+  let roundedData: [number, string] | undefined;
   let formattedData: JSX.Element | string | undefined;
   let isExactlyOne: boolean = false;
 
   if (typeof value === "number") {
-    roundedData = rounded(value, decimals, maxDecimals);
+    roundedData = rounded(value, maxDecimals);
     formattedData = formatDecimal(roundedData[0], decimalClass, roundedData[1]);
   } else {
-    value = value as string;
-    roundedData = rounded(parseFloat(value), decimals, maxDecimals);
+    roundedData = rounded(Number(value), maxDecimals);
     formattedData = value;
   }
   isExactlyOne = roundedData[0] in [-1, 1];
