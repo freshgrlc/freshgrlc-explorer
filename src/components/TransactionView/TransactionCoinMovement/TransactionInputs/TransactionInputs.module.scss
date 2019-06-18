@@ -1,100 +1,100 @@
-@import "../../../../variables.scss";
+@import '../../../../variables.scss';
 
 .transactionInputs {
-  display: flex;
-  flex-direction: column;
-  width: 730px;
-
-  .transactionInput {
     display: flex;
-    flex-direction: row;
-    border-bottom: $border;
+    flex-direction: column;
+    width: 730px;
 
-    height: 85px;
-
-    * .data {
-      display: block;
-      width: 100%;
-      margin-top: auto;
-      margin-bottom: auto;
-
-      div {
-        display: inline;
-      }
-    }
-
-    .source {
-      display: flex;
-      flex-direction: column;
-      margin-top: auto;
-      margin-bottom: auto;
-
-      .address {
-        font-family: $mono;
+    .transactionInput {
         display: flex;
-        width: 430px;
-        font-size: 95%;
-        color: $primary;
-        padding-top: 11px;
-      }
+        flex-direction: row;
+        border-bottom: $border;
 
-      .textAddress {
-        font-family: $normal;
-        font-size: 105%;
-        width: 360px;
-        padding-top: 0px;
-      }
+        height: 85px;
 
-      .signatureType {
-        display: flex;
-        font-family: $normal;
-        font-style: italic;
-        font-size: 0.75em;
-        color: $muted;
-      }
+        * .data {
+            display: block;
+            width: 100%;
+            margin-top: auto;
+            margin-bottom: auto;
+
+            div {
+                display: inline;
+            }
+        }
+
+        .source {
+            display: flex;
+            flex-direction: column;
+            margin-top: auto;
+            margin-bottom: auto;
+
+            .address {
+                font-family: $mono;
+                display: flex;
+                width: 430px;
+                font-size: 95%;
+                color: $primary;
+                padding-top: 11px;
+            }
+
+            .textAddress {
+                font-family: $normal;
+                font-size: 105%;
+                width: 360px;
+                padding-top: 0px;
+            }
+
+            .signatureType {
+                display: flex;
+                font-family: $normal;
+                font-style: italic;
+                font-size: 0.75em;
+                color: $muted;
+            }
+        }
+
+        .inputsAmount {
+            display: inherit;
+            color: $muted;
+            font-size: 0.9em;
+            width: 80px;
+
+            a {
+                text-decoration: none;
+            }
+
+            a:hover {
+                text-decoration: underline;
+            }
+        }
+
+        .coinbaseInput {
+            width: 170px;
+        }
+
+        .value {
+            display: inherit;
+            font-family: $mono;
+            font-size: 115%;
+            width: 210px;
+
+            .data {
+                margin-left: auto;
+                margin-right: 20px;
+                width: auto;
+            }
+
+            .decimals {
+                font-size: 70%;
+            }
+
+            .unit {
+                margin-left: -5px;
+                font-size: 0.9em;
+                white-space: pre;
+                color: $muted;
+            }
+        }
     }
-
-    .inputsAmount {
-      display: inherit;
-      color: $muted;
-      font-size: 0.9em;
-      width: 80px;
-
-      a {
-        text-decoration: none;
-      }
-
-      a:hover {
-        text-decoration: underline;
-      }
-    }
-
-    .coinbaseInput {
-      width: 170px;
-    }
-
-    .value {
-      display: inherit;
-      font-family: $mono;
-      font-size: 115%;
-      width: 210px;
-
-      .data {
-        margin-left: auto;
-        margin-right: 20px;
-        width: auto;
-      }
-
-      .decimals {
-        font-size: 70%;
-      }
-
-      .unit {
-        margin-left: -5px;
-        font-size: 0.9em;
-        white-space: pre;
-        color: $muted;
-      }
-    }
-  }
 }

@@ -1,30 +1,30 @@
-@import "../../../../variables.scss";
+@import '../../../../variables.scss';
 
 .mempool {
-  display: flex;
-  flex-flow: column;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
 
-  width: 675px;
-  margin-left: auto;
-  margin-right: auto;
-
-  .none {
-    height: 181px;
     width: 675px;
-    background-color: $rowBackground2;
+    margin-left: auto;
+    margin-right: auto;
 
-    border: $border;
-    border-radius: 20px;
+    .none {
+        height: 181px;
+        width: 675px;
+        background-color: $rowBackground2;
 
-    h4 {
-      color: $ultramuted;
-      font-size: 230%;
-      font-weight: 100%;
-      font-style: italic;
-      padding-top: auto;
-      padding-bottom: auto;
+        border: $border;
+        border-radius: 20px;
+
+        h4 {
+            color: $ultramuted;
+            font-size: 230%;
+            font-weight: 100%;
+            font-style: italic;
+            padding-top: auto;
+            padding-bottom: auto;
+        }
     }
-  }
 }
