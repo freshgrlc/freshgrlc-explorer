@@ -12,8 +12,8 @@ export interface ICell {
   externalLink?: boolean;
   unit?: string;
   notMono?: boolean;
-  decimals?: Number;
-  maxDecimals?: Number;
+  decimals?: number;
+  maxDecimals?: number;
   alwaysSingular?: boolean;
   cellStyle?: ICellStyle;
 }

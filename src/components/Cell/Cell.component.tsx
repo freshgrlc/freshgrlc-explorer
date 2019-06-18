@@ -48,8 +48,8 @@ export const Cell: React.FC<ICell> = ({
   };
 
   const processCellStyle = (
-    cellStyle: ICellStyle | undefined,
-    innerCell: boolean
+    innerCell: boolean,
+    cellStyle?: ICellStyle
   ): React.CSSProperties | undefined => {
     var style: React.CSSProperties = {};
 
@@ -82,22 +82,21 @@ export const Cell: React.FC<ICell> = ({
 
   const processOuterCellStyle = (
     cellStyle?: ICellStyle
-  ): React.CSSProperties | undefined => processCellStyle(cellStyle, false);
+  ): React.CSSProperties | undefined => processCellStyle(false, cellStyle);
   const processInnerCellStyle = (
     cellStyle?: ICellStyle
-  ): React.CSSProperties | undefined => processCellStyle(cellStyle, true);
+  ): React.CSSProperties | undefined => processCellStyle(true, cellStyle);
 
   const hasData = data !== null && data !== undefined;
   const formattedData = hasData
-    ? formatNumericalValue(
-        data as (string | number),
+    ? formatNumericalValue(data as (string | number), {
         decimals,
         maxDecimals,
         unit,
         alwaysSingular,
-        classes.decimals,
-        classes.unit
-      )
+        decimalClass: classes.decimals,
+        unitClass: classes.unit,
+      })
     : undefined;
 
   return (

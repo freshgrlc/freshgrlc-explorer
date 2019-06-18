@@ -29,8 +29,8 @@ export const formatTime = (
 };
 
 export const formatTimeDiff = (
-  timestamp1: number | undefined | null,
-  timestamp2: number | undefined
+  timestamp1?: number,
+  timestamp2?: number
 ): [number | string, string | undefined] => {
   if (
     timestamp1 === undefined ||
@@ -64,7 +64,7 @@ export const formatTimeDiff = (
 };
 
 export const formatTimeSince = (
-  timestamp: number | undefined | null
+  timestamp?: number
 ): [number | string, string | undefined] => {
   return formatTimeDiff(timestamp, Date.now() / 1000);
 };

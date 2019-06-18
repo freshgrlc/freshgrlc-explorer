@@ -40,8 +40,8 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
     height?: string;
     url?: string;
     timestamp?: string;
-    difficulty?: Number;
-    adjusted?: Number;
+    difficulty?: number;
+    adjusted?: number;
   } => {
     if (latestBlock != null && coinInfo) {
       return {

@@ -7,7 +7,7 @@ import { IRow } from "interfaces/IRow.interface";
 import classes from "./Row.module.scss";
 
 export const Row: React.FC<IRow> = ({ label, labelWidth, cells, wide }) => {
-  const getLabelStyle = (width: string | undefined): React.CSSProperties => {
+  const getLabelStyle = (width?: string): React.CSSProperties => {
     var style: React.CSSProperties = {};
 
     if (width) {
