@@ -66,9 +66,11 @@ export const TransactionInputs: React.FC<IProps> = ({
                 className={classes.data}
                 to={`/${coinInfo.ticker}/transactions/${input.txid}`}
               >
-                {`(${formatNumericalValue(input.inputsAmount, {
+                {"("}
+                {formatNumericalValue(input.inputsAmount, {
                   unit: "input",
-                })})`}
+                })}
+                {")"}
               </Link>
             ) : (
               <div className={classes.data}>
