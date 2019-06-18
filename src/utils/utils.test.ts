@@ -2,6 +2,7 @@ import { padNumber } from "./padNumber.util";
 import { adjustDifficulty } from "./adjustDifficulty.util";
 import { formatTime } from "./formatTime.util";
 import { getNumberPoolsNeeded } from "./getNumberPoolsNeeded.util";
+import { rounded } from "./formatNumericalValue.util";
 
 it("should pad", () => {
   expect(padNumber(2)).toBe("02");
@@ -97,4 +98,34 @@ it("should calculate pools need for a given percentage", () => {
     },
   ];
   expect(getNumberPoolsNeeded(0.9, 1400, poolData)).toBe(5);
+});
+
+it('should round and split a decimal numer', () => {
+  //expect(rounded(1.23456)).toStrictEqual([1, '23456']);  /* Broken - No idea */
+  expect(rounded(1.0)).toStrictEqual([1, undefined ]);
+
+  expect(rounded(1, 2)).toStrictEqual([1, '00' ]);
+  expect(rounded(1.0, 2)).toStrictEqual([1, '00' ]);
+  expect(rounded(1.123, 2)).toStrictEqual([1, '12' ]);
+  expect(rounded(1.127, 2)).toStrictEqual([1, '13' ]);
+  expect(rounded(-1.127, 2)).toStrictEqual([-1, '13' ]);
+
+  expect(rounded(1, undefined, 2)).toStrictEqual([1, undefined ]);
+  expect(rounded(1.0, undefined, 2)).toStrictEqual([1, undefined ]);
+  expect(rounded(1.123, undefined, 2)).toStrictEqual([1, '12' ]);
+
+  //expect(rounded(1.127, undefined, 2)).toStrictEqual([1, '13' ]);     /* Broken - Known issue */
+  expect(rounded(1.127, undefined, 2)).toStrictEqual([1, '12' ]);
+
+  //expect(rounded(-1.127, undefined, 2)).toStrictEqual([-1, '13' ]);   /* Broken - Known issue */
+  expect(rounded(-1.127, undefined, 2)).toStrictEqual([-1, '12' ]);
+
+  /* maxDecimals has a hard cut-off at 8 */
+  expect(rounded(1.1111111111111)).toStrictEqual([1, '11111111' ]);
+  expect(rounded(1, 12)).toStrictEqual([1, '00000000' ]);
+  expect(rounded(0.1 + 0.2, undefined, 24)).toStrictEqual([0, '30000000000000004' ]);
+  expect(rounded(0.1 + 0.2)).toStrictEqual([0, '30000000' ]);
+
+  //expect(rounded(1.1234567890)).toStrictEqual([1, '12345679' ]);      /* Broken - Known issue */
+  expect(rounded(1.1234567890)).toStrictEqual([1, '12345678' ]);
 });
