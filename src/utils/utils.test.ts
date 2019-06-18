@@ -102,7 +102,7 @@ it("should calculate pools need for a given percentage", () => {
 
 it('should round and split a decimal numer', () => {
   //expect(rounded(1.23456)).toStrictEqual([1, '23456']);               /* Broken - Known issue (maxDecimals doesn't truncate remaining zeroes) */
-  expect(rounded(1.23456)).toStrictEqual([1, '2345600']);
+  expect(rounded(1.23456)).toStrictEqual([1, '23456000']);
 
   expect(rounded(1.0)).toStrictEqual([1, undefined ]);
 
