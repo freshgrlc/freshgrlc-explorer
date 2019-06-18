@@ -2,7 +2,7 @@ import React from "react";
 
 export const rounded = (
   number: number,
-  decimals: number = 8,
+  decimals: number = 0,
   maxDecimals: number = decimals
 ): [number, string] => {
   number = Math.round(number * 10 ** decimals) / 10 ** decimals;

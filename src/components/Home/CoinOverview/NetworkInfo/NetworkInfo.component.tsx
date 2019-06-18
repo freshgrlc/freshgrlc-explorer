@@ -260,7 +260,7 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
             data: allTime != null ? allTime.coins.released : undefined,
             unit: coinInfo ? coinInfo.displaySymbol : undefined,
             alwaysSingular: true,
-            maxDecimals: 3,
+            decimals: 3,
           },
         ],
       },
