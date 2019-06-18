@@ -1,4 +1,5 @@
 import { IBlock } from "./IBlock.interface";
+import { IReference, ITransactionOutputReference, ISpentTransactionOutputReference } from "./IReference.interface";
 
 export type TransactionOutputType = 'p2pk' | 'p2pkh' | 'p2sh' | 'p2wpkh' | 'p2wsh' | 'data' | 'raw';
 
@@ -22,22 +23,6 @@ export interface IBlockTransaction
     height: number;
   };
 }
-
-export interface IReference {
-    href: string;
-}
-
-export interface ITransactionReference extends IReference {
-    txid: string;
-}
-
-export interface ISpentTransactionOutputReference extends ITransactionReference {
-    input: number;
-};
-
-export interface ITransactionOutputReference extends ITransactionReference {
-    output: number;
-};
 
 export interface ITransactionInput {
     amount: number;

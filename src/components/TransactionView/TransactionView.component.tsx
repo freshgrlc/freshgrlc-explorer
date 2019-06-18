@@ -5,13 +5,14 @@ import { IExpandedTransaction, ITransactionInput, ISimplifiedTransactionInput } 
 import { CoinTickerSymbol } from "interfaces/ICoinInfo.interface";
 
 import { getBaseUrl } from "utils/getBaseUrl.util";
-import { getCoinInfo } from "utils/getCoinInfo.util";
+import { getCoinInfo, getAllCoins } from "utils/getCoinInfo.util";
 import { Redirect } from "react-router";
 import { TransactionMetaInfo } from "./TransactionMetaInfo/TransactionMetaInfo.component";
 import { TransactionCoinMovement } from "./TransactionCoinMovement/TransactionCoinMovement.component";
 
 import { CoinInfoContext } from "context/CoinInfo.context";
 
+import { SearchBar } from "components/SearchBar/SearchBar.component";
 import { Section } from "components/Section/Section.component";
 import { PageLoadAnimation } from "components/PageLoadAnimation/PageLoadAnimation.component";
 
@@ -57,6 +58,7 @@ export const TransactionView: React.FC<IProps> = ({ routeParams }) => {
     }
     return transaction != null ? (
         <CoinInfoContext.Provider value={coinInfo}>
+            <SearchBar coins={getAllCoins()} preferredCoin={coinInfo ? coinInfo.ticker : undefined} />
             <div className={classes.transactionView}>
                 <h1>Transaction <span className={classes.txid}>{transaction.txid}</span></h1>
                 <Section>
