@@ -12,7 +12,18 @@ it("shouldn't pad", () => {
 });
 
 it("should format time", () => {
-  expect(formatTime(1559354809).split(" ")[0]).toBe("22:06:49");
+  const formatted = formatTime(1559354809);
+
+  expect(formatted.split(" ").length).toBe(3);
+  expect(formatted.split(" ")[0]).toBe("31-05-2019");
+  expect(formatted.split(" ")[1]).toBe("22:06:49");
+});
+
+it("leave out the date if within last 24 hours, unless forced", () => {
+  const date = Date.now() / 1000 - Math.round(Math.random() * 23.9 * 3600);
+
+  expect(formatTime(date).split(" ").length).toBe(2);
+  expect(formatTime(date, true).split(" ").length).toBe(3);
 });
 
 it("should adjust difficulty", () => {
