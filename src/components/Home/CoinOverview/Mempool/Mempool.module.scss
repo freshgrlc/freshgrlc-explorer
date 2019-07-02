@@ -11,6 +11,7 @@
     margin-right: auto;
 
     .none {
+        display: grid;
         height: 181px;
         width: 675px;
         background-color: $rowBackground2;
@@ -21,10 +22,10 @@
         h4 {
             color: $ultramuted;
             font-size: 230%;
-            font-weight: 100%;
             font-style: italic;
-            padding-top: auto;
-            padding-bottom: auto;
+            margin-top: auto;
+            margin-bottom: auto;
+            padding-bottom: 15px;
         }
     }
 }
