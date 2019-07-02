@@ -29,6 +29,14 @@ export const App: React.FC = () => {
             <Switch>
                 <Route exact path="/" component={Waiting(Home)} />
                 <Route
+                    path="/:coin1(grlc|tux|tgrlc)/home"
+                    component={RouteParams(Waiting(Home))}
+                />
+                <Route
+                    path="/:coin1(grlc|tux|tgrlc)\+:coin2(grlc|tux|tgrlc)/home"
+                    component={RouteParams(Waiting(Home))}
+                />
+                <Route
                     path="/:coin(grlc|tux|tgrlc)/blocks/:hash(\w{64,64})"
                     component={RouteParams((props: any) => (
                         <div>

@@ -1,9 +1,12 @@
-.overviews {
+.overview {
     display: grid;
-    grid-template-columns: auto auto;
-    grid-gap: 50px;
     justify-items: center;
 
     width: 100%;
     height: 100%;
+}
+
+.overviews {
+    grid-template-columns: auto auto;
+    grid-gap: 50px;
 }

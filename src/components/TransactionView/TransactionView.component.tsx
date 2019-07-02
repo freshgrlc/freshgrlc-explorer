@@ -16,7 +16,7 @@ import { TransactionCoinMovement } from './TransactionCoinMovement/TransactionCo
 
 import { CoinInfoContext } from 'context/CoinInfo.context';
 
-import { SearchBar } from 'components/SearchBar/SearchBar.component';
+import { Banner } from 'components/Banner/Banner.component';
 import { Section } from 'components/Section/Section.component';
 import { PageLoadAnimation } from 'components/PageLoadAnimation/PageLoadAnimation.component';
 
@@ -62,7 +62,7 @@ export const TransactionView: React.FC<IProps> = ({ routeParams }) => {
     }
     return transaction != null ? (
         <CoinInfoContext.Provider value={coinInfo}>
-            <SearchBar coins={getAllCoins()} preferredCoin={coinInfo ? coinInfo.ticker : undefined} />
+            <Banner coins={getAllCoins()} preferredCoin={coinInfo ? coinInfo.ticker : undefined} />
             <div className={classes.transactionView}>
                 <h1>
                     Transaction <span className={classes.txid}>{transaction.txid}</span>

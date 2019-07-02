@@ -1,0 +1,47 @@
+@import '../../../variables.scss';
+
+
+.banner {
+    display: block;
+    margin: 0;
+    padding: 0px;
+    font-size: 1.5em;
+    font-style: italic;
+    font-weight: normal;
+    text-align: center;
+
+    h1 {
+        color: $primary;
+        font-family: "TeX Gyre Schola", serif;
+        font-style: italic;
+        font-size: 48px;
+        font-weight: normal;
+        margin: 0 auto;
+        max-width: 560px;
+        text-shadow: $shadow;
+
+        .subdomain {
+            font-size: 56px;
+            text-transform: capitalize;
+            color: $deepAccent;
+        }
+    }
+
+    h2 {
+        background: $primary;
+        color: $backgroundColor;
+        font-family: "Space Mono", monospace;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: bold;
+        letter-spacing: 0.5em;
+        margin: 0 auto;
+        max-width: 560px;
+        padding: 2px;
+        text-transform: uppercase;
+    }
+
+    .subtext {
+        margin: 15px 0px;
+    }
+}

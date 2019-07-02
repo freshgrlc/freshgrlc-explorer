@@ -1,20 +1,41 @@
 import React from 'react';
 
 import { CoinOverview } from './CoinOverview/CoinOverview.component';
-import { SearchBar } from 'components/SearchBar/SearchBar.component';
+import { Banner } from 'components/Banner/Banner.component';
 
-import { getAllCoins } from 'utils/getCoinInfo.util';
+import { CoinTickerSymbol } from 'interfaces/ICoinInfo.interface';
+
+import { getAllCoins, getCoinInfo } from 'utils/getCoinInfo.util';
 
 import classes from './Home.module.scss';
 
-export const Home: React.FC = () => {
+interface IProps {
+    routeParams: {
+        coin1: CoinTickerSymbol;
+        coin2?: CoinTickerSymbol;
+    };
+}
+
+export const Home: React.FC<IProps> = ({ routeParams }) => {
     const coins = getAllCoins();
+    var selectedCoins = [ coins[0], coins[1] ];
+
+    if (routeParams !== undefined) {
+        if (routeParams.coin2 !== undefined) {
+            selectedCoins = [
+                routeParams.coin1,
+                routeParams.coin2
+            ].map(ticker => getCoinInfo(ticker as CoinTickerSymbol));
+        } else {
+            selectedCoins = [ getCoinInfo(routeParams.coin1 as CoinTickerSymbol) ];
+        }
+    }
+
     return (
         <div className={classes.home}>
-            <SearchBar coins={coins} />
-            <div className={classes.overviews}>
-                <CoinOverview coinInfo={coins[0]} />
-                <CoinOverview coinInfo={coins[1]} />
+            <Banner coins={coins} preferredCoin={selectedCoins.length === 1 ? selectedCoins[0].ticker : undefined} />
+            <div className={classes.overview + (selectedCoins.length > 1 ? ' ' + classes.overviews : '')}>
+                { selectedCoins.map((coin, index) => ( <CoinOverview key={index} coinInfo={coin} /> )) }
             </div>
         </div>
     );
