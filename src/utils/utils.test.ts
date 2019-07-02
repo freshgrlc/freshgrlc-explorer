@@ -101,8 +101,7 @@ it('should calculate pools need for a given percentage', () => {
 });
 
 it('should round and split a decimal numer', () => {
-    //expect(rounded(1.23456)).toStrictEqual([1, '23456']);               /* Broken - Known issue (maxDecimals doesn't truncate remaining zeroes) */
-    expect(rounded(1.23456)).toStrictEqual([1, '23456000']);
+    expect(rounded(1.23456)).toStrictEqual([1, '23456']);
 
     expect(rounded(1.0)).toStrictEqual([1, undefined]);
 
@@ -116,20 +115,22 @@ it('should round and split a decimal numer', () => {
     expect(rounded(1.0, undefined, 2)).toStrictEqual([1, undefined]);
     expect(rounded(1.123, undefined, 2)).toStrictEqual([1, '12']);
 
-    //expect(rounded(1.127, undefined, 2)).toStrictEqual([1, '13' ]);     /* Broken - Known issue (maxDecimals doesn't round) */
-    expect(rounded(1.127, undefined, 2)).toStrictEqual([1, '12']);
+    expect(rounded(1.127, undefined, 2)).toStrictEqual([1, '13']);
+    expect(rounded(-1.127, undefined, 2)).toStrictEqual([-1, '13']);
 
-    //expect(rounded(-1.127, undefined, 2)).toStrictEqual([-1, '13' ]);   /* Broken - Known issue (maxDecimals doesn't round) */
-    expect(rounded(-1.127, undefined, 2)).toStrictEqual([-1, '12']);
-
-    /* maxDecimals has a hard cut-off at 8 */
+    /* maxDecimals has a default hard cut-off at 8 places */
     expect(rounded(1.1111111111111)).toStrictEqual([1, '11111111']);
     expect(rounded(1, 12)).toStrictEqual([1, '00000000']);
     expect(rounded(0.1 + 0.2, undefined, 24)).toStrictEqual([0, '30000000000000004']);
 
-    //expect(rounded(0.1 + 0.2)).toStrictEqual([0, '3' ]);                /* Broken - Known issue (maxDecimals doesn't truncate remaining zeroes) */
-    expect(rounded(0.1 + 0.2)).toStrictEqual([0, '30000000']);
+    expect(rounded(0.1 + 0.2)).toStrictEqual([0, '3' ]);
 
-    //expect(rounded(1.1234567890)).toStrictEqual([1, '12345679' ]);      /* Broken - Known issue (maxDecimals doesn't round) */
-    expect(rounded(1.123456789)).toStrictEqual([1, '12345678']);
+    expect(rounded(1.1234567890)).toStrictEqual([1, '12345679' ]);
+
+    expect(rounded(200)).toStrictEqual([200, undefined]);
+    expect(rounded(-200)).toStrictEqual([-200, undefined]);
+    expect(rounded(200.0)).toStrictEqual([200, undefined]);
+
+    expect(rounded(200.1234)).toStrictEqual([200, '1234']);
+    expect(rounded(-200.1234)).toStrictEqual([-200, '1234']);
 });

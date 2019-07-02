@@ -1,13 +1,21 @@
 import React from 'react';
 
-export const rounded = (number: number, decimals: number = 0, maxDecimals: number = decimals): [number, string] => {
-    number = Math.round(number * 10 ** decimals) / 10 ** decimals;
-    const formatted = number
-        .toFixed(decimals)
-        .replace(/\.?0+$/, '')
-        .split('.');
+export const rounded = (number: number, decimals?: number, maxDecimals: number = 8): [number, string | undefined] => {
+    const negative = number < 0;
+    const absolute = Math.abs(number.valueOf());
+    const integer = Math.floor(absolute);
+    const decimalpart = absolute - integer;
+    const roundTo = decimals !== undefined ? decimals : decimalpart.toString().length > 2 + maxDecimals ? maxDecimals : undefined;
+    const roundedDecimals = (
+        roundTo !== undefined ? decimalpart.toFixed(roundTo) : decimalpart.toString()
+    ).substring(2, 2 + maxDecimals);
 
-    return [Number(formatted[0]), (formatted[1] ? formatted[1] : '').padEnd(maxDecimals, '0')];
+    return [
+        negative ? -integer : integer,
+        roundedDecimals !== '' ? (
+            decimals !== undefined ? roundedDecimals : roundedDecimals.replace(/0+$/, '')
+        ) : undefined
+    ];
 };
 
 export const formatDecimal = (integer: number, decimalClass?: string, roundedDecimals?: string): JSX.Element => {
@@ -31,7 +39,7 @@ interface INumericalValueOptions {
 export const formatNumericalValue = (value: number | string, options: INumericalValueOptions) => {
     const { decimals, maxDecimals, unit, alwaysSingular, decimalClass, unitClass } = options;
 
-    let roundedData: [number, string] | undefined;
+    let roundedData: [number, string | undefined] | undefined;
     let formattedData: JSX.Element | string | undefined;
     let isExactlyOne: boolean = false;
 
