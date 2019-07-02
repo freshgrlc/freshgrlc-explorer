@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 import { ICoinInfo, CoinTickerSymbol } from 'interfaces/ICoinInfo.interface';
 
@@ -33,7 +32,7 @@ export const CoinSelector: React.FC<IProps> = function({ coins }) {
                 coins.map((coin, index) => (
                     <React.Fragment key={index}>
                         {index ? (<span className={classes.separator}>{'\u25CF'}</span>) : ''}
-                        <Link className={classes.selectableCoin} to={`/${makeCoinsUrl(coin)}/home/`}>{coin.name}</Link>
+                        <a className={classes.selectableCoin} href={`/${makeCoinsUrl(coin)}/home/`}>{coin.name}</a>
                     </React.Fragment>
                 ))
             }
