@@ -18,7 +18,7 @@ export const formatTime = (timestamp: number | null | undefined, alwaysIncludeDa
     );
 };
 
-export const formatTimeDiff = (timestamp1?: number, timestamp2?: number): [number | string, string | undefined] => {
+export const formatTimeDiff = (timestamp1?: number, timestamp2?: number, useSeconds?: boolean): [number | string, string | undefined] => {
     if (timestamp1 === undefined || timestamp1 === null || timestamp2 === undefined) {
         return ['Unknown', undefined];
     }
@@ -26,7 +26,7 @@ export const formatTimeDiff = (timestamp1?: number, timestamp2?: number): [numbe
     const timeDiff = timestamp2 - timestamp1;
 
     if (timeDiff < 60) {
-        return ['<1', 'minute'];
+        return useSeconds ? [timeDiff, 'second'] : ['<1', 'minute'];
     }
     if (timeDiff < 3600) {
         return [Math.round(timeDiff / 60), 'minute'];
@@ -45,6 +45,11 @@ export const formatTimeDiff = (timestamp1?: number, timestamp2?: number): [numbe
     }
     return [Math.round(timeDiff / 220752000), 'year'];
 };
+
+export const formatTimeDiffToString = (timestamp1?: number, timestamp2?: number, useSeconds?: boolean): string => {
+    const unformatted = formatTimeDiff(timestamp1, timestamp2, useSeconds);
+    return unformatted[0].toString() + ' ' + unformatted[1] + (unformatted[0] !== 1 ? 's' : '');
+}
 
 export const formatTimeSince = (timestamp?: number): [number | string, string | undefined] => {
     return formatTimeDiff(timestamp, Date.now() / 1000);

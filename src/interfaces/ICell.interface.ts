@@ -8,6 +8,7 @@ export interface ICellStyle {
 
 export interface ICell {
     label?: string;
+    largelabel?: boolean;
     data?: string | Number;
     link?: string | null;
     externalLink?: boolean;

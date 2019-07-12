@@ -1,26 +1,11 @@
 import { IBlock } from './IBlock.interface';
-import { IReference, ITransactionOutputReference, ISpentTransactionOutputReference } from './IReference.interface';
+import { IReference, IBlockReference, ITransactionOutputReference, ISpentTransactionOutputReference } from './IReference.interface';
 
 export type TransactionOutputType = 'p2pk' | 'p2pkh' | 'p2sh' | 'p2wpkh' | 'p2wsh' | 'data' | 'raw';
 
-export interface IUnconfirmedTransaction {
-    confirmed: boolean;
-    fee: number;
-    txid: string;
-    block: null;
-    coinbase: boolean;
-    totalvalue: number;
-    firstseen: number | null;
-    pending?: number;
-    size: number;
-}
-
-export interface IBlockTransaction extends Omit<IUnconfirmedTransaction, 'block'> {
-    block: {
-        href: string;
-        hash: string;
-        height: number;
-    };
+export interface ITransactionMutations {
+    inputs: { [key: string]: number };
+    outputs: { [key: string]: number };
 }
 
 export interface ITransactionInput {
@@ -29,6 +14,7 @@ export interface ITransactionInput {
     spends: ITransactionOutputReference;
     address: string;
 }
+export type TransactionInputs = { [key: string]: ITransactionInput };
 
 export interface ISimplifiedTransactionInput {
     address: string;
@@ -45,10 +31,42 @@ export interface ITransactionOutput {
     type: TransactionOutputType;
     script: string;
 }
+export type TransactionOutputs = { [key: string]: ITransactionOutput };
 
-export interface IExpandedTransaction extends Omit<IBlockTransaction, 'block'> {
-    inputs: { [key: string]: ITransactionInput };
-    outputs: { [key: string]: ITransactionOutput };
-    mutations: IReference;
-    block: IBlock;
+export interface ITransaction {
+    confirmed: boolean;
+    fee: number;
+    txid: string;
+    coinbase: boolean;
+    totalvalue: number;
+    firstseen: number | null;
+    pending?: number;
+    size: number;
+
+    block: IBlockReference | IBlock | null;
+    inputs: IReference | TransactionInputs;
+    outputs: IReference | TransactionOutputs;
+    mutations: IReference | ITransactionMutations;
+}
+
+export interface IUnconfirmedTransaction extends Omit<ITransaction, 'block'> {
+    block: null;
+}
+
+export interface IBlockTransaction extends Omit<ITransaction, 'block'> {
+    block: IBlockReference;
+}
+
+export interface IExpandedTransaction extends ITransaction {
+    inputs: TransactionInputs;
+    outputs: TransactionOutputs;
+    mutations: ITransactionMutations;
+    block: IBlock | null;
+}
+
+export interface IExpandedBlockTransaction extends IBlockTransaction {
+    inputs: TransactionInputs;
+    outputs: TransactionOutputs;
+    mutations: ITransactionMutations;
+    block: IBlockReference;
 }

@@ -23,6 +23,10 @@ const TransactionView = React.lazy(() =>
     import('components/TransactionView/TransactionView.component').then((module) => wrapModule(module.TransactionView))
 );
 
+const BlockView = React.lazy(() =>
+    import('components/BlockView/BlockView.component').then((module) => wrapModule(module.BlockView))
+);
+
 export const App: React.FC = () => {
     return (
         <Router>
@@ -38,12 +42,7 @@ export const App: React.FC = () => {
                 />
                 <Route
                     path="/:coin(grlc|tux|tgrlc)/blocks/:hash(\w{64,64})"
-                    component={RouteParams((props: any) => (
-                        <div>
-                            {props.routeParams.coin}/blocks/
-                            {props.routeParams.hash}
-                        </div>
-                    ))}
+                    component={RouteParams(Waiting(BlockView))}
                 />
                 <Route
                     path="/:coin(grlc|tux|tgrlc)/transactions/:txid(\w{64,64})"

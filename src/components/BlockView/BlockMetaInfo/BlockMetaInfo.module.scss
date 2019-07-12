@@ -1,0 +1,25 @@
+@import '../../../variables.scss';
+
+.blockMetaInfo {
+    width: 800px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    .header {
+        font-size: 1.1em;
+        background-color: $rowBackground2;
+        margin: 0px;
+        width: 100%;
+        border: $border;
+        border-top-left-radius: 25px;
+        border-top-right-radius: 25px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+
+        .blockhash {
+            font-family: $mono;
+            font-weight: normal;
+        }
+    }
+}

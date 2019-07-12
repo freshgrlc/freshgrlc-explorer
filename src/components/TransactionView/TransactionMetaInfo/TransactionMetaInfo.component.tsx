@@ -8,7 +8,7 @@ import { CoinInfoContext } from 'context/CoinInfo.context';
 
 import { Row } from 'components/Row/Row.component';
 
-import { formatTime, formatTimeDiff } from 'utils/formatTime.util';
+import { formatTime, formatTimeDiffToString } from 'utils/formatTime.util';
 
 import classes from './TransactionMetaInfo.module.scss';
 
@@ -38,9 +38,7 @@ export const TransactionMetaInfo: React.FC<IProps> = ({ transaction }) => {
                               true
                           ) +
                           (transaction.firstseen
-                              ? ` (After ${formatTimeDiff(transaction.firstseen, transaction.block.firstseen)
-                                    .join(' ')
-                                    .trim()})`
+                              ? ` (After ${formatTimeDiffToString(transaction.firstseen, transaction.block.firstseen)})`
                               : '')
                         : '-',
                 },

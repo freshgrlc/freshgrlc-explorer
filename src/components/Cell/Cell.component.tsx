@@ -11,6 +11,7 @@ import classes from './Cell.module.scss';
 
 export const Cell: React.FC<ICell> = ({
     label,
+    largelabel,
     data,
     link,
     externalLink,
@@ -93,7 +94,7 @@ export const Cell: React.FC<ICell> = ({
 
     return (
         <div className={`${classes.cell} ${cellStyle && cellStyle.color ? classes[cellStyle.color + 'Cell'] : ''}`}>
-            {label ? <h4 className={classes.label}>{label}</h4> : null}
+            {label ? <h4 className={classes.label + (largelabel ? ' ' + classes.largelabel : '')}>{label}</h4> : null}
             <div className={classes.info} style={processOuterCellStyle(cellStyle)}>
                 {hasData ? (
                     wrapInLink(<div className={notMono ? undefined : classes.mono}>{formattedData}</div>, cellStyle)

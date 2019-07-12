@@ -1,0 +1,60 @@
+@import "../../variables.scss";
+
+.transactions {
+    border: $border;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1348px;
+    border-radius: 20px;
+
+    div {
+        padding-top: 8px;
+        padding-bottom: 8px;
+
+        div {
+            padding: 0px;
+        }
+    }
+
+    div:first-child {
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+
+        div:first-child {
+            border-top-left-radius: 20px;
+        }
+
+        div:last-child {
+            border-top-right-radius: 20px;
+        }
+    }
+
+    div:last-child {
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+
+        div:first-child {
+            border-bottom-left-radius: 20px;
+        }
+
+        div:last-child {
+            border-bottom-right-radius: 20px;
+        }
+    }
+
+    div:nth-child(2n + 0) {
+        background-color: $rowBackground1;
+
+        div {
+            background-color: inherit;
+        }
+    }
+
+    div:nth-child(2n + 1) {
+        background-color: $rowBackground2;
+
+        div {
+            background-color: inherit;
+        }
+    }
+}

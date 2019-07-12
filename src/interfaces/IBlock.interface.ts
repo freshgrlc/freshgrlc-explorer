@@ -1,5 +1,6 @@
 import { IBlockTransaction } from './ITransaction.interface';
 import { IMiner } from './IMiner.interface';
+import { IReference } from './IReference.interface';
 
 export interface IBlockSimple {
     hash: string;
@@ -9,8 +10,11 @@ export interface IBlockSimple {
     relayedby: string;
     firstseen: number;
     size: number;
-    miner: { href: string };
-    transactions: { href: string };
+    miner: IReference;
+    transactions: IReference;
+    totalfees: number;
+    totaltransacted: number;
+    miningreward: number;
 }
 
 export interface IBlock extends Omit<Omit<IBlockSimple, 'transactions'>, 'miner'> {
