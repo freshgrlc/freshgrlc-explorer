@@ -64,9 +64,6 @@ export const TransactionView: React.FC<IProps> = ({ routeParams }) => {
         <CoinInfoContext.Provider value={coinInfo}>
             <Banner coins={getAllCoins()} preferredCoin={coinInfo ? coinInfo.ticker : undefined} />
             <div className={classes.transactionView}>
-                <h1>
-                    Transaction <span className={classes.txid}>{transaction.txid}</span>
-                </h1>
                 <Section>
                     <TransactionMetaInfo transaction={transaction} />
                 </Section>
