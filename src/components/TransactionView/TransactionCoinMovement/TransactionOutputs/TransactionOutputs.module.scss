@@ -3,12 +3,14 @@
 .transactionOutputs {
     display: flex;
     flex-direction: column;
-    width: 730px;
+    width: 770px;
 
     .transactionOutput {
         display: flex;
         flex-direction: row;
         border-bottom: $border;
+        margin-left: -20px;
+        padding-left: 20px;
 
         height: 85px;
 
@@ -23,6 +25,13 @@
             }
         }
 
+        .arrow {
+            width: 40px;
+            margin-top: auto;
+            margin-bottom: auto;
+            font-size: 2.3em;
+        }
+
         .destination {
             font-family: $mono;
             display: flex;
@@ -35,9 +44,11 @@
 
             .address {
                 display: flex;
-                font-size: 95%;
+                font-size: 1.1em;
                 color: $primary;
                 padding-top: 14px;
+                padding-left: 3px;
+                padding-bottom: 2px;
             }
 
             .rawOutput {
@@ -46,18 +57,32 @@
 
             .script {
                 display: flex;
+                width: 41em;
                 font-size: 0.7em;
                 text-align: left;
                 color: $muted;
+                line-height: 1.3em;
+                padding: 4px;
+                background-color: $sunkenBackground;
+                border-radius: 8px;
 
                 .header {
                     font-family: $normal;
                     color: $slightlyMuted;
                     font-style: italic;
                     padding-right: 5px;
-                    padding-top: 2px;
                     height: auto;
+                    min-width: 32px;
                 }
+            }
+        }
+
+        .destinationOverflow {
+            width: auto;
+
+            .script {
+                width: auto;
+                padding-right: 1em;
             }
         }
 

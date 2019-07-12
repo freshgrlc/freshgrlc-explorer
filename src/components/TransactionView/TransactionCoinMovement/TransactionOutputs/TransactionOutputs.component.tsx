@@ -10,23 +10,25 @@ import classes from './TransactionOutputs.module.scss';
 
 interface IProps {
     outputs: ITransactionOutput[];
+    padToAmount?: number;
 }
 
 export const TransactionOutputs: React.FC<IProps> = ({ outputs }) => {
-    const convertDestination = (output: ITransactionOutput): [string, string] => {
+    const convertDestination = (output: ITransactionOutput): [string, string, string] => {
         if (output.address === null) {
-            return ['', output.script];
+            return ['Raw redeemscript', 'Script', output.script];
         }
 
         const splitted = output.address.split(': ');
         if (splitted.length > 1) {
-            return [splitted[0] + ' output', splitted[1]];
+            return [splitted[0] + ' output', splitted[0], splitted[1]];
         }
 
-        return [output.address, output.script];
+        return [output.address, 'Script', output.script];
     };
     const getDestinationHeader = (output: ITransactionOutput): string => convertDestination(output)[0];
-    const getDestinationRaw = (output: ITransactionOutput): string => convertDestination(output)[1];
+    const getDestinationRawType = (output: ITransactionOutput): string => convertDestination(output)[1];
+    const getDestinationRaw = (output: ITransactionOutput): string => convertDestination(output)[2];
     const isDataOutput = (output: ITransactionOutput): boolean =>
         output.address && output.address.split(': ')[0] === 'Data' ? true : false;
 
@@ -35,12 +37,13 @@ export const TransactionOutputs: React.FC<IProps> = ({ outputs }) => {
         <div className={classes.transactionOutputs}>
             {outputs.map((output, index) => (
                 <div key={index} className={classes.transactionOutput}>
-                    <div className={classes.destination}>
+                    <div className={classes.arrow}>➔</div>
+                    <div className={classes.destination + (output.type === 'raw' ? ' ' + classes.destinationOverflow : '')}>
                         <div className={classes.address + (output.type === 'raw' ? ' ' + classes.rawOutput : '')}>
                             <div className={classes.data}>{getDestinationHeader(output)}</div>
                         </div>
                         <div className={classes.script}>
-                            <div className={classes.header}>Script:</div>
+                            <div className={classes.header}>{getDestinationRawType(output)}:</div>
                             <div className={classes.data}>{getDestinationRaw(output)}</div>
                         </div>
                     </div>

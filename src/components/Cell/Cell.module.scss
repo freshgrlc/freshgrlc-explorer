@@ -12,7 +12,7 @@
     .label {
         margin: 0;
         font-size: 0.85em;
-        margin-bottom: 5px;
+        margin-bottom: 1px;
     }
 
     .info {
@@ -22,7 +22,7 @@
         align-items: flex-end;
 
         width: 100%;
-        height: 16px;
+        height: 20px;
 
         * {
             display: inline;
@@ -48,11 +48,16 @@
         }
 
         .link {
+            color: $primary;
             text-decoration: none;
         }
 
         .link:hover {
             text-decoration: underline;
+        }
+
+        .accentuatedLink {
+            color: $link;
         }
     }
 }

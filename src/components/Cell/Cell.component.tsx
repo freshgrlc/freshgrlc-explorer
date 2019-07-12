@@ -22,10 +22,11 @@ export const Cell: React.FC<ICell> = ({
     cellStyle,
 }) => {
     const wrapInLink = (contents: JSX.Element, cellStyle?: ICellStyle) => {
+        let className = classes.link + (cellStyle && cellStyle.linkColor !== 'normal' ? ' ' + classes.accentuatedLink : '');
         return link ? (
             externalLink ? (
                 <a
-                    className={classes.link}
+                    className={className}
                     href={link}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -34,7 +35,7 @@ export const Cell: React.FC<ICell> = ({
                     {contents}
                 </a>
             ) : (
-                <Link className={classes.link} to={link} style={processInnerCellStyle(cellStyle)}>
+                <Link className={className} to={link} style={processInnerCellStyle(cellStyle)}>
                     {contents}
                 </Link>
             )

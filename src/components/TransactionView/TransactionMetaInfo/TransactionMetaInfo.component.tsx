@@ -19,7 +19,7 @@ interface IProps {
 export const TransactionMetaInfo: React.FC<IProps> = ({ transaction }) => {
     const coinInfo = useContext(CoinInfoContext);
 
-    const table: IRow[] = [
+    const table: IRow[] = ([
         {
             label: 'Received',
             cells: [
@@ -56,8 +56,8 @@ export const TransactionMetaInfo: React.FC<IProps> = ({ transaction }) => {
                             ? `/${coinInfo.ticker}/blocks/${transaction.block.hash}`
                             : undefined,
                     cellStyle: {
-                        fontSize: 'smaller',
-                    } as ICellStyle,
+                        linkColor: 'normal'
+                    }
                 },
             ],
         },
@@ -115,7 +115,7 @@ export const TransactionMetaInfo: React.FC<IProps> = ({ transaction }) => {
                       },
             ],
         },
-    ].map(
+    ] as IRow[]).map(
         (row: IRow): IRow => {
             row.cells.forEach((cell: ICell) => {
                 if (cell.cellStyle === undefined) {

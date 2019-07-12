@@ -20,7 +20,6 @@ export const TransactionCoinMovement: React.FC<IProps> = ({ transaction, simplif
                 coinbase={transaction.coinbase}
                 coinbaseAmount={transaction.totalvalue}
             />
-            <div className={classes.coinMovementArrow}>➔</div>
             <TransactionOutputs outputs={Object.values(transaction.outputs)} />
         </div>
     );

@@ -119,6 +119,9 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
                         label: 'Height',
                         data: formattedBlock.height,
                         link: formattedBlock.url,
+                        cellStyle: {
+                            linkColor: 'accentuate'
+                        }
                     },
                     {
                         label: 'Recieved at',
