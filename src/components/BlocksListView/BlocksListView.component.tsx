@@ -56,8 +56,9 @@ export const BlocksListView: React.FC<IProps> = ({ routeParams, queryParams }) =
     if (apiStart < 1) {
         apiStart = 1;
     }
+    const apiEnd = apiStart + queryParams.count - 1;
 
-    const { data: blocks, error } = useFetch<IBlock[]>(
+    const { data: blocks, isLoading, error } = useFetch<IBlock[]>(
         `${baseUrl}/blocks/?start=${apiStart}&limit=${queryParams.count}&expand=transactions,miner`
     );
 
@@ -67,13 +68,15 @@ export const BlocksListView: React.FC<IProps> = ({ routeParams, queryParams }) =
     }
 
     const innerPage = (blocks: IBlock[]) => {
-        const lowestBlock = blocks[0].height;
-        const highestBlock = blocks[blocks.length-1].height;
+        const lowestBlock = blocks.length > 0 ? blocks[0].height : apiStart;
+        const highestBlock = blocks.length > 0 ? blocks[blocks.length-1].height : undefined;
         const firstBlock = !reverseDirection ? lowestBlock : highestBlock;
         const lastBlock = reverseDirection ? lowestBlock : highestBlock;
         return (
             <>
-                <p>Showing blocks {firstBlock} to {lastBlock}</p>
+                {firstBlock && lastBlock ? (
+                    <p>Showing blocks {firstBlock} to {lastBlock}</p>
+                ) : undefined}
                 <BlockListNavigation
                     blocksPerPage={queryParams.count as number}
                     reverseDirection={reverseDirection}
@@ -82,9 +85,13 @@ export const BlocksListView: React.FC<IProps> = ({ routeParams, queryParams }) =
                 />
                 <div className={classes.wrapper}>
                     <div className={classes.blockList}>
-                        {(queryParams.direction === 'asc' ? blocks : blocks.reverse()).map((block: IBlock, index: number) => (
-                            <BlockSummary key={index} block={block} first={index === 0} highlighted={index % 2 === 1}/>
-                        ))}
+                        {blocks.length > 0 ? (
+                            (queryParams.direction === 'asc' ? blocks : blocks.reverse()).map((block: IBlock, index: number) => (
+                                <BlockSummary key={index} block={block} first={index === 0} highlighted={index % 2 === 1}/>
+                            ))
+                        ) : (
+                            <p>Block {apiStart} is beyond the tip of the blockchain</p>
+                        )}
                     </div>
                 </div>
                 <BlockListNavigation
@@ -101,7 +108,12 @@ export const BlocksListView: React.FC<IProps> = ({ routeParams, queryParams }) =
         <CoinInfoContext.Provider value={coinInfo}>
             <Banner coins={getAllCoins()} preferredCoin={coinInfo ? coinInfo.ticker : undefined} />
             <Section header="Browse blockchain">
-                {blocks != null && blocks.length > 0 ? innerPage(blocks) : <PageLoadAnimation />}
+                {!isLoading && blocks != null ? innerPage(blocks) : (
+                    <>
+                        <p>Loading blocks {reverseDirection ? apiEnd : apiStart} to {reverseDirection ? apiStart : apiEnd}</p>
+                        <PageLoadAnimation />
+                    </>
+                )}
             </Section>
         </CoinInfoContext.Provider>
     );

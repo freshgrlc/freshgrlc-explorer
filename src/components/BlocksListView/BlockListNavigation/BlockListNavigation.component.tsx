@@ -8,7 +8,7 @@ import classes from './BlockListNavigation.module.scss';
 interface IProps {
     reverseDirection: boolean;
     blocksPerPage: number;
-    currentHighest: number;
+    currentHighest: number | undefined;
     currentLowest: number;
 }
 
@@ -28,7 +28,10 @@ export const BlockListNavigation: React.FC<IProps> = ({ reverseDirection, blocks
                 currentHighest = blocksPerPage * 2;
             }
         }
-        const newStart = (reverseDirection ? currentHighest : currentLowest) + (backwards ? -blocksPerPage : blocksPerPage);
+        if (!backwards && (currentHighest === undefined || currentHighest < currentLowest + blocksPerPage - 1)) {
+            return undefined;
+        }
+        const newStart = (reverseDirection ? (currentHighest ? currentHighest : currentLowest + blocksPerPage) : currentLowest) + (backwards ? -blocksPerPage : blocksPerPage);
         return `/${coinInfo.ticker}/blocks/?start=${newStart}&direction=${reverseDirection?'desc':'asc'}&count=${blocksPerPage}`;
     };
 
