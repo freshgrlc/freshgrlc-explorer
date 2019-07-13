@@ -18,7 +18,7 @@ export const Transactions: React.FC<IProps> = ({ transactions, highlightRows, bo
     const calcHeight = (height: number): React.CSSProperties => {
         var style: React.CSSProperties = {};
 
-        style.height = 31 + 30 * height;
+        style.height = 31 + 34 * height;
         return style;
     };
 

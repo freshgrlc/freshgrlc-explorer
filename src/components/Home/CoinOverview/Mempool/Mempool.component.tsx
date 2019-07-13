@@ -12,16 +12,18 @@ interface IProps {
 
 export const Mempool: React.FC<IProps> = ({ transactions }) => {
     return (
-        <Section header="Transactions pending confirmation">
+        <Section header="Transactions waiting for confirmation">
             <div className={classes.mempool}>
                 {transactions.length > 0 ? (
-                    <Transactions
-                        transactions={transactions}
-                        height={5}
-                        border={true}
-                        highlightRows={true}
-                        showPendingColumn={true}
-                    />
+                    <div className={classes.wrapper}>
+                        <Transactions
+                            transactions={transactions}
+                            height={5}
+                            border={false}
+                            highlightRows={true}
+                            showPendingColumn={true}
+                        />
+                    </div>
                 ) : (
                     <span className={classes.none}>
                         <h4>No unconfirmed transactions</h4>

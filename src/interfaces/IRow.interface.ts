@@ -5,4 +5,5 @@ export interface IRow {
     labelWidth?: string;
     cells: ICell[];
     wide?: boolean;
+    extrawide?: boolean;
 }

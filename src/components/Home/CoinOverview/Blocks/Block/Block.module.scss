@@ -10,26 +10,39 @@
     margin: 0px auto;
     border: $border;
     border-radius: 25px;
-    background-color: $sunkenBackground;
+    background-color: $rowBackground2;
 
     .header {
         font-size: 1em;
         font-family: $mono;
-        background-color: $rowBackground2;
         margin: 0px;
         width: 100%;
         border-top-left-radius: 25px;
         border-top-right-radius: 25px;
         padding-top: 10px;
-        padding-bottom: 10px;
+        padding-bottom: 6px;
 
         .link {
             color: $primary;
             text-decoration: none;
+            background-color: $semiSunkenBackground;
+            display: inline-block;
+            width: 650px;
+            padding: 5px;
+            border-radius: 10px;
+
+            .headerLabel {
+                font-family: $normal;
+                font-size: 0.85em;
+            }
         }
 
         .link:hover {
             text-decoration: underline;
+
+            .headerLabel {
+                text-decoration: none;
+            }
         }
     }
 
@@ -40,19 +53,14 @@
         align-items: center;
 
         width: 100%;
-        height: 48px;
-    }
-    .data:first-of-type {
-        border-top: $borderThin;
+        height: 58px;
     }
 
     .transactions {
         width: 100%;
-        border-top: $borderThin;
 
         .header {
             text-align: center;
-            margin: 10px 0;
             font-size: 1.15em;
             font-family: $normal;
         }

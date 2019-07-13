@@ -6,7 +6,7 @@ import { IRow } from 'interfaces/IRow.interface';
 
 import classes from './Row.module.scss';
 
-export const Row: React.FC<IRow> = ({ label, labelWidth, cells, wide }) => {
+export const Row: React.FC<IRow> = ({ label, labelWidth, cells, wide, extrawide }) => {
     const getLabelStyle = (width?: string): React.CSSProperties => {
         var style: React.CSSProperties = {};
 
@@ -28,7 +28,7 @@ export const Row: React.FC<IRow> = ({ label, labelWidth, cells, wide }) => {
     return (
         <div
             className={`
-        ${classes.row} ${hasCellLabels || wide ? classes.verticalPaddedRow : ''}`}
+        ${classes.row} ${extrawide ? classes.verticalExtraPaddedRow : hasCellLabels || wide ? classes.verticalPaddedRow : ''}`}
         >
             <h3
                 className={`${classes.label} ${hasCellLabels ? classes.verticalPaddedLabel : ''} ${

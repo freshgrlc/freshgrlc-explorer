@@ -52,6 +52,17 @@ export const Cell: React.FC<ICell> = ({
             return undefined;
         }
 
+        if (cellStyle.sunken || cellStyle.sunkenData) {
+            if (innerCell) {
+                style.backgroundColor = '#34322e';
+                style.padding = '4px';
+                style.borderRadius = '10px';
+                style.width = '90%';
+            } else {
+                style.height = '28px';
+            }
+        }
+
         if (innerCell && cellStyle.align) {
             if (cellStyle.align === 'left') {
                 style.marginRight = 'auto';
@@ -94,12 +105,12 @@ export const Cell: React.FC<ICell> = ({
 
     return (
         <div className={`${classes.cell} ${cellStyle && cellStyle.color ? classes[cellStyle.color + 'Cell'] : ''}`}>
-            {label ? <h4 className={classes.label + (largelabel ? ' ' + classes.largelabel : '')}>{label}</h4> : null}
+            {label ? <h4 className={classes.label + (largelabel ? ' ' + classes.largelabel : '') + (cellStyle && cellStyle.sunken ? ' ' + classes.sunkenLabel : '')}>{label}</h4> : null}
             <div className={classes.info} style={processOuterCellStyle(cellStyle)}>
                 {hasData ? (
                     wrapInLink(<div className={notMono ? undefined : classes.mono}>{formattedData}</div>, cellStyle)
                 ) : (
-                    <img className={classes.loading} src={loading} alt="Loading" />
+                    wrapInLink(<img className={classes.loading} src={loading} alt="Loading" />, cellStyle)
                 )}
             </div>
         </div>

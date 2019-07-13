@@ -4,6 +4,8 @@ export interface ICellStyle {
     color?: 'normal' | 'lighter' | 'light' | 'darker';
     fontSize?: 'normal' | 'smaller' | 'small';
     linkColor?: 'normal' | 'accentuate';
+    sunken?: boolean;
+    sunkenData?: boolean;
 }
 
 export interface ICell {

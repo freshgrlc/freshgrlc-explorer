@@ -30,9 +30,9 @@
 }
 
 .transactionHighlightedRow:nth-child(2n + 0) {
-    background-color: $rowBackground1;
+    background-color: $sunkenBackground;
 }
 
 .transactionHighlightedRow:nth-child(2n + 1) {
-    background-color: $rowBackground2;
+    background-color: $semiSunkenBackground;
 }

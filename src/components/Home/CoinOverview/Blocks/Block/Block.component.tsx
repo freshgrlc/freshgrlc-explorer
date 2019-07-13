@@ -7,6 +7,7 @@ import { Transactions } from '../../Transactions/Transactions.component';
 import { CoinInfoContext } from 'context/CoinInfo.context';
 
 import { IBlock } from 'interfaces/IBlock.interface';
+import { ICellStyle } from 'interfaces/ICell.interface';
 
 import { formatTime } from 'utils/formatTime.util';
 
@@ -19,17 +20,19 @@ interface IProps {
 export const Block: React.FC<IProps> = React.memo(
     ({ block }) => {
         const coinInfo = useContext(CoinInfoContext);
+        const tableCellStyle: ICellStyle = { sunken: true };
         return coinInfo ? (
             <div className={classes.block}>
                 <h3 className={classes.header}>
                     <Link to={`/${coinInfo.ticker}/blocks/${block.hash}`} className={classes.link}>
+                        <div className={classes.headerLabel}>Block</div>
                         {block.hash}
                     </Link>
                 </h3>
                 <div className={classes.data}>
-                    <Cell label="Height" data={block.height.toString()} cellStyle={{ color: 'normal' }} />
-                    <Cell label="Difficulty" data={block.difficulty.toString()} cellStyle={{ color: 'lighter' }} />
-                    <Cell label="Received at" data={formatTime(block.firstseen)} cellStyle={{ color: 'normal' }} />
+                    <Cell label="Height" data={block.height.toString()} cellStyle={tableCellStyle} />
+                    <Cell label="Difficulty" data={block.difficulty.toString()} cellStyle={tableCellStyle} />
+                    <Cell label="Received at" data={formatTime(block.firstseen)} cellStyle={tableCellStyle} />
                 </div>
                 <div className={classes.data}>
                     <Cell
@@ -38,13 +41,13 @@ export const Block: React.FC<IProps> = React.memo(
                         link={block.miner.website}
                         externalLink={true}
                         notMono={true}
-                        cellStyle={{ color: 'lighter' }}
+                        cellStyle={tableCellStyle}
                     />
-                    <Cell label="Size" data={block.size.toString()} unit="byte" cellStyle={{ color: 'normal' }} />
+                    <Cell label="Size" data={block.size.toString()} unit="byte" cellStyle={tableCellStyle} />
                     <Cell
                         label="Transactions"
                         data={block.transactions.length.toString()}
-                        cellStyle={{ color: 'lighter' }}
+                        cellStyle={tableCellStyle}
                     />
                 </div>
                 <div className={classes.transactions}>

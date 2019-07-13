@@ -1,23 +1,24 @@
 @import '../../../../variables.scss';
 
 .mempool {
-    display: flex;
-    flex-flow: column;
-    justify-content: center;
-    align-items: center;
-
-    width: 675px;
-    margin-left: auto;
-    margin-right: auto;
+    .wrapper {
+        width: 675px;
+        padding: auto;
+        margin: auto;
+        background-color: $rowBackground2;
+        border: $border;
+        border-radius: 25px;
+    }
 
     .none {
         display: grid;
-        height: 181px;
+        height: 227px;
         width: 675px;
+        margin: auto;
         background-color: $rowBackground2;
 
         border: $border;
-        border-radius: 20px;
+        border-radius: 25px;
 
         h4 {
             color: $ultramuted;
