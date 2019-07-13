@@ -25,6 +25,7 @@ export const TransactionMetaInfo: React.FC<IProps> = ({ transaction }) => {
             cells: [
                 {
                     data: formatTime(transaction.firstseen, true),
+                    notMono: true
                 },
             ],
         },
@@ -41,6 +42,7 @@ export const TransactionMetaInfo: React.FC<IProps> = ({ transaction }) => {
                               ? ` (After ${formatTimeDiffToString(transaction.firstseen, transaction.block.firstseen)})`
                               : '')
                         : '-',
+                    notMono: true
                 },
             ],
         },
