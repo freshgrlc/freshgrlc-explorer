@@ -1,9 +1,5 @@
 import React, { useContext } from 'react';
 
-import { getBaseUrl } from 'utils/getBaseUrl.util';
-import { getCoinInfo, getAllCoins } from 'utils/getCoinInfo.util';
-import { Redirect } from 'react-router';
-
 import { CoinInfoContext } from 'context/CoinInfo.context';
 
 import { IExpandedBlockTransaction } from 'interfaces/ITransaction.interface';
@@ -12,7 +8,6 @@ import { IBlock } from 'interfaces/IBlock.interface';
 import { formatTime } from 'utils/formatTime.util';
 
 import { Cell } from 'components/Cell/Cell.component';
-import { ICellStyle } from 'interfaces/ICell.interface';
 
 
 import classes from './TransactionSummary.module.scss';
