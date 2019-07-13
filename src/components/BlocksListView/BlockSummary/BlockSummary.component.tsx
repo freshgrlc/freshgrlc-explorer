@@ -59,7 +59,8 @@ export const BlockSummary: React.FC<IProps> = ({ block, first, highlighted }) =>
                 largelabel={true}
                 data={block.transactions.length}
                 cellStyle={{
-                    size: '100px'
+                    size: '100px',
+                    dataNotImportant: block.transactions.length === 1
                 }}
             />
             <Cell
@@ -71,7 +72,8 @@ export const BlockSummary: React.FC<IProps> = ({ block, first, highlighted }) =>
                 decimals={8}
                 cellStyle={{
                     size: '140px',
-                    align: 'right'
+                    align: 'right',
+                    dataNotImportant: block.totaltransacted === 0.0
                 }}
             />
             <Cell

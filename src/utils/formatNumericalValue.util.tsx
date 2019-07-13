@@ -34,6 +34,7 @@ interface INumericalValueOptions {
     alwaysSingular?: boolean;
     decimalClass?: string;
     unitClass?: string;
+    dimValue?: boolean;
 }
 
 export const formatNumericalValue = (value: number | string, options: INumericalValueOptions) => {

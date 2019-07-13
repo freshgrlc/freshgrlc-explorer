@@ -99,7 +99,7 @@ export const Cell: React.FC<ICell> = ({
               unit,
               alwaysSingular,
               decimalClass: classes.decimals,
-              unitClass: classes.unit,
+              unitClass: classes.unit
           })
         : undefined;
 
@@ -108,7 +108,12 @@ export const Cell: React.FC<ICell> = ({
             {label ? <h4 className={classes.label + (largelabel ? ' ' + classes.largelabel : '') + (cellStyle && cellStyle.sunken ? ' ' + classes.sunkenLabel : '')}>{label}</h4> : null}
             <div className={classes.info} style={processOuterCellStyle(cellStyle)}>
                 {hasData ? (
-                    wrapInLink(<div className={notMono ? undefined : classes.mono}>{formattedData}</div>, cellStyle)
+                    wrapInLink(<div
+                        className={[
+                            notMono ? undefined : classes.mono,
+                            cellStyle && cellStyle.dataNotImportant ? classes.dimmedValue : undefined
+                        ].filter(e => e !== undefined).join(' ')}
+                    >{formattedData}</div>, cellStyle)
                 ) : (
                     wrapInLink(<img className={classes.loading} src={loading} alt="Loading" />, cellStyle)
                 )}

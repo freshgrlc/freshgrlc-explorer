@@ -6,6 +6,7 @@ export interface ICellStyle {
     linkColor?: 'normal' | 'accentuate';
     sunken?: boolean;
     sunkenData?: boolean;
+    dataNotImportant?: boolean;
 }
 
 export interface ICell {
