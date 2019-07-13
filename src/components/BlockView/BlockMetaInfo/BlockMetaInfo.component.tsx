@@ -22,6 +22,10 @@ interface IProps {
 export const BlockMetaInfo: React.FC<IProps> = ({ block, transactions }) => {
     const coinInfo = useContext(CoinInfoContext);
 
+    const isAddressMiner = block.miner.name.indexOf(' (') !== -1;
+    const minerLink = !isAddressMiner ? block.miner.website : `/${coinInfo.ticker}/address/${block.miner.name.split(' (')[0]}`;
+    const minerLinkExternal = !isAddressMiner;
+
     const table: IRow[] = ([
         {
             label: 'Height',
@@ -40,7 +44,15 @@ export const BlockMetaInfo: React.FC<IProps> = ({ block, transactions }) => {
                         ? (formatTime(block.firstseen, true) +
                           ` (After ${formatTimeDiffToString(block.timestamp, block.firstseen, true)})`
                         ) : '-',
-                    notMono: true
+                    notMono: block.firstseen ? true : false
+                },
+            ],
+        },
+        {
+            label: 'Relayed by',
+            cells: [
+                {
+                    data: block.relayedby ? block.relayedby : '-'
                 },
             ],
         },
@@ -98,8 +110,11 @@ export const BlockMetaInfo: React.FC<IProps> = ({ block, transactions }) => {
                 {
                     data: block.miner.name,
                     notMono: true,
-                    link: block.miner.website,
-                    externalLink: true
+                    link: minerLink,
+                    externalLink: minerLinkExternal,
+                    cellStyle: {
+                        linkColor: minerLinkExternal ? 'accentuate' : 'normal'
+                    }
                 },
             ],
         },
