@@ -1,7 +1,6 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
-
-// import classes from "./App.module.scss"
+import queryString from 'query-string';
 
 const Waiting = (Component: any) => {
     return (props: any) => (
@@ -12,7 +11,7 @@ const Waiting = (Component: any) => {
 };
 
 const RouteParams = (Component: React.FC<any>) => {
-    return ({ match }: any) => <Component routeParams={match.params} />;
+    return ({ match, location }: any) => <Component routeParams={match.params} queryParams={queryString.parse(location.search)} />;
 };
 
 const wrapModule = (module: any) => ({ default: module });
