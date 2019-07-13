@@ -57,6 +57,10 @@ export interface IBlockTransaction extends Omit<ITransaction, 'block'> {
     block: IBlockReference;
 }
 
+export interface IBlockTransactionWithBlockInfo extends Omit<ITransaction, 'block'> {
+    block: IBlock;
+}
+
 export interface IExpandedTransaction extends ITransaction {
     inputs: TransactionInputs;
     outputs: TransactionOutputs;

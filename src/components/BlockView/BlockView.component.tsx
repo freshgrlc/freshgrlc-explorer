@@ -29,7 +29,10 @@ export const BlockView: React.FC<IProps> = ({ routeParams }) => {
     const baseUrl = getBaseUrl(routeParams.coin);
     const coinInfo = getCoinInfo(routeParams.coin);
     const { data: block, error } = useFetch<IBlock>(
-        `${baseUrl}/blocks/${routeParams.hash}/?expand=transactions,miner,inputs,outputs`
+        `${baseUrl}/blocks/${routeParams.hash}/?expand=miner`
+    );
+    const { data: transactions } = useFetch<IBlockTransaction[]>(
+        `${baseUrl}/blocks/${routeParams.hash}/transactions/?expand=inputs,outputs`
     );
     if (error != null) {
         console.log(error);
@@ -41,14 +44,18 @@ export const BlockView: React.FC<IProps> = ({ routeParams }) => {
             {block != null ? (
                 <>
                     <Section>
-                        <BlockMetaInfo block={block} />
+                        <BlockMetaInfo block={block} transactions={transactions} />
                     </Section>
                     <Section header="Included transactions">
-                        <div className={classes.transactions}>
-                            {block.transactions.map((transaction: IBlockTransaction, index: number) => (
-                                <TransactionSummary key={index} transaction={transaction as IExpandedBlockTransaction} block={block} first={index === 0} />
-                            ))}
-                        </div>
+                        {transactions != null ? (
+                            <div className={classes.transactions}>
+                                {transactions.map((transaction: IBlockTransaction, index: number) => (
+                                    <TransactionSummary key={index} transaction={transaction as IExpandedBlockTransaction} block={block} first={index === 0} />
+                                ))}
+                            </div>
+                        ) : (
+                            <PageLoadAnimation />
+                        )}
                     </Section>
                 </>
             ) : (

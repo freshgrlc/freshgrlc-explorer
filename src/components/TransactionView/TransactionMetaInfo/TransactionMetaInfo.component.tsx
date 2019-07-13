@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 
 import { ICell, ICellStyle } from 'interfaces/ICell.interface';
 import { IRow } from 'interfaces/IRow.interface';
-import { IExpandedTransaction } from 'interfaces/ITransaction.interface';
+import { IBlockTransactionWithBlockInfo } from 'interfaces/ITransaction.interface';
 
 import { CoinInfoContext } from 'context/CoinInfo.context';
 
@@ -13,7 +13,7 @@ import { formatTime, formatTimeDiffToString } from 'utils/formatTime.util';
 import classes from './TransactionMetaInfo.module.scss';
 
 interface IProps {
-    transaction: IExpandedTransaction;
+    transaction: IBlockTransactionWithBlockInfo;
 }
 
 export const TransactionMetaInfo: React.FC<IProps> = ({ transaction }) => {

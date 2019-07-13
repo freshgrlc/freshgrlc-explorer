@@ -2,9 +2,10 @@ import React from 'react';
 import useFetch from 'react-fetch-hook';
 
 import {
-    IExpandedTransaction,
+    IBlockTransactionWithBlockInfo,
     ITransactionInput,
     ISimplifiedTransactionInput,
+    ITransactionOutput
 } from 'interfaces/ITransaction.interface';
 import { CoinTickerSymbol } from 'interfaces/ICoinInfo.interface';
 
@@ -53,8 +54,14 @@ const simplifyInputs = (inputs: ITransactionInput[]): ISimplifiedTransactionInpu
 export const TransactionView: React.FC<IProps> = ({ routeParams }) => {
     const baseUrl = getBaseUrl(routeParams.coin);
     const coinInfo = getCoinInfo(routeParams.coin);
-    const { data: transaction, error } = useFetch<IExpandedTransaction>(
-        `${baseUrl}/transactions/${routeParams.txid}/?expand=block,inputs,outputs`
+    const { data: transaction, error } = useFetch<IBlockTransactionWithBlockInfo>(
+        `${baseUrl}/transactions/${routeParams.txid}/?expand=block`
+    );
+    const { data: txInputs } = useFetch<ITransactionInput[]>(
+        `${baseUrl}/transactions/${routeParams.txid}/inputs/`
+    );
+    const { data: txOutputs } = useFetch<ITransactionOutput[]>(
+        `${baseUrl}/transactions/${routeParams.txid}/outputs/`
     );
     if (error != null) {
         console.log(error);
@@ -69,10 +76,15 @@ export const TransactionView: React.FC<IProps> = ({ routeParams }) => {
                         <TransactionMetaInfo transaction={transaction} />
                     </Section>
                     <Section header="Coins moved">
-                        <TransactionCoinMovement
-                            transaction={transaction}
-                            simplifiedInputs={simplifyInputs(Object.values(transaction.inputs))}
-                        />
+                        {txInputs != null && txOutputs != null ? (
+                            <TransactionCoinMovement
+                                transaction={transaction}
+                                outputs={txOutputs}
+                                simplifiedInputs={simplifyInputs(Object.values(txInputs))}
+                            />
+                        ) : (
+                            <PageLoadAnimation />
+                        )}
                     </Section>
                 </div>
             ) : (

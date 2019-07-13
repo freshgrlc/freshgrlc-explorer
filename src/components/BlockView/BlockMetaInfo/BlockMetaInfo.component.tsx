@@ -6,6 +6,7 @@ import { CoinInfoContext } from 'context/CoinInfo.context';
 import { ICell, ICellStyle } from 'interfaces/ICell.interface';
 import { IRow } from 'interfaces/IRow.interface';
 import { IBlock } from 'interfaces/IBlock.interface';
+import { IBlockTransaction } from 'interfaces/ITransaction.interface';
 
 import { formatTime, formatTimeDiffToString } from 'utils/formatTime.util';
 
@@ -15,9 +16,10 @@ import classes from './BlockMetaInfo.module.scss';
 
 interface IProps {
     block: IBlock;
+    transactions?: IBlockTransaction[];
 }
 
-export const BlockMetaInfo: React.FC<IProps> = ({ block }) => {
+export const BlockMetaInfo: React.FC<IProps> = ({ block, transactions }) => {
     const coinInfo = useContext(CoinInfoContext);
 
     const table: IRow[] = ([
@@ -45,7 +47,7 @@ export const BlockMetaInfo: React.FC<IProps> = ({ block }) => {
             label: 'Transactions',
             cells: [
                 {
-                    data: block.transactions.length
+                    data: transactions != null ? transactions.length : undefined
                 },
             ],
         },
