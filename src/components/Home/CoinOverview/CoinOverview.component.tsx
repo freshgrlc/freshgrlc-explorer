@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Subject } from 'rxjs';
 import useFetch from 'react-fetch-hook';
 
@@ -99,6 +100,11 @@ export const CoinOverview: React.FC<IProps> = ({ coinInfo }) => {
                 </Section>
                 <Mempool transactions={unconfirmedTransactions} />
                 <Section header="Blockchain">
+                    <div className={classes.explore}>
+                        {blocks && blocks[0] ? (
+                            <Link to={`/${coinInfo.ticker}/blocks/?start=${blocks[0].height}&direction=desc`}>Explore ➔</Link>
+                        ) : 'Explore ➔'}
+                    </div>
                     <Blocks blocks={blocks} />
                 </Section>
             </div>

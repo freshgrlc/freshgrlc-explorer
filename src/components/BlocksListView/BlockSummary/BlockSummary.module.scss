@@ -1,0 +1,20 @@
+@import '../../../variables.scss';
+
+.blocksummary {
+    display: flex;
+    flex-direction: row;
+    padding-top: 2px;
+    padding-bottom: 2px;
+
+    .spacer {
+        width: 20px;
+    }
+
+    div {
+        width: auto;
+    }
+}
+
+.highlighted {
+    background-color: $backgroundColor;
+}

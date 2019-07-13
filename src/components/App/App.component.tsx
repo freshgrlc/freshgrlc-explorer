@@ -21,7 +21,9 @@ const Home = React.lazy(() => import('components/Home/Home.component').then((mod
 const TransactionView = React.lazy(() =>
     import('components/TransactionView/TransactionView.component').then((module) => wrapModule(module.TransactionView))
 );
-
+const BlocksListView = React.lazy(() =>
+    import('components/BlocksListView/BlocksListView.component').then((module) => wrapModule(module.BlocksListView))
+);
 const BlockView = React.lazy(() =>
     import('components/BlockView/BlockView.component').then((module) => wrapModule(module.BlockView))
 );
@@ -38,6 +40,11 @@ export const App: React.FC = () => {
                 <Route
                     path="/:coin1(grlc|tux|tgrlc)\+:coin2(grlc|tux|tgrlc)/home"
                     component={RouteParams(Waiting(Home))}
+                />
+                <Route
+                    exact
+                    path="/:coin(grlc|tux|tgrlc)/blocks"
+                    component={RouteParams(Waiting(BlocksListView))}
                 />
                 <Route
                     path="/:coin(grlc|tux|tgrlc)/blocks/:hash(\w{64,64})"

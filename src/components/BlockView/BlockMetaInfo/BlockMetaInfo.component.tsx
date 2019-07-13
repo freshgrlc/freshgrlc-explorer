@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 
 import { CoinInfoContext } from 'context/CoinInfo.context';
 
@@ -36,6 +37,7 @@ export const BlockMetaInfo: React.FC<IProps> = ({ block }) => {
                         ? (formatTime(block.firstseen, true) +
                           ` (After ${formatTimeDiffToString(block.timestamp, block.firstseen, true)})`
                         ) : '-',
+                    notMono: true
                 },
             ],
         },
@@ -83,6 +85,7 @@ export const BlockMetaInfo: React.FC<IProps> = ({ block }) => {
             cells: [
                 {
                     data: formatTime(block.timestamp, true),
+                    notMono: true,
                 },
             ],
         },
@@ -91,6 +94,7 @@ export const BlockMetaInfo: React.FC<IProps> = ({ block }) => {
             cells: [
                 {
                     data: block.miner.name,
+                    notMono: true,
                     link: block.miner.website,
                     externalLink: true
                 },
@@ -131,6 +135,9 @@ export const BlockMetaInfo: React.FC<IProps> = ({ block }) => {
         <div className={classes.blockMetaInfo}>
             <h3 className={classes.header}>
                 Block <span className={classes.blockhash}>{block.hash}</span>
+                <div className={classes.explore}>
+                    <Link to={`/${coinInfo.ticker}/blocks/?start=${block.height - (block.height % 40) + 40}`}>Show in list ➔</Link>
+                </div>
             </h3>
             {table.map((entry, index) => (
                 <Row key={index} wide={true} labelWidth="200px" {...entry} />
