@@ -27,7 +27,8 @@ export const BlockMetaInfo: React.FC<IProps> = ({ block, transactions }) => {
             label: 'Height',
             cells: [
                 {
-                    data: block.height,
+                    data: block.height ? block.height : 'Orphaned, not part of blockchain',
+                    notMono: !block.height
                 },
             ],
         },
@@ -138,7 +139,7 @@ export const BlockMetaInfo: React.FC<IProps> = ({ block, transactions }) => {
             <h3 className={classes.header}>
                 Block <span className={classes.blockhash}>{block.hash}</span>
                 <div className={classes.explore}>
-                    <Link to={`/${coinInfo.ticker}/blocks/?start=${block.height - (block.height % 40) + 40}`}>Show in list ➔</Link>
+                    {block.height ? <Link to={`/${coinInfo.ticker}/blocks/?start=${block.height - (block.height % 40) + 40}`}>Show in list ➔</Link> : undefined}
                 </div>
             </h3>
             {table.map((entry, index) => (
