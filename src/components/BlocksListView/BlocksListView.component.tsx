@@ -66,41 +66,43 @@ export const BlocksListView: React.FC<IProps> = ({ routeParams, queryParams }) =
         return <Redirect to="/error404" push={false} />;
     }
 
-
-    if (blocks != null && blocks.length > 0) {
+    const innerPage = (blocks: IBlock[]) => {
         const lowestBlock = blocks[0].height;
         const highestBlock = blocks[blocks.length-1].height;
         const firstBlock = !reverseDirection ? lowestBlock : highestBlock;
         const lastBlock = reverseDirection ? lowestBlock : highestBlock;
-
         return (
-            <CoinInfoContext.Provider value={coinInfo}>
-                <Banner coins={getAllCoins()} preferredCoin={coinInfo ? coinInfo.ticker : undefined} />
-                <Section header="Browse blockchain">
-                    <p>Showing blocks {firstBlock} to {lastBlock}</p>
-                    <BlockListNavigation
-                        blocksPerPage={queryParams.count}
-                        reverseDirection={reverseDirection}
-                        currentLowest={lowestBlock}
-                        currentHighest={highestBlock}
-                    />
-                    <div className={classes.wrapper}>
-                        <div className={classes.blockList}>
-                            {(queryParams.direction === 'asc' ? blocks : blocks.reverse()).map((block: IBlock, index: number) => (
-                                <BlockSummary key={index} block={block} first={index === 0} highlighted={index % 2 === 1}/>
-                            ))}
-                        </div>
+            <>
+                <p>Showing blocks {firstBlock} to {lastBlock}</p>
+                <BlockListNavigation
+                    blocksPerPage={queryParams.count as number}
+                    reverseDirection={reverseDirection}
+                    currentLowest={lowestBlock}
+                    currentHighest={highestBlock}
+                />
+                <div className={classes.wrapper}>
+                    <div className={classes.blockList}>
+                        {(queryParams.direction === 'asc' ? blocks : blocks.reverse()).map((block: IBlock, index: number) => (
+                            <BlockSummary key={index} block={block} first={index === 0} highlighted={index % 2 === 1}/>
+                        ))}
                     </div>
-                    <BlockListNavigation
-                        blocksPerPage={queryParams.count}
-                        reverseDirection={reverseDirection}
-                        currentLowest={lowestBlock}
-                        currentHighest={highestBlock}
-                    />
-                </Section>
-            </CoinInfoContext.Provider>
+                </div>
+                <BlockListNavigation
+                    blocksPerPage={queryParams.count as number}
+                    reverseDirection={reverseDirection}
+                    currentLowest={lowestBlock}
+                    currentHighest={highestBlock}
+                />
+            </>
         );
-    } else {
-        return <PageLoadAnimation />;
-    }
+    };
+
+    return (
+        <CoinInfoContext.Provider value={coinInfo}>
+            <Banner coins={getAllCoins()} preferredCoin={coinInfo ? coinInfo.ticker : undefined} />
+            <Section header="Browse blockchain">
+                {blocks != null && blocks.length > 0 ? innerPage(blocks) : <PageLoadAnimation />}
+            </Section>
+        </CoinInfoContext.Provider>
+    );
 };

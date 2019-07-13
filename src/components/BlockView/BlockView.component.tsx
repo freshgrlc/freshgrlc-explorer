@@ -35,21 +35,25 @@ export const BlockView: React.FC<IProps> = ({ routeParams }) => {
         console.log(error);
         return <Redirect to="/error404" push={false} />;
     }
-    return block != null ? (
+    return (
         <CoinInfoContext.Provider value={coinInfo}>
             <Banner coins={getAllCoins()} preferredCoin={coinInfo ? coinInfo.ticker : undefined} />
-            <Section>
-                <BlockMetaInfo block={block} />
-            </Section>
-            <Section header="Included transactions">
-                <div className={classes.transactions}>
-                    {block.transactions.map((transaction: IBlockTransaction, index: number) => (
-                        <TransactionSummary transaction={transaction as IExpandedBlockTransaction} block={block} first={index === 0} />
-                    ))}
-                </div>
-            </Section>
+            {block != null ? (
+                <>
+                    <Section>
+                        <BlockMetaInfo block={block} />
+                    </Section>
+                    <Section header="Included transactions">
+                        <div className={classes.transactions}>
+                            {block.transactions.map((transaction: IBlockTransaction, index: number) => (
+                                <TransactionSummary key={index} transaction={transaction as IExpandedBlockTransaction} block={block} first={index === 0} />
+                            ))}
+                        </div>
+                    </Section>
+                </>
+            ) : (
+                <PageLoadAnimation />
+            )}
         </CoinInfoContext.Provider>
-    ) : (
-        <PageLoadAnimation />
     );
 };

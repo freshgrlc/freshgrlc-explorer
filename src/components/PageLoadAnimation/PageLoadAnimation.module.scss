@@ -1,0 +1,30 @@
+@import '../../variables.scss';
+
+.wrapper {
+    display: flex;
+    margin-top: 40px;
+}
+
+.pageLoad {
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px 40px;
+    border-radius: 50px;
+    background-color: $sunkenBackground;
+
+    .inner {
+        display: flex;
+        flex-grow: row;
+
+        h3 {
+            margin: 10px 20px;
+        }
+
+        img {
+            display: inline-block;
+            height: 43px;
+            width: 43px;
+        }
+    }
+}

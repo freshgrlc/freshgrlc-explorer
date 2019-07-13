@@ -60,22 +60,24 @@ export const TransactionView: React.FC<IProps> = ({ routeParams }) => {
         console.log(error);
         return <Redirect to="/error404" push={false} />;
     }
-    return transaction != null ? (
+    return (
         <CoinInfoContext.Provider value={coinInfo}>
             <Banner coins={getAllCoins()} preferredCoin={coinInfo ? coinInfo.ticker : undefined} />
-            <div className={classes.transactionView}>
-                <Section>
-                    <TransactionMetaInfo transaction={transaction} />
-                </Section>
-                <Section header="Coins moved">
-                    <TransactionCoinMovement
-                        transaction={transaction}
-                        simplifiedInputs={simplifyInputs(Object.values(transaction.inputs))}
-                    />
-                </Section>
-            </div>
+            {transaction != null ? (
+                <div className={classes.transactionView}>
+                    <Section>
+                        <TransactionMetaInfo transaction={transaction} />
+                    </Section>
+                    <Section header="Coins moved">
+                        <TransactionCoinMovement
+                            transaction={transaction}
+                            simplifiedInputs={simplifyInputs(Object.values(transaction.inputs))}
+                        />
+                    </Section>
+                </div>
+            ) : (
+                <PageLoadAnimation />
+            )}
         </CoinInfoContext.Provider>
-    ) : (
-        <PageLoadAnimation />
     );
 };
