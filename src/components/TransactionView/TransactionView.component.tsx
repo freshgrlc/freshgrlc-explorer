@@ -54,13 +54,13 @@ const simplifyInputs = (inputs: ITransactionInput[]): ISimplifiedTransactionInpu
 export const TransactionView: React.FC<IProps> = ({ routeParams }) => {
     const baseUrl = getBaseUrl(routeParams.coin);
     const coinInfo = getCoinInfo(routeParams.coin);
-    const { data: transaction, error } = useFetch<IBlockTransactionWithBlockInfo>(
+    const { isLoading, data: transaction, error } = useFetch<IBlockTransactionWithBlockInfo>(
         `${baseUrl}/transactions/${routeParams.txid}/?expand=block`
     );
-    const { data: txInputs } = useFetch<ITransactionInput[]>(
+    const { isLoading: inputsLoading, data: txInputs } = useFetch<ITransactionInput[]>(
         `${baseUrl}/transactions/${routeParams.txid}/inputs/`
     );
-    const { data: txOutputs } = useFetch<ITransactionOutput[]>(
+    const { isLoading: outputsLoading, data: txOutputs } = useFetch<ITransactionOutput[]>(
         `${baseUrl}/transactions/${routeParams.txid}/outputs/`
     );
     if (error != null) {
@@ -70,13 +70,13 @@ export const TransactionView: React.FC<IProps> = ({ routeParams }) => {
     return (
         <CoinInfoContext.Provider value={coinInfo}>
             <Banner coins={getAllCoins()} preferredCoin={coinInfo ? coinInfo.ticker : undefined} />
-            {transaction != null ? (
+            {!isLoading && transaction != null ? (
                 <div className={classes.transactionView}>
                     <Section>
                         <TransactionMetaInfo transaction={transaction} />
                     </Section>
                     <Section header="Coins moved">
-                        {txInputs != null && txOutputs != null ? (
+                        { !inputsLoading && !outputsLoading && txInputs != null && txOutputs != null ? (
                             <TransactionCoinMovement
                                 transaction={transaction}
                                 outputs={txOutputs}
