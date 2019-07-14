@@ -15,11 +15,11 @@ import { ITransaction, ITransactionInput, ITransactionOutput, TransactionOutputT
 
 import { Banner } from 'components/Banner/Banner.component';
 import { Section } from 'components/Section/Section.component';
+import { PagedListNavigation } from 'components/PagedListNavigation/PagedListNavigation.component';
 import { PageLoadAnimation } from 'components/PageLoadAnimation/PageLoadAnimation.component';
 
 import { AddressMutation } from './AddressMutation/AddressMutation.component';
 import { AddressMetaInfo } from './AddressMetaInfo/AddressMetaInfo.component';
-import { AddressMutationsNavigation } from './AddressMutationsNavigation/AddressMutationsNavigation.component';
 
 import classes from './AddressView.module.scss';
 
@@ -82,7 +82,15 @@ export const AddressView: React.FC<IProps> = ({ routeParams, queryParams }) => {
                     <Section header="Recent transactions">
                     { !mutationsLoading && mutations != null ? (
                         <>
-                            <AddressMutationsNavigation address={address} currentOffset={mutationsOffset} mutationsPerPage={40} noMoreMutations={mutations.length < 40} />
+                            <PagedListNavigation
+                                baseUrl={`/${coinInfo.ticker}/address/${address.address}`}
+                                currentOffset={mutationsOffset}
+                                offsetParamName="mutationsOffset"
+                                entriesPerPage={40}
+                                reachedEndOfList={mutations.length < 40}
+                                labelForward="Older ⇾"
+                                labelBackward="⇽ Newer"
+                            />
                             <div className={classes.wrapper}>
                                 <div className={classes.mutations}>
                                     {mutations.map((mutation, index) => (
@@ -90,7 +98,15 @@ export const AddressView: React.FC<IProps> = ({ routeParams, queryParams }) => {
                                     ))}
                                 </div>
                             </div>
-                            <AddressMutationsNavigation address={address} currentOffset={mutationsOffset} mutationsPerPage={40} noMoreMutations={mutationsLoading || !mutations || mutations.length < 40} />
+                            <PagedListNavigation
+                                baseUrl={`/${coinInfo.ticker}/address/${address.address}`}
+                                currentOffset={mutationsOffset}
+                                offsetParamName="mutationsOffset"
+                                entriesPerPage={40}
+                                reachedEndOfList={mutations.length < 40}
+                                labelForward="Older ⇾"
+                                labelBackward="⇽ Newer"
+                            />
                         </>
                     ) : (
                         <PageLoadAnimation />

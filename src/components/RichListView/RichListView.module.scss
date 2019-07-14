@@ -1,0 +1,14 @@
+@import '../../variables.scss';
+
+.wrapper {
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.richlist {
+    width: 100%;
+    background-color: $sunkenBackground;
+    padding: 20px;
+    border-radius: 25px;
+}

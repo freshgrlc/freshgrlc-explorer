@@ -1,41 +1,40 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { CoinInfoContext } from 'context/CoinInfo.context';
-
-import { IAddressInfo } from 'interfaces/IAddressInfo.interface';
-
-import classes from './AddressMutationsNavigation.module.scss';
+import classes from './PagedListNavigation.module.scss';
 
 interface IProps {
-    address: IAddressInfo;
+    baseUrl: string;
     currentOffset: number;
-    mutationsPerPage: number;
-    noMoreMutations?: boolean;
+    offsetParamName?: string;
+    entriesPerPage: number;
+    reachedEndOfList?: boolean;
+    labelBackward: string;
+    labelForward: string;
 }
 
-export const AddressMutationsNavigation: React.FC<IProps> = ({ address, currentOffset, mutationsPerPage, noMoreMutations }) => {
-    const coinInfo = useContext(CoinInfoContext);
+export const PagedListNavigation: React.FC<IProps> = ({ baseUrl, currentOffset, offsetParamName, entriesPerPage, reachedEndOfList, labelBackward, labelForward }) => {
+    if (!offsetParamName) {
+        offsetParamName = 'offset'
+    }
 
     const makeLink = (backwards: boolean): string | undefined => {
-        var newOffset = currentOffset + (backwards ? -mutationsPerPage : mutationsPerPage);
+        var newOffset = currentOffset + (backwards ? -entriesPerPage : entriesPerPage);
         if (newOffset < 0) {
             if (currentOffset === 0) {
                 return undefined;
             }
             newOffset = 0;
         }
-        if (!backwards && noMoreMutations) {
+        if (!backwards && reachedEndOfList) {
             return undefined;
         }
 
-        return `/${coinInfo.ticker}/address/${address.address}?mutationsOffset=${newOffset}`;
+        return `${baseUrl}?${offsetParamName}=${newOffset}`;
     };
 
     const linkBackward = makeLink(true);
     const linkForward = makeLink(false);
-    const labelBackward = '⇽ Newer';
-    const labelForward = 'Older ⇾';
 
     return (
         <div className={classes.navigation}>

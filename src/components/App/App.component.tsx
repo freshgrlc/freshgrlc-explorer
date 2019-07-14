@@ -30,6 +30,9 @@ const BlockView = React.lazy(() =>
 const AddressView = React.lazy(() =>
     import('components/AddressView/AddressView.component').then((module) => wrapModule(module.AddressView))
 );
+const RichListView = React.lazy(() =>
+    import('components/RichListView/RichListView.component').then((module) => wrapModule(module.RichListView))
+);
 
 export const App: React.FC = () => {
     return (
@@ -60,6 +63,10 @@ export const App: React.FC = () => {
                 <Route
                     path="/:coin(grlc|tux|tgrlc)/address/:address(\w+)"
                     component={RouteParams(Waiting(AddressView))}
+                />
+                <Route
+                    path="/:coin(grlc|tux|tgrlc)/richlist"
+                    component={RouteParams(Waiting(RichListView))}
                 />
                 <Route
                     component={() => (
