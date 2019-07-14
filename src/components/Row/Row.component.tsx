@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import { Cell } from '../Cell/Cell.component';
 
@@ -6,7 +7,7 @@ import { IRow } from 'interfaces/IRow.interface';
 
 import classes from './Row.module.scss';
 
-export const Row: React.FC<IRow> = ({ label, labelWidth, cells, wide, extrawide }) => {
+export const Row: React.FC<IRow> = ({ label, labelWidth, labelSubText, labelSubTextLink, cells, wide, extrawide }) => {
     const getLabelStyle = (width?: string): React.CSSProperties => {
         var style: React.CSSProperties = {};
 
@@ -37,6 +38,16 @@ export const Row: React.FC<IRow> = ({ label, labelWidth, cells, wide, extrawide 
                 style={getLabelStyle(labelWidth)}
             >
                 {label}
+                {labelSubText ? (
+                    <>
+                        <br />
+                        <span className={classes.labelSubText}>
+                        {labelSubTextLink ? (
+                            <Link to={labelSubTextLink}>{labelSubText}</Link>
+                        ) : labelSubText}
+                        </span>
+                    </>
+                ) : undefined}
             </h3>
             {cells.map((cell, index) => (
                 <Cell key={index} {...cell} />

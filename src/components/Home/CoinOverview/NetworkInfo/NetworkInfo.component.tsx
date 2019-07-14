@@ -152,6 +152,8 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
         let data: IRow[] = [
             {
                 label: 'Latest Block',
+                labelSubText: 'Explore blockchain ➔',
+                labelSubTextLink: `/${coinInfo.ticker}/blocks/?start=${formattedBlock.height}&direction=desc`,
                 cells: [
                     {
                         label: 'Height',
@@ -173,6 +175,8 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
             },
             {
                 label: 'Mining Difficulty',
+                labelSubText: 'Difficulty graphs ➔',
+                labelSubTextLink: `/${coinInfo.ticker}/difficultygraphs`,
                 cells: [
                     {
                         label: 'Network',
@@ -240,6 +244,8 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
             },
             {
                 label: 'Decentralization',
+                labelSubText: 'Pool distribution graph ➔',
+                labelSubTextLink: `/${coinInfo.ticker}/pooldistribution`,
                 cells: [
                     {
                         label: 'Controlling 50%',
@@ -261,6 +267,8 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
             },
             {
                 label: 'Wealth distribution',
+                labelSubText: 'Show richlist ➔',
+                labelSubTextLink: `/${coinInfo.ticker}/richlist`,
                 cells: [
                     {
                         label: 'Owning 50%',

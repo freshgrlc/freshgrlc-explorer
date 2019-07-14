@@ -24,6 +24,25 @@
         text-align: left;
 
         color: $text;
+
+        .labelSubText {
+            display: block;
+            font-size: 0.6em;
+            margin-top: -6px;
+            margin-bottom: -14px;
+            margin-left: 2px;
+            font-family: $normal;
+            font-style: normal;
+            font-weight: normal;
+
+            a {
+                color: $deepAccent;
+            }
+
+            a:hover {
+                text-decoration: underline;
+            }
+        }
     }
 
     .wideRowLabel {
