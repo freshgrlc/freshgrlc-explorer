@@ -9,17 +9,27 @@ import { Cell } from 'components/Cell/Cell.component';
 import classes from './RichListEntry.module.scss';
 
 interface IProps {
+    position: number;
     entry: IRichListEntry;
     totalcoins: number | undefined;
     first?: boolean;
     highlighted?: boolean;
 }
 
-export const RichListEntry: React.FC<IProps> = ({ entry, totalcoins, first, highlighted }) => {
+export const RichListEntry: React.FC<IProps> = ({ position, entry, totalcoins, first, highlighted }) => {
     const coinInfo = useContext(CoinInfoContext);
 
     return (
         <div className={classes.richlistEntry + (highlighted ? ' ' + classes.highlighted : '')}>
+            <Cell
+                label={first ? 'Position' : undefined}
+                largelabel={true}
+                data={position.toString() + '.'}
+                notMono={true}
+                cellStyle={{
+                    size: '60px'
+                }}
+            />
             <Cell
                 label={first ? 'Address' : undefined}
                 largelabel={true}

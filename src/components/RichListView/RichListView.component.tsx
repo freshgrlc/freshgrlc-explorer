@@ -69,7 +69,7 @@ export const RichListView: React.FC<IProps> = ({ routeParams, queryParams }) => 
                         <div className={classes.wrapper}>
                             <div className={classes.richlist}>
                                 {entries.map((entry, index) => (
-                                    <RichListEntry key={index} entry={entry} totalcoins={coinsInfo ? coinsInfo.total.released : undefined} first={index === 0} highlighted={index % 2 === 1} />
+                                    <RichListEntry key={index} position={queryParams.offset as number + index + 1} entry={entry} totalcoins={coinsInfo ? coinsInfo.total.released : undefined} first={index === 0} highlighted={index % 2 === 1} />
                                 ))}
                             </div>
                         </div>
