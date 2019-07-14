@@ -8,6 +8,7 @@ import { CoinInfoContext } from 'context/CoinInfo.context';
 import { IBlock, IBlockSimple } from 'interfaces/IBlock.interface';
 import { INetworkStats } from 'interfaces/INetworkStats.interface';
 import { IPoolStat } from 'interfaces/IPoolStat.interface';
+import { IRichListEntry } from 'interfaces/IRichListEntry.interface';
 
 import { adjustDifficulty } from 'utils/adjustDifficulty.util';
 import { formatTime } from 'utils/formatTime.util';
@@ -55,6 +56,8 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
     const { data: allTime } = useFetch<INetworkStats>(`${baseUrl}/networkstats/?since=0`);
 
     const { data: poolData } = useFetch<IPoolStat[]>(`${baseUrl}/poolstats/?since=${yesterdayDate}`);
+
+    const { data: richList } = useFetch<IRichListEntry[]>(`${baseUrl}/richlist/?limit=1000`);
 
     const blocks = useMemo(() => {
         if (poolData) {
@@ -109,6 +112,41 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
             };
         }
     }, [baseUrl, latestBlock]);
+
+    const [addressesOwning50Percent, setAddressesOwning50Percent] = useState<number | string | undefined>(undefined);
+    const [addressesOwning90Percent, setAddressesOwning90Percent] = useState<number | string | undefined>(undefined);
+
+    useEffect(() => {
+        if (!richList || !allTime) {
+            setAddressesOwning50Percent(undefined);
+            setAddressesOwning90Percent(undefined);
+            return;
+        }
+
+        var currentTotal = 0.0;
+        var found50 = false;
+        var found90 = false;
+        const totalFor50Percent = allTime.coins.released / 2;
+        const totalFor90Percent = allTime.coins.released / 10 * 9;
+
+        richList.forEach((entry, index) => {
+            currentTotal += entry.balance;
+            if (!found50 && currentTotal >= totalFor50Percent) {
+                setAddressesOwning50Percent(index + 1);
+                found50 = true;
+            }
+            if (!found90 && currentTotal >= totalFor90Percent) {
+                setAddressesOwning90Percent(index + 1);
+                found90 = true;
+            }
+        });
+        if (!found90) {
+            setAddressesOwning90Percent('> ' + richList.length);
+            if (!found50) {
+                setAddressesOwning50Percent('> ' + richList.length);
+            }
+        }
+    }, [richList, allTime]);
 
     const table = useMemo(() => {
         let data: IRow[] = [
@@ -222,6 +260,29 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
                 ],
             },
             {
+                label: 'Wealth distribution',
+                cells: [
+                    {
+                        label: 'Owning 50%',
+                        data: addressesOwning50Percent,
+                        unit: 'addresses',
+                        alwaysSingular: true,
+                        cellStyle: {
+                            sunken: true
+                        }
+                    },
+                    {
+                        label: 'Owning 90%',
+                        data: addressesOwning90Percent,
+                        unit: 'addresses',
+                        alwaysSingular: true,
+                        cellStyle: {
+                            sunken: true
+                        }
+                    },
+                ],
+            },
+            {
                 label: 'Average Blocktime',
                 cells: [
                     {
@@ -286,7 +347,7 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
                         }
                     },
                 ],
-            },
+            }
         ];
         return data;
     }, [
@@ -298,6 +359,8 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
         decentralization50,
         decentralization90,
         coinInfo,
+        addressesOwning50Percent,
+        addressesOwning90Percent
     ]);
 
     return (
