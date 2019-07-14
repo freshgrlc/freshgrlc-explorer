@@ -21,16 +21,16 @@ export const TabBar: React.FC<IProps> = ({ options, selected, parameterName, bas
         <div className={classes.wrapper}>
             <div className={classes.navigation}>
                 {options.map((option, index) => (
-                    <>
+                    <div key={index} className={classes.optionWrapper}>
                         {index !== 0 ? (
                             <span className={classes.separator}>·</span>
                         ) : undefined}
                         {option.name === selected ? (
-                            <span key={index} className={classes.option}>{option.displayName}</span>
+                            <span className={classes.option}>{option.displayName}</span>
                         ) : (
-                            <Link key={index} className={classes.option} to={`${baseUrl}?${parameterName}=${option.name}`}>{option.displayName}</Link>
+                            <Link className={classes.option} to={`${baseUrl}?${parameterName}=${option.name}`}>{option.displayName}</Link>
                         )}
-                    </>
+                    </div>
                 ))}
             </div>
         </div>
