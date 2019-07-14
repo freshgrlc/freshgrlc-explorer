@@ -33,6 +33,9 @@ const AddressView = React.lazy(() =>
 const RichListView = React.lazy(() =>
     import('components/RichListView/RichListView.component').then((module) => wrapModule(module.RichListView))
 );
+const PoolDistributionView = React.lazy(() =>
+    import('components/PoolDistributionView/PoolDistributionView.component').then((module) => wrapModule(module.PoolDistributionView))
+);
 
 export const App: React.FC = () => {
     return (
@@ -67,6 +70,10 @@ export const App: React.FC = () => {
                 <Route
                     path="/:coin(grlc|tux|tgrlc)/richlist"
                     component={RouteParams(Waiting(RichListView))}
+                />
+                <Route
+                    path="/:coin(grlc|tux|tgrlc)/pooldistribution"
+                    component={RouteParams(Waiting(PoolDistributionView))}
                 />
                 <Route
                     component={() => (

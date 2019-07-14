@@ -1,0 +1,30 @@
+@import '../../variables.scss';
+
+.wrapper {
+    display: block;
+}
+
+.navigation {
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1.4em;
+    border-top: $border;
+    border-bottom: $border;
+    padding: 10px 20px;
+    margin-top: 10px;
+    margin-bottom: 30px;
+
+    .option {
+        margin: 0px 10px;
+    }
+
+    a {
+        color: $link;
+    }
+
+    a:hover {
+        color: $deepAccent;
+        text-decoration: underline;
+    }
+}
