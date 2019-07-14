@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const rounded = (number: number, decimals?: number, maxDecimals: number = 8): [number, string | undefined] => {
+export const rounded = (number: number, decimals?: number, maxDecimals: number = 8): [number | string, string | undefined] => {
     const negative = number < 0;
     const absolute = Math.abs(number.valueOf());
     const integer = Math.floor(absolute);
@@ -11,14 +11,14 @@ export const rounded = (number: number, decimals?: number, maxDecimals: number =
     ).substring(2, 2 + maxDecimals);
 
     return [
-        negative ? -integer : integer,
+        negative ? integer === 0 ? '-0' : -integer : integer,
         roundedDecimals !== '' ? (
             decimals !== undefined ? roundedDecimals : roundedDecimals.replace(/0+$/, '')
         ) : undefined
     ];
 };
 
-export const formatDecimal = (integer: number, decimalClass?: string, roundedDecimals?: string): JSX.Element => {
+export const formatDecimal = (integer: number | string, decimalClass?: string, roundedDecimals?: string): JSX.Element => {
     return (
         <>
             {integer}
@@ -40,7 +40,7 @@ interface INumericalValueOptions {
 export const formatNumericalValue = (value: number | string, options: INumericalValueOptions) => {
     const { decimals, maxDecimals, unit, alwaysSingular, decimalClass, unitClass } = options;
 
-    let roundedData: [number, string | undefined] | undefined;
+    let roundedData: [number | string, string | undefined] | undefined;
     let formattedData: JSX.Element | string | undefined;
     let isExactlyOne: boolean = false;
 
