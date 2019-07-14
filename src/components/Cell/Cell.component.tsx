@@ -71,6 +71,10 @@ export const Cell: React.FC<ICell> = ({
             }
         }
 
+        if (innerCell && cellStyle.textColor) {
+            style.color = cellStyle.textColor;
+        }
+
         if (!innerCell && cellStyle.size) {
             style.width = cellStyle.size;
         }

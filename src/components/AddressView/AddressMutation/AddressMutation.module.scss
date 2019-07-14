@@ -1,0 +1,12 @@
+@import '../../../variables.scss';
+
+.mutation {
+    display: flex;
+    flex-grow: row;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.highlighted {
+    background-color: $backgroundColor;
+}

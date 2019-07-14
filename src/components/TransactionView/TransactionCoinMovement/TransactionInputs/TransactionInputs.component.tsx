@@ -42,7 +42,11 @@ export const TransactionInputs: React.FC<IProps> = ({ inputs, coinbase, coinbase
                 <div key={index} className={classes.transactionInput}>
                     <div className={classes.source}>
                         <div className={classes.address}>
-                            <div className={classes.data}>{input.address}</div>
+                            {input.type !== 'raw' && input.type !== 'data' ? (
+                                <Link to={`/${coinInfo.ticker}/address/${input.address}`} className={classes.data}>{input.address}</Link>
+                            ) : (
+                                <div className={classes.data}>{input.address}</div>
+                            )}
                         </div>
                         {getInputSubtext(input.type) !== undefined ? (
                             <div className={classes.signatureType}>

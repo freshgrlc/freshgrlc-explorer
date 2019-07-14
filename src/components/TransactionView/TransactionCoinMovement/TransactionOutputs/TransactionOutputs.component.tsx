@@ -40,7 +40,11 @@ export const TransactionOutputs: React.FC<IProps> = ({ outputs }) => {
                     <div className={classes.arrow}>➔</div>
                     <div className={classes.destination + (output.type === 'raw' ? ' ' + classes.destinationOverflow : '')}>
                         <div className={classes.address + (output.type === 'raw' ? ' ' + classes.rawOutput : '')}>
-                            <div className={classes.data}>{getDestinationHeader(output)}</div>
+                            {output.type !== 'raw' && output.type !== 'data' ? (
+                                <Link to={`/${coinInfo.ticker}/address/${output.address}`} className={classes.data}>{getDestinationHeader(output)}</Link>
+                            ) : (
+                                <div className={classes.data}>{getDestinationHeader(output)}</div>
+                            )}
                         </div>
                         <div className={classes.script}>
                             <div className={classes.header}>{getDestinationRawType(output)}:</div>

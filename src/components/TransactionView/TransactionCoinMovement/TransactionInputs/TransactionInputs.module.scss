@@ -36,6 +36,14 @@
                 font-size: 1.1em;
                 color: $primary;
                 padding-top: 11px;
+
+                a {
+                    color: $primary;
+                }
+
+                a:hover {
+                    text-decoration: underline;
+                }
             }
 
             .textAddress {

@@ -3,6 +3,7 @@ export interface ICellStyle {
     size?: string;
     color?: 'normal' | 'lighter' | 'light' | 'darker';
     fontSize?: 'normal' | 'smaller' | 'small';
+    textColor?: string;
     linkColor?: 'normal' | 'accentuate';
     sunken?: boolean;
     sunkenData?: boolean;
