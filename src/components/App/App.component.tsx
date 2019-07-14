@@ -36,6 +36,9 @@ const RichListView = React.lazy(() =>
 const PoolDistributionView = React.lazy(() =>
     import('components/PoolDistributionView/PoolDistributionView.component').then((module) => wrapModule(module.PoolDistributionView))
 );
+const DifficultyGraphView = React.lazy(() =>
+    import('components/DifficultyGraphView/DifficultyGraphView.component').then((module) => wrapModule(module.DifficultyGraphView))
+);
 
 export const App: React.FC = () => {
     return (
@@ -74,6 +77,10 @@ export const App: React.FC = () => {
                 <Route
                     path="/:coin(grlc|tux|tgrlc)/pooldistribution"
                     component={RouteParams(Waiting(PoolDistributionView))}
+                />
+                <Route
+                    path="/:coin(grlc|tux|tgrlc)/difficultygraphs"
+                    component={RouteParams(Waiting(DifficultyGraphView))}
                 />
                 <Route
                     component={() => (
