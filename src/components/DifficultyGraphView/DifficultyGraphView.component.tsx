@@ -58,7 +58,7 @@ export const DifficultyGraphView: React.FC<IProps> = ({ routeParams, queryParams
     }
 
     const getUrlForSeries = (period: number, targetDataPoints: number): string => {
-        const blockTime = 41;
+        const blockTime = coinInfo.blockTime + 1;
         const blocks = Math.floor(period / blockTime);
         const interval = Math.ceil(blocks/targetDataPoints);
         const limit = Math.floor(blocks / interval);
