@@ -126,7 +126,7 @@ export const DifficultyGraphView: React.FC<IProps> = ({ routeParams, queryParams
             xAxis: {
                 type: 'datetime',
                 title: {
-                    text: 'Time',
+                    text: 'Time (UTC)',
                     style: {
                         color: '#ffa71a',
                         fontSize: '1.25em'
