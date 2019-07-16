@@ -10,7 +10,6 @@ import { Redirect } from 'react-router';
 import { CoinInfoContext } from 'context/CoinInfo.context';
 
 import { IRichListEntry } from 'interfaces/IRichListEntry.interface';
-import { ICoinsInfo } from 'interfaces/ICoinsInfo.interface';
 
 import { Banner } from 'components/Banner/Banner.component';
 import { Section } from 'components/Section/Section.component';
@@ -45,7 +44,7 @@ export const RichListView: React.FC<IProps> = ({ routeParams, queryParams }) => 
     const { data: entries, isLoading, error } = useFetch<IRichListEntry[]>(
         `${baseUrl}/richlist/?start=${queryParams.offset}&limit=${entriesPerPage}`
     );
-    const { data: coinsInfo } = useFetch<ICoinsInfo>(`${baseUrl}/coins/`);
+    const { data: totalCoins } = useFetch<number>(`${baseUrl}/coins/total/released/`);
 
     if (error != null) {
         console.log(error);
@@ -69,7 +68,7 @@ export const RichListView: React.FC<IProps> = ({ routeParams, queryParams }) => 
                         <div className={classes.wrapper}>
                             <div className={classes.richlist}>
                                 {entries.map((entry, index) => (
-                                    <RichListEntry key={index} position={queryParams.offset as number + index + 1} entry={entry} totalcoins={coinsInfo ? coinsInfo.total.released : undefined} first={index === 0} highlighted={index % 2 === 1} />
+                                    <RichListEntry key={index} position={queryParams.offset as number + index + 1} entry={entry} totalcoins={totalCoins ? totalCoins : undefined} first={index === 0} highlighted={index % 2 === 1} />
                                 ))}
                             </div>
                         </div>

@@ -53,7 +53,9 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
 
     const { data: yesterday } = useFetch<INetworkStats>(`${baseUrl}/networkstats/?since=${yesterdayDate}`);
 
-    const { data: allTime } = useFetch<INetworkStats>(`${baseUrl}/networkstats/?since=0`);
+    const { data: totalTransactions } = useFetch<number>(`${baseUrl}/networkstats/transactions/amount/?since=0`);
+
+    const { data: totalCoins } = useFetch<number>(`${baseUrl}/coins/total/released/`);
 
     const { data: poolData } = useFetch<IPoolStat[]>(`${baseUrl}/poolstats/?since=${yesterdayDate}`);
 
@@ -117,7 +119,7 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
     const [addressesOwning90Percent, setAddressesOwning90Percent] = useState<number | string | undefined>(undefined);
 
     useEffect(() => {
-        if (!richList || !allTime) {
+        if (!richList || !totalCoins) {
             setAddressesOwning50Percent(undefined);
             setAddressesOwning90Percent(undefined);
             return;
@@ -126,8 +128,8 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
         var currentTotal = 0.0;
         var found50 = false;
         var found90 = false;
-        const totalFor50Percent = allTime.coins.released / 2;
-        const totalFor90Percent = allTime.coins.released / 10 * 9;
+        const totalFor50Percent = totalCoins / 2;
+        const totalFor90Percent = totalCoins / 10 * 9;
 
         richList.forEach((entry, index) => {
             currentTotal += entry.balance;
@@ -146,7 +148,7 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
                 setAddressesOwning50Percent('> ' + richList.length);
             }
         }
-    }, [richList, allTime]);
+    }, [richList, totalCoins]);
 
     const table = useMemo(() => {
         let data: IRow[] = [
@@ -339,14 +341,14 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
                 cells: [
                     {
                         label: 'All-time Transactions',
-                        data: allTime != null ? allTime.transactions.amount : undefined,
+                        data: totalTransactions != null ? totalTransactions : undefined,
                         cellStyle: {
                             sunken: true
                         }
                     },
                     {
                         label: 'Coins Released',
-                        data: allTime != null ? allTime.coins.released : undefined,
+                        data: totalCoins != null ? totalCoins : undefined,
                         unit: coinInfo ? coinInfo.displaySymbol : undefined,
                         alwaysSingular: true,
                         decimals: 3,
@@ -361,7 +363,8 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
     }, [
         formattedBlock,
         yesterday,
-        allTime,
+        totalCoins,
+        totalTransactions,
         average5000,
         average50000,
         decentralization50,
