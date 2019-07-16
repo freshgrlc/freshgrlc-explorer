@@ -174,6 +174,7 @@ export const DifficultyGraphView: React.FC<IProps> = ({ routeParams, queryParams
                     selected={queryParams.period}
                     parameterName="period"
                     baseUrl={`/${coinInfo.ticker}/difficultygraphs`}
+                    disabled={isLoading}
                 />
                 {!isLoading && highchartsData ? (
                     <div className={classes.outerWrapper}>

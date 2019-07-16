@@ -23,6 +23,10 @@
         display: inline;
     }
 
+    .disabledLink {
+        color: $link;
+    }
+
     a {
         color: $link;
     }

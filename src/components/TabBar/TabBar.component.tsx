@@ -10,9 +10,10 @@ interface IProps {
     selected?: string;
     parameterName?: string;
     baseUrl: string;
+    disabled?: boolean;
 }
 
-export const TabBar: React.FC<IProps> = ({ options, selected, parameterName, baseUrl }) => {
+export const TabBar: React.FC<IProps> = ({ options, selected, parameterName, baseUrl, disabled }) => {
     if (!parameterName) {
         parameterName = 'show'
     }
@@ -27,6 +28,8 @@ export const TabBar: React.FC<IProps> = ({ options, selected, parameterName, bas
                         ) : undefined}
                         {option.name === selected ? (
                             <span className={classes.option}>{option.displayName}</span>
+                        ) : disabled ? (
+                            <span className={classes.option + ' ' + classes.disabledLink}>{option.displayName}</span>
                         ) : (
                             <Link className={classes.option} to={`${baseUrl}?${parameterName}=${option.name}`}>{option.displayName}</Link>
                         )}
