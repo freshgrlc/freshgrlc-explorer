@@ -106,7 +106,7 @@ export const DifficultyGraphView: React.FC<IProps> = ({ routeParams, queryParams
                 width: 1100
             },
             title: {
-                text: `Mining difficulty (${PeriodDescription[queryParams.period as Period]})`,
+                text: `Mining difficulty (${PeriodDescription[queryParams.period as Period].toLowerCase()})`,
                 style: {
                     color: '#ffa71a',
                     fontSize: '24px'
