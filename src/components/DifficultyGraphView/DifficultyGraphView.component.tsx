@@ -36,13 +36,24 @@ interface ISeriesEntry {
 };
 
 const PeriodTime: { [key: string]: number } = {
+    hours: 28800,
     day: 86400,
     week: 604800,
     month: 2592000,
     year: 31104000
 };
 
+const TARGET_DATAPOINTS = 300;
+const PeriodDatapoints: { [key: string]: number } = {
+    hours: 1000,    /* Extra precise */
+    day: TARGET_DATAPOINTS,
+    week: TARGET_DATAPOINTS,
+    month: TARGET_DATAPOINTS,
+    year: TARGET_DATAPOINTS
+};
+
 const PeriodDescription: { [key: string]: string } = {
+    hours: 'Last 8 hours',
     day: 'Last 24 hours',
     week: 'Last week',
     month: 'Last month',
@@ -72,7 +83,7 @@ export const DifficultyGraphView: React.FC<IProps> = ({ routeParams, queryParams
     );
 
     const [ series1, setSeries1 ] = useState<ISeriesEntry[] | undefined>(undefined);
-    const { data: series1Data, isLoading } = useFetch<IBlock[]>(getUrlForSeries(PeriodTime[queryParams.period], 300));
+    const { data: series1Data, isLoading } = useFetch<IBlock[]>(getUrlForSeries(PeriodTime[queryParams.period], PeriodDatapoints[queryParams.period]));
     useEffect(() => {
         setSeries1(series1Data ? convertRawData(series1Data) : undefined);
     }, [series1Data]);
