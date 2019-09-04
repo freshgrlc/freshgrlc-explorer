@@ -19,10 +19,21 @@ interface IProps {
 export const BlockSummary: React.FC<IProps> = ({ block, first, highlighted }) => {
     const coinInfo = useContext(CoinInfoContext);
 
-    const isAddressMiner = block.miner.name.indexOf(' (') !== -1;
-    const minerName = !isAddressMiner ? block.miner.name : '(' + block.miner.name.split(' (')[1];
-    const minerLink = !isAddressMiner ? block.miner.website : `/${coinInfo.ticker}/address/${block.miner.name.split(' (')[0]}`;
-    const minerLinkExternal = !isAddressMiner;
+    /* FIXME: Deduplicate and move this logic somewhere else */
+    var isAddressMiner: boolean;
+    var minerName: string;
+    var minerLink: string | null;
+    var minerLinkExternal: boolean = false;
+
+    if (block.miner !== null) {
+        isAddressMiner = block.miner.name.indexOf(' (') !== -1;
+        minerName = !isAddressMiner ? block.miner.name : '(' + block.miner.name.split(' (')[1];
+        minerLink = !isAddressMiner ? block.miner.website : `/${coinInfo.ticker}/address/${block.miner.name.split(' (')[0]}`;
+        minerLinkExternal = !isAddressMiner;
+    } else {
+        minerName = '(Unknown pool)';
+        minerLink = null;
+    }
 
     return (
         <div className={classes.blocksummary + (highlighted ? ' ' + classes.highlighted : '')}>

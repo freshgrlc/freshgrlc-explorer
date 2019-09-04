@@ -37,8 +37,8 @@ export const Block: React.FC<IProps> = React.memo(
                 <div className={classes.data}>
                     <Cell
                         label="Miner"
-                        data={block.miner.website ? block.miner.name : 'Unknown Pool'}
-                        link={block.miner.website}
+                        data={block.miner && block.miner.website ? block.miner.name : 'Unknown Pool'}
+                        link={block.miner ? block.miner.website : undefined}
                         externalLink={true}
                         notMono={true}
                         cellStyle={tableCellStyle}

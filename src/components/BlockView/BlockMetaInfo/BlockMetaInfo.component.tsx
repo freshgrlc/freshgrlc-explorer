@@ -22,9 +22,21 @@ interface IProps {
 export const BlockMetaInfo: React.FC<IProps> = ({ block, transactions }) => {
     const coinInfo = useContext(CoinInfoContext);
 
-    const isAddressMiner = block.miner.name.indexOf(' (') !== -1;
-    const minerLink = !isAddressMiner ? block.miner.website : `/${coinInfo.ticker}/address/${block.miner.name.split(' (')[0]}`;
-    const minerLinkExternal = !isAddressMiner;
+    /* FIXME: Deduplicate and move this logic somewhere else */
+    var isAddressMiner: boolean;
+    var minerName: string;
+    var minerLink: string | null;
+    var minerLinkExternal: boolean = false;
+
+    if (block.miner !== null) {
+        isAddressMiner = block.miner.name.indexOf(' (') !== -1;
+        minerName = block.miner.name;
+        minerLink = !isAddressMiner ? block.miner.website : `/${coinInfo.ticker}/address/${block.miner.name.split(' (')[0]}`;
+        minerLinkExternal = !isAddressMiner;
+    } else {
+        minerName = '(Unknown pool)';
+        minerLink = null;
+    }
 
     const table: IRow[] = ([
         {
@@ -108,7 +120,7 @@ export const BlockMetaInfo: React.FC<IProps> = ({ block, transactions }) => {
             label: 'Miner',
             cells: [
                 {
-                    data: block.miner.name,
+                    data: minerName,
                     notMono: true,
                     link: minerLink,
                     externalLink: minerLinkExternal,

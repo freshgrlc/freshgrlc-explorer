@@ -19,5 +19,5 @@ export interface IBlockSimple {
 
 export interface IBlock extends Omit<Omit<IBlockSimple, 'transactions'>, 'miner'> {
     transactions: IBlockTransaction[];
-    miner: IMiner;
+    miner: IMiner | null;
 }
