@@ -14,7 +14,7 @@
     "react-router-dom": "^5.0.1",
     "rxjs": "^6.5.3",
     "semantic-ui-css": "^2.4.1",
-    "semantic-ui-react": "^0.88.0"
+    "semantic-ui-react": "^0.88.1"
   },
   "devDependencies": {
     "@types/jest": "24.0.18",
