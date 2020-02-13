@@ -8630,10 +8630,10 @@ react-error-overlay@^6.0.1:
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.1.tgz#b8d3cf9bb991c02883225c48044cb3ee20413e0f"
   integrity sha512-V9yoTr6MeZXPPd4nV/05eCBvGH9cGzc52FN8fs0O0TVQ3HYYf1n7EgZVtHbldRq5xU9zEzoXIITjYNIfxDDdUw==
 
-react-fetch-hook@^1.6.4:
-  version "1.6.4"
-  resolved "https://registry.yarnpkg.com/react-fetch-hook/-/react-fetch-hook-1.6.4.tgz#8ebf4b2d405bc1c061dabc5aae9c0c582e86d65f"
-  integrity sha512-iTArOaNP7C1s4T3soD3SYey8pqabHrGmySaHxvK3buILGeLOLyYNmJudhxJCxtlZDR2x9DeoFBNB0tSRfXnf/w==
+react-fetch-hook@^1.8.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/react-fetch-hook/-/react-fetch-hook-1.8.0.tgz#90f0bed39096ae3ee52ed3c070b73ae64fe476e3"
+  integrity sha512-DAbCvBCmncXqZrLTxlERITea21UJ1WuvHZN+m0uq2wBl8zcVTCAUJfX5XKQDW1tceD3qv2OkNt5zHR5bbr2CIg==
 
 react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   version "16.9.0"
