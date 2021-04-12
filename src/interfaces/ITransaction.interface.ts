@@ -33,11 +33,18 @@ export interface ITransactionOutput {
 }
 export type TransactionOutputs = { [key: string]: ITransactionOutput };
 
+export interface ICoinbaseInfo {
+    extranonce: string | null;
+    timestamp: string | null;
+    height: number | null;
+    data: string[];
+}
+
 export interface ITransaction {
     confirmed: boolean;
     fee: number;
     txid: string;
-    coinbase: boolean;
+    coinbase: IReference | ICoinbaseInfo | null;
     totalvalue: number;
     firstseen: number | null;
     pending?: number;

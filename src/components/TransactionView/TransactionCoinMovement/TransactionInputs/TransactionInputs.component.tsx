@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { CoinInfoContext } from 'context/CoinInfo.context';
 
-import { ISimplifiedTransactionInput, TransactionOutputType } from 'interfaces/ITransaction.interface';
+import { ICoinbaseInfo, ISimplifiedTransactionInput, TransactionOutputType } from 'interfaces/ITransaction.interface';
 
 import { formatNumericalValue } from 'utils/formatNumericalValue.util';
 
@@ -11,7 +11,7 @@ import classes from './TransactionInputs.module.scss';
 
 interface IProps {
     inputs: ISimplifiedTransactionInput[];
-    coinbase: boolean;
+    coinbase: ICoinbaseInfo | null;
     coinbaseAmount?: number;
 }
 

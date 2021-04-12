@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ITransaction, ISimplifiedTransactionInput, ITransactionOutput } from 'interfaces/ITransaction.interface';
+import { ITransaction, ISimplifiedTransactionInput, ITransactionOutput, ICoinbaseInfo } from 'interfaces/ITransaction.interface';
 
 import { TransactionOutputs } from './TransactionOutputs/TransactionOutputs.component';
 import { TransactionInputs } from './TransactionInputs/TransactionInputs.component';
@@ -18,7 +18,7 @@ export const TransactionCoinMovement: React.FC<IProps> = ({ transaction, outputs
         <div className={classes.coinMovement}>
             <TransactionInputs
                 inputs={simplifiedInputs}
-                coinbase={transaction.coinbase}
+                coinbase={transaction.coinbase ? transaction.coinbase as ICoinbaseInfo : null}
                 coinbaseAmount={transaction.totalvalue}
             />
             <TransactionOutputs outputs={Object.values(outputs)} />

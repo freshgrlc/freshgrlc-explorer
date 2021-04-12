@@ -32,7 +32,7 @@ export const BlockView: React.FC<IProps> = ({ routeParams }) => {
         `${baseUrl}/blocks/${routeParams.hash}/?expand=miner`
     );
     const { data: transactions } = useFetch<IBlockTransaction[]>(
-        `${baseUrl}/blocks/${routeParams.hash}/transactions/?expand=inputs,outputs`
+        `${baseUrl}/blocks/${routeParams.hash}/transactions/?expand=inputs,outputs,coinbase`
     );
     if (error != null) {
         console.log(error);

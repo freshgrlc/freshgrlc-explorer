@@ -55,7 +55,7 @@ export const TransactionView: React.FC<IProps> = ({ routeParams }) => {
     const baseUrl = getBaseUrl(routeParams.coin);
     const coinInfo = getCoinInfo(routeParams.coin);
     const { isLoading, data: transaction, error } = useFetch<IBlockTransactionWithBlockInfo>(
-        `${baseUrl}/transactions/${routeParams.txid}/?expand=block`
+        `${baseUrl}/transactions/${routeParams.txid}/?expand=block,coinbase`
     );
     const { isLoading: inputsLoading, data: txInputs } = useFetch<ITransactionInput[]>(
         `${baseUrl}/transactions/${routeParams.txid}/inputs/`
