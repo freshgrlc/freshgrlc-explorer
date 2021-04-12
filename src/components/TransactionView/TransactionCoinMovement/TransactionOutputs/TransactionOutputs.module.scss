@@ -70,9 +70,10 @@
                 text-align: left;
                 color: $muted;
                 line-height: 1.3em;
-                padding: 4px;
+                margin: 0 -4px;
+                padding: 6px;
                 background-color: $semiSunkenBackground;
-                border-radius: 8px;
+                border-radius: 10px;
 
                 .header {
                     font-family: $normal;

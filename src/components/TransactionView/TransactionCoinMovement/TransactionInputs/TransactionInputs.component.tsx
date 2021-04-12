@@ -47,12 +47,12 @@ export const TransactionInputs: React.FC<IProps> = ({ inputs, coinbase, coinbase
                             ) : (
                                 <div className={classes.data}>{input.address}</div>
                             )}
+                            {getInputSubtext(input.type) !== undefined ? (
+                                <div className={classes.signatureType}>
+                                    <div className={classes.data}>{getInputSubtext(input.type)}</div>
+                                </div>
+                            ) : null}
                         </div>
-                        {getInputSubtext(input.type) !== undefined ? (
-                            <div className={classes.signatureType}>
-                                <div className={classes.data}>{getInputSubtext(input.type)}</div>
-                            </div>
-                        ) : null}
                     </div>
                     <div className={classes.inputsAmount}>
                         {coinInfo && input.txid ? (
@@ -91,6 +91,14 @@ export const TransactionInputs: React.FC<IProps> = ({ inputs, coinbase, coinbase
                     <div className={classes.source}>
                         <div className={classes.address + ' ' + classes.textAddress}>
                             <div className={classes.data}>Newly generated coins + transaction fees</div>
+                            <div className={classes.coinbasedata}>
+                                <div className={classes.header}>Data:</div>
+                                <div className={classes.data}>
+                                    {coinbase.data.map((segment, index) => 
+                                        (<div className={classes.datasegment}>{segment}</div>)
+                                    )}
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div className={classes.inputsAmount + ' ' + classes.coinbaseInput}>
