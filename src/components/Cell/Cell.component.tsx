@@ -18,6 +18,7 @@ export const Cell: React.FC<ICell> = ({
     unit,
     notMono,
     decimals,
+    thousandsSpacing,
     maxDecimals,
     alwaysSingular,
     cellStyle,
@@ -100,6 +101,7 @@ export const Cell: React.FC<ICell> = ({
         ? formatNumericalValue(data as (string | number), {
               decimals,
               maxDecimals,
+              thousandsSpacing,
               unit,
               alwaysSingular,
               decimalClass: classes.decimals,

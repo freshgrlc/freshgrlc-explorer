@@ -43,7 +43,7 @@ export const Block: React.FC<IProps> = React.memo(
                         notMono={true}
                         cellStyle={tableCellStyle}
                     />
-                    <Cell label="Size" data={block.size.toString()} unit="byte" cellStyle={tableCellStyle} />
+                    <Cell label="Size" data={block.size} unit="byte" thousandsSpacing={true} cellStyle={tableCellStyle} />
                     <Cell
                         label="Transactions"
                         data={block.transactions.length.toString()}

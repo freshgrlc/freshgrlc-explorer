@@ -1,5 +1,8 @@
 import React from 'react';
 
+import classes from './utils.module.scss';
+
+
 export const rounded = (number: number, decimals?: number, maxDecimals: number = 8): [number | string, string | undefined] => {
     const negative = number < 0;
     const absolute = Math.abs(number.valueOf());
@@ -18,10 +21,21 @@ export const rounded = (number: number, decimals?: number, maxDecimals: number =
     ];
 };
 
-export const formatDecimal = (integer: number | string, decimalClass?: string, roundedDecimals?: string): JSX.Element => {
+export const formatDecimal = (integer: number | string, decimalClass?: string, roundedDecimals?: string, thousandsSpacing?: boolean): JSX.Element => {
+    let formattedInteger = (integer: number | string) => {
+        let n = '' + integer;
+        let formatted = '';
+        if (!thousandsSpacing) return n;
+        for (let i = n.length; i--; ) {
+            formatted = n[i] + formatted;
+            if (!((n.length - i) % 3)) formatted = '\u2005' + formatted;
+        }
+        return formatted;
+    };
+
     return (
         <>
-            {integer}
+            {formattedInteger(integer)}
             {roundedDecimals ? <span className={decimalClass}>.{roundedDecimals}</span> : null}
         </>
     );
@@ -30,6 +44,7 @@ export const formatDecimal = (integer: number | string, decimalClass?: string, r
 interface INumericalValueOptions {
     decimals?: number;
     maxDecimals?: number;
+    thousandsSpacing?: boolean;
     unit?: string;
     alwaysSingular?: boolean;
     decimalClass?: string;
@@ -38,7 +53,7 @@ interface INumericalValueOptions {
 }
 
 export const formatNumericalValue = (value: number | string, options: INumericalValueOptions) => {
-    const { decimals, maxDecimals, unit, alwaysSingular, decimalClass, unitClass } = options;
+    const { decimals, maxDecimals, thousandsSpacing, unit, alwaysSingular, decimalClass, unitClass } = options;
 
     let roundedData: [number | string, string | undefined] | undefined;
     let formattedData: JSX.Element | string | undefined;
@@ -46,7 +61,7 @@ export const formatNumericalValue = (value: number | string, options: INumerical
 
     if (typeof value === 'number') {
         roundedData = rounded(value, decimals, maxDecimals);
-        formattedData = formatDecimal(roundedData[0], decimalClass, roundedData[1]);
+        formattedData = formatDecimal(roundedData[0], decimalClass, roundedData[1], thousandsSpacing);
     } else {
         roundedData = rounded(Number(value), decimals, maxDecimals);
         formattedData = value;
@@ -54,7 +69,7 @@ export const formatNumericalValue = (value: number | string, options: INumerical
     isExactlyOne = roundedData[0] in [-1, 1];
 
     return (
-        <>
+        <span className={classes.nowrap}>
             {formattedData}
             {unit ? (
                 <div className={unitClass}>
@@ -63,6 +78,6 @@ export const formatNumericalValue = (value: number | string, options: INumerical
                     {isExactlyOne || alwaysSingular ? '' : 's'}
                 </div>
             ) : null}
-        </>
+        </span>
     );
 };

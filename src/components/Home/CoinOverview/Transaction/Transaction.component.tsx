@@ -47,6 +47,7 @@ export const Transaction: React.FC<IProps> = React.memo(
                             label={showHeader ? 'Size' : undefined}
                             data={byteCount}
                             unit={byteUnit}
+                            thousandsSpacing={true}
                             alwaysSingular={true}
                             cellStyle={{ align: 'right', size: '100px' }}
                         />

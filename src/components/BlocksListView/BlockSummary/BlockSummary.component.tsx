@@ -91,6 +91,7 @@ export const BlockSummary: React.FC<IProps> = ({ block, first, highlighted }) =>
                 label={first ? 'Block size' : undefined}
                 largelabel={true}
                 data={block.size}
+                thousandsSpacing={true}
                 unit="byte"
                 cellStyle={{
                     size: '100px',

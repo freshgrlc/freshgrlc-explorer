@@ -203,7 +203,8 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
                 cells: [
                     {
                         label: 'Transactions',
-                        data: yesterday != null ? yesterday.transactions.amount.toString() : undefined,
+                        data: yesterday != null ? yesterday.transactions.amount : undefined,
+                        thousandsSpacing: true,
                         cellStyle: {
                             sunken: true
                         }
@@ -228,7 +229,8 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
                 cells: [
                     {
                         label: 'Blocks Mined',
-                        data: yesterday != null ? yesterday.blocks.amount.toString() : undefined,
+                        data: yesterday != null ? yesterday.blocks.amount : undefined,
+                        thousandsSpacing: true,
                         cellStyle: {
                             sunken: true
                         }
@@ -237,6 +239,7 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
                         label: 'New Coins Released',
                         data: yesterday != null ? yesterday.coins.released : undefined,
                         unit: coinInfo ? coinInfo.displaySymbol : undefined,
+                        thousandsSpacing: true,
                         alwaysSingular: true,
                         cellStyle: {
                             sunken: true
@@ -342,6 +345,7 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
                     {
                         label: 'All-time Transactions',
                         data: totalTransactions != null ? totalTransactions : undefined,
+                        thousandsSpacing: true,
                         cellStyle: {
                             sunken: true
                         }
@@ -352,6 +356,7 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
                         unit: coinInfo ? coinInfo.displaySymbol : undefined,
                         alwaysSingular: true,
                         decimals: 3,
+                        thousandsSpacing: true,
                         cellStyle: {
                             sunken: true
                         }

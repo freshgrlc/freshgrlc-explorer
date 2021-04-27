@@ -19,6 +19,7 @@ export interface ICell {
     unit?: string;
     notMono?: boolean;
     decimals?: number;
+    thousandsSpacing?: boolean;
     maxDecimals?: number;
     alwaysSingular?: boolean;
     cellStyle?: ICellStyle;
