@@ -210,14 +210,15 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
                         }
                     },
                     {
-                        label: 'Transacted Value',
+                        label: 'Destroyed coin-days ',
                         data:
-                            yesterday != null && yesterday.transactions.totalvalue
-                                ? yesterday.transactions.totalvalue
+                            yesterday != null && yesterday.transactions.coindaysdestroyed
+                                ? yesterday.transactions.coindaysdestroyed
                                 : undefined,
-                        unit: coinInfo ? coinInfo.displaySymbol : undefined,
+                        unit: undefined,
                         alwaysSingular: true,
-                        decimals: 2,
+                        decimals: 0,
+                        thousandsSpacing: true,
                         cellStyle: {
                             sunken: true
                         }

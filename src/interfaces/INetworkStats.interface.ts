@@ -1,5 +1,5 @@
 export interface INetworkStats {
     coins: { released: number };
     blocks: { amount: number };
-    transactions: { amount: number; totalvalue: number | null };
+    transactions: { amount: number; totalvalue: number | null; coindaysdestroyed: number };
 }
