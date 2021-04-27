@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import queryString from 'query-string';
+import { Footer } from '../Footer/Footer.component';
 
 const Waiting = (Component: any) => {
     return (props: any) => (
@@ -42,55 +43,58 @@ const DifficultyGraphView = React.lazy(() =>
 
 export const App: React.FC = () => {
     return (
-        <Router>
-            <Switch>
-                <Route exact path="/" component={Waiting(Home)} />
-                <Route
-                    path="/:coin1(grlc|tux|tgrlc)/home"
-                    component={RouteParams(Waiting(Home))}
-                />
-                <Route
-                    path="/:coin1(grlc|tux|tgrlc)\+:coin2(grlc|tux|tgrlc)/home"
-                    component={RouteParams(Waiting(Home))}
-                />
-                <Route
-                    exact
-                    path="/:coin(grlc|tux|tgrlc)/blocks"
-                    component={RouteParams(Waiting(BlocksListView))}
-                />
-                <Route
-                    path="/:coin(grlc|tux|tgrlc)/blocks/:hash(\w{64,64})"
-                    component={RouteParams(Waiting(BlockView))}
-                />
-                <Route
-                    path="/:coin(grlc|tux|tgrlc)/transactions/:txid(\w{64,64})"
-                    component={RouteParams(Waiting(TransactionView))}
-                />
-                <Route
-                    path="/:coin(grlc|tux|tgrlc)/address/:address(\w+)"
-                    component={RouteParams(Waiting(AddressView))}
-                />
-                <Route
-                    path="/:coin(grlc|tux|tgrlc)/richlist"
-                    component={RouteParams(Waiting(RichListView))}
-                />
-                <Route
-                    path="/:coin(grlc|tux|tgrlc)/pooldistribution"
-                    component={RouteParams(Waiting(PoolDistributionView))}
-                />
-                <Route
-                    path="/:coin(grlc|tux|tgrlc)/difficultygraphs"
-                    component={RouteParams(Waiting(DifficultyGraphView))}
-                />
-                <Route
-                    component={() => (
-                        <div>
-                            <h1>Error 404</h1>
-                            <Link to="/">Back to Safety</Link>
-                        </div>
-                    )}
-                />
-            </Switch>
-        </Router>
+        <>
+            <Router>
+                <Switch>
+                    <Route exact path="/" component={Waiting(Home)} />
+                    <Route
+                        path="/:coin1(grlc|tux|tgrlc)/home"
+                        component={RouteParams(Waiting(Home))}
+                    />
+                    <Route
+                        path="/:coin1(grlc|tux|tgrlc)\+:coin2(grlc|tux|tgrlc)/home"
+                        component={RouteParams(Waiting(Home))}
+                    />
+                    <Route
+                        exact
+                        path="/:coin(grlc|tux|tgrlc)/blocks"
+                        component={RouteParams(Waiting(BlocksListView))}
+                    />
+                    <Route
+                        path="/:coin(grlc|tux|tgrlc)/blocks/:hash(\w{64,64})"
+                        component={RouteParams(Waiting(BlockView))}
+                    />
+                    <Route
+                        path="/:coin(grlc|tux|tgrlc)/transactions/:txid(\w{64,64})"
+                        component={RouteParams(Waiting(TransactionView))}
+                    />
+                    <Route
+                        path="/:coin(grlc|tux|tgrlc)/address/:address(\w+)"
+                        component={RouteParams(Waiting(AddressView))}
+                    />
+                    <Route
+                        path="/:coin(grlc|tux|tgrlc)/richlist"
+                        component={RouteParams(Waiting(RichListView))}
+                    />
+                    <Route
+                        path="/:coin(grlc|tux|tgrlc)/pooldistribution"
+                        component={RouteParams(Waiting(PoolDistributionView))}
+                    />
+                    <Route
+                        path="/:coin(grlc|tux|tgrlc)/difficultygraphs"
+                        component={RouteParams(Waiting(DifficultyGraphView))}
+                    />
+                    <Route
+                        component={() => (
+                            <div>
+                                <h1>Error 404</h1>
+                                <Link to="/">Back to Safety</Link>
+                            </div>
+                        )}
+                    />
+                </Switch>
+            </Router>
+            <Footer />
+        </>
     );
 };

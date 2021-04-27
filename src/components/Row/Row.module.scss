@@ -7,7 +7,7 @@
 
     height: 24px;
 
-    padding: 2px 15px;
+    padding: 4px 8px 4px 24px;
     border-left: $border;
     border-right: $border;
 
@@ -19,7 +19,7 @@
         margin-top: auto;
         margin-bottom: auto;
 
-        width: 100%;
+        width: 80%;
 
         text-align: left;
 
@@ -84,11 +84,11 @@
 }
 
 .verticalExtraPaddedRow:first-child {
-    padding-top: 0px;
+    padding-top: 4px;
 }
 
 .verticalExtraPaddedRow:last-child {
-    padding-bottom: 0px;
+    padding-bottom: 4px;
 }
 
 .row:nth-child(2n + 0) {
