@@ -41,10 +41,17 @@ export const AddressView: React.FC<IProps> = ({ routeParams, queryParams }) => {
         `${baseUrl}/address/${routeParams.address}/mutations/?start=${mutationsOffset}&limit=40`
     );
 
-    const [addressType, setAddressType] = useState<TransactionOutputType | undefined>();
+    const [addressType, setAddressType] = useState<TransactionOutputType | null | undefined>();
     useEffect(() => {
+        let isMyAddress = (x: string | null) => {
+            if (x === null) return false;
+            if (x === address?.address) return true;
+            if (address?.aliases && address.aliases.length >= 0) return address.aliases.includes(x);
+            return false;
+        };
+
         if (!mutations || mutations.length === 0) {
-            setAddressType(undefined);
+            setAddressType(mutations ? null : undefined);
         } else {
             const mutationType = mutations[0].change < 0.0 ? 'input' : 'output';
             fetch(`${getBaseUrl(coinInfo.ticker)}/transactions/${mutations[0].transaction.txid}/?expand=${mutationType}s`)
@@ -52,19 +59,19 @@ export const AddressView: React.FC<IProps> = ({ routeParams, queryParams }) => {
                 .then(result => {
                     const transaction: ITransaction = result;
                     if (mutationType === 'output') {
-                        const myOutput = (Object.values(transaction.outputs) as ITransactionOutput[]).filter((output) => output.address === routeParams.address);
+                        const myOutput = (Object.values(transaction.outputs) as ITransactionOutput[]).filter(output => isMyAddress(output.address));
                         if (myOutput.length > 0) {
                             setAddressType(myOutput[0].type);
                         }
                     } else {
-                        const myInput = (Object.values(transaction.inputs) as ITransactionInput[]).filter((input) => input.address === routeParams.address);
+                        const myInput = (Object.values(transaction.inputs) as ITransactionInput[]).filter(input => isMyAddress(input.address));
                         if (myInput.length > 0) {
                             setAddressType(myInput[0].type);
                         }
                     }
                 });
         }
-    }, [mutationsLoading, mutations, coinInfo, routeParams]);
+    }, [mutationsLoading, mutations, coinInfo, routeParams, address]);
 
     if (error != null) {
         console.log(error);
@@ -81,33 +88,39 @@ export const AddressView: React.FC<IProps> = ({ routeParams, queryParams }) => {
                     </Section>
                     <Section header="Recent transactions">
                     { !mutationsLoading && mutations != null ? (
-                        <>
-                            <PagedListNavigation
-                                baseUrl={`/${coinInfo.ticker}/address/${address.address}`}
-                                currentOffset={mutationsOffset}
-                                offsetParamName="mutationsOffset"
-                                entriesPerPage={40}
-                                reachedEndOfList={mutations.length < 40}
-                                labelForward="Older ⇾"
-                                labelBackward="⇽ Newer"
-                            />
-                            <div className={classes.wrapper}>
-                                <div className={classes.mutations}>
-                                    {mutations.map((mutation, index) => (
-                                        <AddressMutation key={index} mutation={mutation} first={index === 0} highlight={index % 2 === 1} />
-                                    ))}
+                        mutations.length > 0 ? (
+                            <>
+                                <PagedListNavigation
+                                    baseUrl={`/${coinInfo.ticker}/address/${address.address}`}
+                                    currentOffset={mutationsOffset}
+                                    offsetParamName="mutationsOffset"
+                                    entriesPerPage={40}
+                                    reachedEndOfList={mutations.length < 40}
+                                    labelForward="Older ⇾"
+                                    labelBackward="⇽ Newer"
+                                />
+                                <div className={classes.wrapper}>
+                                    <div className={classes.mutations}>
+                                        {mutations.map((mutation, index) => (
+                                            <AddressMutation key={index} mutation={mutation} first={index === 0} highlight={index % 2 === 1} />
+                                        ))}
+                                    </div>
                                 </div>
+                                <PagedListNavigation
+                                    baseUrl={`/${coinInfo.ticker}/address/${address.address}`}
+                                    currentOffset={mutationsOffset}
+                                    offsetParamName="mutationsOffset"
+                                    entriesPerPage={40}
+                                    reachedEndOfList={mutations.length < 40}
+                                    labelForward="Older ⇾"
+                                    labelBackward="⇽ Newer"
+                                />
+                            </>
+                        ) : (
+                            <div className={classes.none}>
+                                <h4>No transactions yet for this address</h4>
                             </div>
-                            <PagedListNavigation
-                                baseUrl={`/${coinInfo.ticker}/address/${address.address}`}
-                                currentOffset={mutationsOffset}
-                                offsetParamName="mutationsOffset"
-                                entriesPerPage={40}
-                                reachedEndOfList={mutations.length < 40}
-                                labelForward="Older ⇾"
-                                labelBackward="⇽ Newer"
-                            />
-                        </>
+                        )
                     ) : (
                         <PageLoadAnimation />
                     )}

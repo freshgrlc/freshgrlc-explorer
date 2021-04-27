@@ -12,3 +12,21 @@
     padding: 20px;
     border-radius: 25px;
 }
+
+.none {
+    width: 800px;
+    background-color: $sunkenBackground;
+    display: grid;
+    height: 227px;
+    margin: auto;
+    border-radius: 25px;
+
+    h4 {
+        color: $ultramuted;
+        font-size: 230%;
+        font-style: italic;
+        margin-top: auto;
+        margin-bottom: auto;
+        padding-bottom: 15px;
+    }
+}

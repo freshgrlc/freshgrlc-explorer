@@ -14,7 +14,7 @@ import classes from './AddressMetaInfo.module.scss';
 
 interface IProps {
     address: IAddressInfo;
-    addressType?: TransactionOutputType
+    addressType?: TransactionOutputType | null
 }
 
 const AddressTypeDescriptions: { [key: string]: string } = {
@@ -36,7 +36,7 @@ export const AddressMetaInfo: React.FC<IProps> = ({ address, addressType }) => {
             label: 'Address type',
             cells: [
                 {
-                    data: addressType ? AddressTypeDescriptions[addressType + '_' + hasAliases.toString()] : undefined,
+                    data: addressType ? AddressTypeDescriptions[addressType + '_' + hasAliases.toString()] : addressType !== undefined ? '-' : undefined,
                     notMono: true
                 },
             ],
