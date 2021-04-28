@@ -200,6 +200,8 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
             },
             {
                 label: '24-hour Activity',
+                labelSubText: 'Destroyed coin-days graph ➔',
+                labelSubTextLink: `/${coinInfo.ticker}/coindaysdestroyedgraphs`,
                 cells: [
                     {
                         label: 'Transactions',
