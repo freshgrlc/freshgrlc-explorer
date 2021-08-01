@@ -4,7 +4,6 @@
   "dockerFile": "Dockerfile",
   "extensions": [
     "dbaeumer.vscode-eslint",
-    "esbenp.prettier-vscode",
     "editorconfig.editorconfig",
     "wix.vscode-import-cost"
   ],
