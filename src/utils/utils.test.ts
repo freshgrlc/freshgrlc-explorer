@@ -1,5 +1,4 @@
 import { padNumber } from './padNumber.util';
-import { adjustDifficulty } from './adjustDifficulty.util';
 import { formatTime } from './formatTime.util';
 import { getNumberPoolsNeeded } from './getNumberPoolsNeeded.util';
 import { rounded } from './formatNumericalValue.util';
@@ -25,10 +24,6 @@ it('leave out the date if within last 24 hours, unless forced', () => {
 
     expect(formatTime(date).split(' ').length).toBe(2);
     expect(formatTime(date, true).split(' ').length).toBe(3);
-});
-
-it('should adjust difficulty', () => {
-    expect(adjustDifficulty(50, 41, 25)).toBeCloseTo(68.33);
 });
 
 it('should calculate pools need for a given percentage', () => {

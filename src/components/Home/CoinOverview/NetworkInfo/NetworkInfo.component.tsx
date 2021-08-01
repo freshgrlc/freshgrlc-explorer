@@ -10,7 +10,6 @@ import { INetworkStats } from 'interfaces/INetworkStats.interface';
 import { IPoolStat } from 'interfaces/IPoolStat.interface';
 import { IRichListEntry } from 'interfaces/IRichListEntry.interface';
 
-import { adjustDifficulty } from 'utils/adjustDifficulty.util';
 import { formatTime } from 'utils/formatTime.util';
 import { getNumberPoolsNeeded } from 'utils/getNumberPoolsNeeded.util';
 
@@ -36,7 +35,6 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
         url?: string;
         timestamp?: string;
         difficulty?: number;
-        adjusted?: number;
     } => {
         if (latestBlock != null && coinInfo) {
             return {
@@ -44,7 +42,6 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
                 url: `/${coinInfo.ticker}/blocks/${latestBlock.hash}`,
                 timestamp: formatTime(latestBlock.firstseen),
                 difficulty: latestBlock.difficulty,
-                adjusted: adjustDifficulty(latestBlock.difficulty, coinInfo.blockTime, coinInfo.blockReward),
             };
         } else {
             return {};
@@ -176,12 +173,12 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
                 ],
             },
             {
-                label: 'Mining Difficulty',
+                label: 'Mining difficulty',
                 labelSubText: 'Difficulty graphs ➔',
                 labelSubTextLink: `/${coinInfo.ticker}/difficultygraphs`,
                 cells: [
                     {
-                        label: 'Network',
+                        label: 'Latest Block Difficulty',
                         data: formattedBlock.difficulty,
                         decimals: 3,
                         cellStyle: {
@@ -189,8 +186,10 @@ export const NetworkInfo: React.FC<IProps> = ({ latestBlock, baseUrl }) => {
                         }
                     },
                     {
-                        label: 'Adjusted (50 coins/min)',
-                        data: formattedBlock.adjusted,
+                        label: 'Est. Network Hashrate',
+                        data: formattedBlock.difficulty !== undefined ? formattedBlock.difficulty * 2 ** 32 / (coinInfo.blockTime + 1) / 1000000000 : undefined,
+                        unit: 'GH/s',
+                        alwaysSingular: true,
                         decimals: 3,
                         cellStyle: {
                             sunken: true
