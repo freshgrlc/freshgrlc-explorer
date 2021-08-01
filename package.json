@@ -1,6 +1,6 @@
 {
-  "name": "allium-explorer",
-  "version": "0.1.0",
+  "name": "freshgrlc-explorer",
+  "version": "1.1.0",
   "private": true,
   "dependencies": {
     "highcharts": "^8.1.0",
