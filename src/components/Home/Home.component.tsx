@@ -18,7 +18,7 @@ interface IProps {
 
 export const Home: React.FC<IProps> = ({ routeParams }) => {
     const coins = getAllCoins();
-    var selectedCoins = [ coins[0], coins[1] ];
+    var selectedCoins = [ coins[0] ];
 
     if (routeParams !== undefined) {
         if (routeParams.coin2 !== undefined) {
