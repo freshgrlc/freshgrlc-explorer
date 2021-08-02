@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { CoinOverview } from './CoinOverview/CoinOverview.component';
 import { Banner } from 'components/Banner/Banner.component';
@@ -7,7 +7,7 @@ import { HalvingCountdown } from './HalvingCountdown/HalvingCountdown.component'
 import { CoinTickerSymbol } from 'interfaces/ICoinInfo.interface';
 
 import { CoinInfoContext } from 'context/CoinInfo.context';
-import { CoinEventsProvider } from 'context/CoinEvents.context';
+import { CoinEventManager, CoinEventsContext } from 'context/CoinEvents.context';
 
 import { getAllCoins, getCoinInfo } from 'utils/getCoinInfo.util';
 
@@ -35,24 +35,34 @@ export const Home: React.FC<IProps> = ({ routeParams }) => {
         }
     }
 
+    let eventManagers: { [key: string]: CoinEventManager } = {};
+    for (const coin of coins) {
+        eventManagers[coin.ticker as string] = new CoinEventManager(coin);
+    }
+    useEffect(() => () => {
+        for (const coin in eventManagers) {
+            eventManagers[coin].cleanUp();
+        }
+    });
+
     return (
         <div className={classes.home}>
             <Banner coins={coins} preferredCoin={selectedCoins.length === 1 ? selectedCoins[0].ticker : undefined} />
             <div>
                 { selectedCoins.map((coin, index) => (
                     <CoinInfoContext.Provider key={index} value={coin}>
-                        <CoinEventsProvider>
+                        <CoinEventsContext.Provider value={eventManagers[coin.ticker]}>
                             <HalvingCountdown/>
-                        </CoinEventsProvider>
+                        </CoinEventsContext.Provider>
                     </CoinInfoContext.Provider>
                 )) }
             </div>
             <div className={classes.overview + (selectedCoins.length > 1 ? ' ' + classes.overviews : '')}>
                 { selectedCoins.map((coin, index) => (
                     <CoinInfoContext.Provider key={index} value={coin}>
-                        <CoinEventsProvider>
+                        <CoinEventsContext.Provider value={eventManagers[coin.ticker]}>
                             <CoinOverview />
-                        </CoinEventsProvider>
+                        </CoinEventsContext.Provider>
                     </CoinInfoContext.Provider>
                 )) }
             </div>
