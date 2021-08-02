@@ -1,0 +1,72 @@
+@import '../../../variables.scss';
+
+.halving {
+    display: flex;
+    flex-direction: column;
+    width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+    border: $border;
+    border-radius: 20px;
+    background-color: $rowBackground2;
+    padding: 20px;
+    margin-top: -10px;
+    margin-bottom: 40px;
+    color: $muted;
+    font-size: 115%;
+}
+
+.halving * {
+    display: block;
+    vertical-align: middle;
+    margin: 0.3em auto;
+}
+
+.halving img {
+    display: inline;
+    height: 2.5em;
+    width: 2.5em;
+    margin: 0 -2.5em 0 0;
+    transform: translateX(-2.5em);
+}
+
+.halving span {
+    display: inline;
+    vertical-align: bottom;
+}
+
+h1 {
+    margin: 0px;
+}
+
+.countdown {
+    font-size: 150%;
+    margin-bottom: 0.5em;
+}
+
+.countdown2 {
+    font-size: 200%;
+}
+
+.blkcntdwn {
+    color: $primary;
+}
+
+.capitalize {
+    display: inline;
+    text-transform: capitalize;
+}
+
+.mono {
+    color: $text;
+}
+
+.halving .ticker {
+    display: inline;
+    font-family: $mono;
+    font-size: 90%;
+}
+
+.nobreak div {
+    display: inline;
+}
