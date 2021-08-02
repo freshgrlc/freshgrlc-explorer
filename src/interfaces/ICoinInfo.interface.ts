@@ -7,5 +7,6 @@ export interface ICoinInfo {
     displaySymbol: string;
     blockTime: number;
     blockReward: number;
+    blockRewardHalvingInterval: number;
     logo: string;
 }

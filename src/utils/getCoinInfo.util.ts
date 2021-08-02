@@ -8,6 +8,7 @@ const Coins: ICoinInfo[] = [
         displaySymbol: 'GRLC',
         blockTime: 40,
         blockReward: 25,
+        blockRewardHalvingInterval: 690000,
         logo: 'garlicoin.svg',
     },
     {
@@ -17,6 +18,7 @@ const Coins: ICoinInfo[] = [
         displaySymbol: 'TUX',
         blockTime: 60,
         blockReward: 33.5,
+        blockRewardHalvingInterval: 420690,
         logo: 'tuxcoin.svg',
     },
     {
@@ -26,6 +28,7 @@ const Coins: ICoinInfo[] = [
         displaySymbol: 'tGRLC',
         blockTime: 40,
         blockReward: 50,
+        blockRewardHalvingInterval: 690000,
         logo: 'garlicoin.svg',
     },
 ];

@@ -2,6 +2,7 @@ import React from 'react';
 
 import { CoinOverview } from './CoinOverview/CoinOverview.component';
 import { Banner } from 'components/Banner/Banner.component';
+import { HalvingCountdown } from './HalvingCountdown/HalvingCountdown.component';
 
 import { CoinTickerSymbol } from 'interfaces/ICoinInfo.interface';
 
@@ -37,6 +38,15 @@ export const Home: React.FC<IProps> = ({ routeParams }) => {
     return (
         <div className={classes.home}>
             <Banner coins={coins} preferredCoin={selectedCoins.length === 1 ? selectedCoins[0].ticker : undefined} />
+            <div>
+                { selectedCoins.map((coin, index) => (
+                    <CoinInfoContext.Provider key={index} value={coin}>
+                        <CoinEventsProvider>
+                            <HalvingCountdown/>
+                        </CoinEventsProvider>
+                    </CoinInfoContext.Provider>
+                )) }
+            </div>
             <div className={classes.overview + (selectedCoins.length > 1 ? ' ' + classes.overviews : '')}>
                 { selectedCoins.map((coin, index) => (
                     <CoinInfoContext.Provider key={index} value={coin}>
