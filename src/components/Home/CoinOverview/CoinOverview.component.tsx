@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Subject } from 'rxjs';
 import useFetch from 'react-fetch-hook';
 
 import { Section } from 'components/Section/Section.component';
@@ -11,21 +10,19 @@ import { Mempool } from './Mempool/Mempool.component';
 import { Blocks } from './Blocks/Blocks.component';
 
 import { CoinInfoContext } from 'context/CoinInfo.context';
+import { CoinEventsContext } from 'context/CoinEvents.context';
 
-import { ICoinInfo } from 'interfaces/ICoinInfo.interface';
 import { IBlock } from 'interfaces/IBlock.interface';
 import { IUnconfirmedTransaction } from 'interfaces/ITransaction.interface';
-import { IEventMessage } from 'interfaces/IEventMessage.interface';
 
 import { getBaseUrl } from 'utils/getBaseUrl.util';
 
 import classes from './CoinOverview.module.scss';
 
-interface IProps {
-    coinInfo: ICoinInfo;
-}
 
-export const CoinOverview: React.FC<IProps> = ({ coinInfo }) => {
+export const CoinOverview: React.FC = () => {
+    const coinInfo = useContext(CoinInfoContext);
+    const events = useContext(CoinEventsContext);
     const baseUrl = getBaseUrl(coinInfo.ticker);
 
     const blockCount = 10;
@@ -52,62 +49,44 @@ export const CoinOverview: React.FC<IProps> = ({ coinInfo }) => {
         if (firstBlocks != null && firstUnconfirmedTransactions != null) {
             setBlocks(firstBlocks.slice().reverse());
             setUnconfirmedTransactions(calculateAndInjectPendingTime(firstUnconfirmedTransactions));
-            const blocksSubject = new Subject<IBlock>();
-            const unconfirmedTransactionsSubject = new Subject<IUnconfirmedTransaction[]>();
-            const bSub = blocksSubject.subscribe({
-                next: (block) => {
-                    setBlocks((blocks) => {
-                        if (blocks[0].hash !== block.hash) {
-                            const slice = blocks.slice();
-                            slice.pop();
-                            slice.unshift(block);
-                            return slice;
-                        } else {
-                            return blocks;
-                        }
-                    });
-                },
+            const bSub = events.blockEvents.subscribe((block) => {
+                setBlocks((blocks) => {
+                    if (blocks[0].hash !== block.hash) {
+                        const slice = blocks.slice();
+                        slice.pop();
+                        slice.unshift(block);
+                        return slice;
+                    } else {
+                        return blocks;
+                    }
+                });
             });
-            const uSub = unconfirmedTransactionsSubject.subscribe({
-                next: (mempool) => {
-                    setUnconfirmedTransactions(calculateAndInjectPendingTime(mempool));
-                },
-            });
-            const es = new EventSource(`${baseUrl}/events/subscribe?channels=mempool,blocks,keepalive`);
-            es.addEventListener('message', (message) => {
-                const { event, data } = JSON.parse(message.data) as IEventMessage;
-                if (event === 'mempoolupdate') {
-                    unconfirmedTransactionsSubject.next((data as unknown) as IUnconfirmedTransaction[]);
-                } else if (event === 'newblock') {
-                    blocksSubject.next((data as unknown) as IBlock);
-                }
-            });
+            const uSub = events.mempoolEvents.subscribe((mempool) =>
+                setUnconfirmedTransactions(calculateAndInjectPendingTime(mempool))
+            );
 
             return () => {
                 bSub.unsubscribe();
                 uSub.unsubscribe();
-                es.close();
             };
         }
-    }, [baseUrl, firstBlocks, firstUnconfirmedTransactions]);
+    }, [baseUrl, firstBlocks, firstUnconfirmedTransactions, events]);
 
     return (
-        <CoinInfoContext.Provider value={coinInfo}>
-            <div className={classes.overview}>
-                <Section>
-                    <Header />
-                    <NetworkInfo latestBlock={blocks[0]} baseUrl={baseUrl} />
-                </Section>
-                <Mempool transactions={unconfirmedTransactions} />
-                <Section header="Blockchain">
-                    <div className={classes.explore}>
-                        {blocks && blocks[0] ? (
-                            <Link to={`/${coinInfo.ticker}/blocks/?start=${blocks[0].height}&direction=desc`}>Explore ➔</Link>
-                        ) : 'Explore ➔'}
-                    </div>
-                    <Blocks blocks={blocks} />
-                </Section>
-            </div>
-        </CoinInfoContext.Provider>
+        <div className={classes.overview}>
+            <Section>
+                <Header />
+                <NetworkInfo latestBlock={blocks[0]} baseUrl={baseUrl} />
+            </Section>
+            <Mempool transactions={unconfirmedTransactions} />
+            <Section header="Blockchain">
+                <div className={classes.explore}>
+                    {blocks && blocks[0] ? (
+                        <Link to={`/${coinInfo.ticker}/blocks/?start=${blocks[0].height}&direction=desc`}>Explore ➔</Link>
+                    ) : 'Explore ➔'}
+                </div>
+                <Blocks blocks={blocks} />
+            </Section>
+        </div>
     );
 };

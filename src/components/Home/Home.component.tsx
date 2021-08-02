@@ -5,6 +5,9 @@ import { Banner } from 'components/Banner/Banner.component';
 
 import { CoinTickerSymbol } from 'interfaces/ICoinInfo.interface';
 
+import { CoinInfoContext } from 'context/CoinInfo.context';
+import { CoinEventsProvider } from 'context/CoinEvents.context';
+
 import { getAllCoins, getCoinInfo } from 'utils/getCoinInfo.util';
 
 import classes from './Home.module.scss';
@@ -35,7 +38,13 @@ export const Home: React.FC<IProps> = ({ routeParams }) => {
         <div className={classes.home}>
             <Banner coins={coins} preferredCoin={selectedCoins.length === 1 ? selectedCoins[0].ticker : undefined} />
             <div className={classes.overview + (selectedCoins.length > 1 ? ' ' + classes.overviews : '')}>
-                { selectedCoins.map((coin, index) => ( <CoinOverview key={index} coinInfo={coin} /> )) }
+                { selectedCoins.map((coin, index) => (
+                    <CoinInfoContext.Provider key={index} value={coin}>
+                        <CoinEventsProvider>
+                            <CoinOverview />
+                        </CoinEventsProvider>
+                    </CoinInfoContext.Provider>
+                )) }
             </div>
         </div>
     );
